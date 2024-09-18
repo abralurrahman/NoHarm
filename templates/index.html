@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Decision Making Survey</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Medical Decision Making Survey</h1>
+
+    <form method="POST" action="/submit">
+        <!-- Informed Consent -->
+        <label>Do you consent to the use of your data for research?</label><br>
+        <input type="radio" id="consent_yes" name="consent" value="yes"> Yes
+        <input type="radio" id="consent_no" name="consent" value="no"> No
+        <br><br>
+
+        <!-- Vignette Question -->
+        <label>Which patient should be treated?</label><br>
+        <input type="radio" name="patient_choice" value="1"> Patient 1
+        <input type="radio" name="patient_choice" value="2"> Patient 2
+        <br><br>
+
+        <!-- Procedural Ratings -->
+        <label>Rate the following procedures:</label><br>
+        <label>Save the most life years:</label>
+        <select name="procedure_rating">
+            <option value="1">1 (Not Fair)</option>
+            <option value="6">6 (Very Fair)</option>
+        </select>
+        <br><br>
+
+        <!-- Demographics -->
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="female"> Female
+        <input type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="diverse"> Diverse
+        <br><br>
+
+        <label>Age:</label>
+        <input type="number" name="age">
+        <br><br>
+
+        <label>Religion:</label>
+        <select name="religion">
+            <option value="none">None</option>
+            <option value="christian">Christian</option>
+            <option value="islam">Islam</option>
+        </select>
+        <br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

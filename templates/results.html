@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Results</title>
+</head>
+<body>
+    <h1>Survey Results</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Consent</th>
+            <th>Patient Choice</th>
+            <th>Procedure Rating</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Religion</th>
+        </tr>
+        {% for survey in surveys %}
+        <tr>
+            <td>{{ survey['id'] }}</td>
+            <td>{{ survey['consent'] }}</td>
+            <td>{{ survey['patient_choice'] }}</td>
+            <td>{{ survey['procedure_rating'] }}</td>
+            <td>{{ survey['age'] }}</td>
+            <td>{{ survey['gender'] }}</td>
+            <td>{{ survey['religion'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
