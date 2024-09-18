@@ -1,4 +1,4 @@
-# NoHarmSurvey Project Setup Guide
+# NoHarm Survey Project Setup Guide
 
 This guide will walk you through setting up and running the NoHarm survey web application. To create a virtual environment, install necessary dependencies, run the server, and view survey results.
 
@@ -77,7 +77,9 @@ This guide will walk you through setting up and running the NoHarm survey web ap
     ```
     http://127.0.0.1:5000/
     ```
-   This is the homepage where you can fill out and submit the survey.
+   This URL is specific to your local machine and indicates that the server is running locally. It will open the homepage where you can fill out and submit the survey.
+
+   **Note:** The URL `http://127.0.0.1:5000/` is a loopback address that points to your own computer. This means each developer will use the same address to access their own local instance of the server. Since we haven't deployed this application to a public server yet, the address may change once we have a dedicated server.
 
 ## Step 6: Viewing Survey Results
 
@@ -85,34 +87,7 @@ This guide will walk you through setting up and running the NoHarm survey web ap
     ```
     http://127.0.0.1:5000/results
     ```
-2. This page displays a table with all the survey responses collected so far.
+2. This page displays a table with all the survey responses collected on your local instance.
 
-## Summary of Commands
+   **Note:** The data displayed here will only include responses submitted on your own machine. If other developers are running the app on their machines, they will see their own set of responses.
 
-1. Navigate to the project directory:
-    ```bash
-    cd path/to/NoHarm
-    ```
-2. Create and activate the virtual environment:
-    ```bash
-    python -m venv venv
-    .\venv\Scripts\Activate.ps1  # Windows PowerShell
-    source venv/bin/activate      # Mac/Linux
-    ```
-3. Install Flask:
-    ```bash
-    pip install Flask
-    ```
-4. Initialize the database:
-    ```bash
-    python init_db.py
-    ```
-5. Run the server:
-    ```bash
-    python app.py
-    ```
-6. Access the app in your web browser:
-    - Survey form: `http://127.0.0.1:5000/`
-    - Survey results: `http://127.0.0.1:5000/results`
-
-This guide should help you set up and run the NoHarm project from start to finish, enabling you to run the server and view survey results efficiently.
