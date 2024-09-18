@@ -1,6 +1,6 @@
-# NoHarm Project Setup Guide
+# NoHarmSurvey Project Setup Guide
 
-This guide will walk you through setting up and running the NoHarm survey web application. You will learn how to create a virtual environment, install necessary dependencies, run the server, and view survey results.
+This guide will walk you through setting up and running the NoHarm survey web application. To create a virtual environment, install necessary dependencies, run the server, and view survey results.
 
 ## Prerequisites
 
