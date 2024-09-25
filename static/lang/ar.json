@@ -1,0 +1,34 @@
+{
+    "intro": {
+        "intro_title": "مرحبًا بكم في استطلاع اتخاذ القرارات الطبية",
+        "intro_paragraph_1": "سيساعدنا هذا الاستطلاع في فهم وجهة نظرك حول القرارات الحاسمة المتعلقة بالحياة أو الموت.",
+        "intro_paragraph_2": "مشاركتك طوعية ومجهولة الهوية. سيستغرق الاستطلاع حوالي 5 دقائق لإكماله.",
+        "start_button": "ابدأ الاستطلاع"
+    },
+    "survey": {
+        "survey_title": "استطلاع اتخاذ القرارات الطبية",
+        "consent_label": "هل توافق على استخدام بياناتك لأغراض البحث؟",
+        "yes_label": "نعم",
+        "no_label": "لا",
+        "patient_label": "أي مريض يجب علاجه؟",
+        "procedure_label": "قيم الإجراءات التالية: إنقاذ معظم سنوات الحياة:",
+        "gender_label": "الجنس:",
+        "age_label": "العمر:",
+        "religion_label": "الدين:",
+        "submit_button": "إرسال"
+    },
+    "result": {
+        "result_title": "نتائج الاستطلاع",
+        "id_column": "ID",
+        "consent_column": "الموافقة",
+        "patient_choice_column": "اختيار المريض",
+        "procedure_rating_column": "تقييم الإجراء",
+        "age_column": "العمر",
+        "gender_column": "الجنس",
+        "religion_column": "الدين"
+    },
+    "thank_you": {
+        "thank_you_title": "شكرا لك على تقديم الاستطلاع الخاص بك!",
+        "thank_you_message": "تم تسجيل إجاباتك. نحن نقدر وقتك وجهدك في مساعدتنا في هذا البحث."
+    }
+}

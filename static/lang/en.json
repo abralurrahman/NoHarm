@@ -1,0 +1,34 @@
+{
+    "intro": {
+        "intro_title": "Welcome to the Medical Decision Making Survey",
+        "intro_paragraph_1": "This survey will help us understand your perspective on critical life-and-death decisions.",
+        "intro_paragraph_2": "Your participation is voluntary and anonymous. The survey will take approximately 5 minutes to complete.",
+        "start_button": "Start Survey"
+    },
+    "survey": {
+        "survey_title": "Medical Decision Making Survey",
+        "consent_label": "Do you consent to the use of your data for research?",
+        "yes_label": "Yes",
+        "no_label": "No",
+        "patient_label": "Which patient should be treated?",
+        "procedure_label": "Rate the following procedures: Save the most life years:",
+        "gender_label": "Gender:",
+        "age_label": "Age:",
+        "religion_label": "Religion:",
+        "submit_button": "Submit"
+    },
+    "result": {
+        "result_title": "Survey Results",
+        "id_column": "ID",
+        "consent_column": "Consent",
+        "patient_choice_column": "Patient Choice",
+        "procedure_rating_column": "Procedure Rating",
+        "age_column": "Age",
+        "gender_column": "Gender",
+        "religion_column": "Religion"
+    },
+    "thank_you": {
+        "thank_you_title": "Thank you for submitting your survey!",
+        "thank_you_message": "Your responses have been recorded. We appreciate your time and effort in helping us with this research."
+    }
+}

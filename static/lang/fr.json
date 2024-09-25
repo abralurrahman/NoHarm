@@ -1,0 +1,34 @@
+{
+    "intro": {
+        "intro_title": "Bienvenue dans l'enquête sur la prise de décision médicale",
+        "intro_paragraph_1": "Cette enquête nous aidera à comprendre votre point de vue sur des décisions critiques de vie ou de mort.",
+        "intro_paragraph_2": "Votre participation est volontaire et anonyme. L'enquête prendra environ 5 minutes à compléter.",
+        "start_button": "Commencer l'enquête"
+    },
+    "survey": {
+        "survey_title": "Enquête sur la Prise de Décision Médicale",
+        "consent_label": "Consentez-vous à l'utilisation de vos données pour la recherche?",
+        "yes_label": "Oui",
+        "no_label": "Non",
+        "patient_label": "Quel patient doit être traité?",
+        "procedure_label": "Évaluez les procédures suivantes : Sauver le plus d'années de vie:",
+        "gender_label": "Genre:",
+        "age_label": "Âge:",
+        "religion_label": "Religion:",
+        "submit_button": "Soumettre"
+    },
+    "result": {
+        "result_title": "Résultats de l'enquête",
+        "id_column": "ID",
+        "consent_column": "Consentement",
+        "patient_choice_column": "Choix du Patient",
+        "procedure_rating_column": "Évaluation de la Procédure",
+        "age_column": "Âge",
+        "gender_column": "Genre",
+        "religion_column": "Religion"
+    },
+    "thank_you": {
+        "thank_you_title": "Merci d'avoir soumis votre enquête!",
+        "thank_you_message": "Vos réponses ont été enregistrées. Nous apprécions votre temps et vos efforts pour nous aider dans cette recherche."
+    }
+}

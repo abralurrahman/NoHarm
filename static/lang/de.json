@@ -1,0 +1,34 @@
+{
+    "intro": {
+        "intro_title": "Willkommen zur Umfrage zur medizinischen Entscheidungsfindung",
+        "intro_paragraph_1": "Diese Umfrage hilft uns, Ihre Perspektive auf lebenswichtige Entscheidungen zu verstehen.",
+        "intro_paragraph_2": "Ihre Teilnahme ist freiwillig und anonym. Die Umfrage dauert etwa 5 Minuten.",
+        "start_button": "Umfrage starten"
+    },
+    "survey": {
+        "survey_title": "Umfrage zur medizinischen Entscheidungsfindung",
+        "consent_label": "Stimmen Sie der Verwendung Ihrer Daten für Forschungszwecke zu?",
+        "yes_label": "Ja",
+        "no_label": "Nein",
+        "patient_label": "Welcher Patient sollte behandelt werden?",
+        "procedure_label": "Bewerten Sie die folgenden Verfahren: Maximieren Sie die Lebensjahre:",
+        "gender_label": "Geschlecht:",
+        "age_label": "Alter:",
+        "religion_label": "Religion:",
+        "submit_button": "Einreichen"
+    },
+    "result": {
+        "result_title": "Umfrageergebnisse",
+        "id_column": "ID",
+        "consent_column": "Zustimmung",
+        "patient_choice_column": "Patientenwahl",
+        "procedure_rating_column": "Verfahrensbewertung",
+        "age_column": "Alter",
+        "gender_column": "Geschlecht",
+        "religion_column": "Religion"
+    },
+    "thank_you": {
+        "thank_you_title": "Danke für die Einreichung Ihrer Umfrage!",
+        "thank_you_message": "Ihre Antworten wurden aufgezeichnet. Wir schätzen Ihre Zeit und Mühe, uns bei dieser Forschung zu unterstützen."
+    }
+}

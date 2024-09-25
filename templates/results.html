@@ -1,31 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <h1>Survey Results</h1>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Consent</th>
-            <th>Patient Choice</th>
-            <th>Procedure Rating</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Religion</th>
-        </tr>
-        {% for survey in surveys %}
-        <tr>
-            <td>{{ survey['id'] }}</td>
-            <td>{{ survey['consent'] }}</td>
-            <td>{{ survey['patient_choice'] }}</td>
-            <td>{{ survey['procedure_rating'] }}</td>
-            <td>{{ survey['age'] }}</td>
-            <td>{{ survey['gender'] }}</td>
-            <td>{{ survey['religion'] }}</td>
-        </tr>
-        {% endfor %}
+<body data-page="result">
+
+<!-- Language switcher in the corner -->
+<div class="language-switcher">
+    <label for="language-switcher">Language:</label>
+    <select id="language-switcher">
+        <option value="en">English</option>
+        <option value="de">German</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <option value="ar">Arabic</option>
+    </select>
+</div>
+
+<div class="result-container">
+    <h1 id="result-title">Survey Results</h1>
+    <table border="1" class="result-table">
+        <thead>
+            <tr>
+                <th id="id-column">ID</th>
+                <th id="consent-column">Consent</th>
+                <th id="patient-choice-column">Patient Choice</th>
+                <th id="procedure-rating-column">Procedure Rating</th>
+                <th id="age-column">Age</th>
+                <th id="gender-column">Gender</th>
+                <th id="religion-column">Religion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for survey in surveys %}
+            <tr>
+                <td>{{ survey['id'] }}</td>
+                <td>{{ survey['consent'] }}</td>
+                <td>{{ survey['patient_choice'] }}</td>
+                <td>{{ survey['procedure_rating'] }}</td>
+                <td>{{ survey['age'] }}</td>
+                <td>{{ survey['gender'] }}</td>
+                <td>{{ survey['religion'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+</div>
+
+<script src="{{ url_for('static', filename='js/language.js') }}"></script>
 </body>
 </html>

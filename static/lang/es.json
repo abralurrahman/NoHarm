@@ -1,0 +1,34 @@
+{
+    "intro": {
+        "intro_title": "Bienvenido a la Encuesta de Toma de Decisiones Médicas",
+        "intro_paragraph_1": "Esta encuesta nos ayudará a comprender su perspectiva sobre decisiones críticas de vida o muerte.",
+        "intro_paragraph_2": "Su participación es voluntaria y anónima. La encuesta tardará aproximadamente 5 minutos en completarse.",
+        "start_button": "Comenzar la encuesta"
+    },
+    "survey": {
+        "survey_title": "Encuesta de Toma de Decisiones Médicas",
+        "consent_label": "¿Acepta que se utilicen sus datos para la investigación?",
+        "yes_label": "Sí",
+        "no_label": "No",
+        "patient_label": "¿Qué paciente debe ser tratado?",
+        "procedure_label": "Califica los siguientes procedimientos: Salvar la mayor cantidad de años de vida:",
+        "gender_label": "Género:",
+        "age_label": "Edad:",
+        "religion_label": "Religión:",
+        "submit_button": "Enviar"
+    },
+    "result": {
+        "result_title": "Resultados de la Encuesta",
+        "id_column": "ID",
+        "consent_column": "Consentimiento",
+        "patient_choice_column": "Elección del Paciente",
+        "procedure_rating_column": "Evaluación del Procedimiento",
+        "age_column": "Edad",
+        "gender_column": "Género",
+        "religion_column": "Religión"
+    },
+    "thank_you": {
+        "thank_you_title": "¡Gracias por enviar su encuesta!",
+        "thank_you_message": "Sus respuestas han sido registradas. Agradecemos su tiempo y esfuerzo en ayudarnos con esta investigación."
+    }
+}

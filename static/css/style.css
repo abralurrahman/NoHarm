@@ -1,0 +1,223 @@
+/* General Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Shared Container for both Survey and Intro Pages */
+.survey-container, .intro-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px;
+    text-align: center;
+}
+
+/* Headings for both Survey and Intro Pages */
+.survey-form h1, .intro-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+/* Text Styles for Labels */
+label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Radio and Checkbox Inputs */
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Form Inputs (Number, Select, Text) */
+input[type="number"], select, input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-size: 1em;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+/* Input Focus Effect */
+input[type="number"]:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Submit Button and Start Button */
+input[type="submit"], .start-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover, .start-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Form Blocks */
+.question-block {
+    margin-bottom: 20px;
+}
+
+.answer-block {
+    margin-left: 10px;
+}
+
+/* Ensure radio, number, and select inputs align properly */
+input[type="radio"], input[type="number"], select {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+/* Language Switcher */
+.language-switcher {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.language-switcher select {
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* Intro Page Text */
+.intro-content p {
+    font-size: 1.2em;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Ensure container adjusts height smoothly */
+.intro-container {
+    transition: height 0.3s ease;
+}
+
+/* Result Page Styling */
+.result-container {
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.result-table th, .result-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.result-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.result-table td {
+    background-color: #f9f9f9;
+}
+
+/* Thank You Page */
+.thank-you-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.thank-you-container h1 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.thank-you-container p {
+    font-size: 1.2em;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Admin Login Page */
+.login-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.login-container h1 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.login-container input[type="password"],
+.login-container input[type="submit"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    width: 100%;
+}
+
+.login-container input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.login-container input[type="submit"]:hover {
+    background-color: #0056b3;
+}
