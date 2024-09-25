@@ -1,6 +1,6 @@
 # NoHarm Survey Project Setup Guide
 
-This guide will walk you through setting up and running the NoHarm survey web application. To create a virtual environment, install necessary dependencies, run the server, and view survey results.
+This guide will walk you through setting up and running the NoHarm survey web application. It includes steps for creating a virtual environment, installing necessary dependencies, running the server, and viewing survey results. Just so you know, for now, each developer will have their local server, but we aim to deploy the project on a shared server soon.
 
 ## Prerequisites
 
@@ -18,7 +18,11 @@ This guide will walk you through setting up and running the NoHarm survey web ap
     ```bash
     python -m venv venv
     ```
-4. Activate the virtual environment:
+4. For PowerShell users, if you encounter execution policy restrictions, run the following command to allow script execution:
+    ```bash
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+    ```
+5. Activate the virtual environment:
     - **Windows (PowerShell)**:
       ```bash
       .\venv\Scripts\Activate.ps1
@@ -79,7 +83,7 @@ This guide will walk you through setting up and running the NoHarm survey web ap
     ```
    This URL is specific to your local machine and indicates that the server is running locally. It will open the homepage where you can fill out and submit the survey.
 
-   **Note:** The URL `http://127.0.0.1:5000/` is a loopback address that points to your own computer. This means each developer will use the same address to access their own local instance of the server. Since we haven't deployed this application to a public server yet, the address may change once we have a dedicated server.
+   **Note:** The URL `http://127.0.0.1:5000/` is a loopback address that points to your own computer. This means each developer will use the same address to access their own local instance of the server. Since we haven't deployed this application to a public server yet, the address will change once we have a dedicated server.
 
 ## Step 6: Viewing Survey Results
 
@@ -89,5 +93,11 @@ This guide will walk you through setting up and running the NoHarm survey web ap
     ```
 2. This page displays a table with all the survey responses collected on your local instance.
 
-   **Note:** The data displayed here will only include responses submitted on your own machine. If other developers are running the app on their machines, they will see their own set of responses.
+   **Note:** The data displayed here will only include responses submitted on your machine. Other developers will see their data on their local instance.
+
+---
+
+### Future Server Setup
+
+We aim to deploy this project on a dedicated server soon, where everyone will be able to interact with the same instance of the application. For now, each developer will have their own local environment, and the server will be different for each machine.
 
