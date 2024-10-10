@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group-Related Preferences</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- Language switcher in the corner -->
+    <div class="language-switcher">
+        <label for="language-switcher">Language:</label>
+        <select id="language-switcher">
+            <option value="en">English</option>
+            <option value="de">German</option>
+            <option value="fr">French</option>
+            <option value="es">Spanish</option>
+            <option value="ar">Arabic</option>
+        </select>
+    </div>
+
+    <div class="group-preferences-container">
+        <h1>Group-Related Preferences</h1>
+
+        <form method="POST" action="/submit-group-preferences">
+            <!-- 5.1 Construct: General Health -->
+            <label for="general_health" required>How is your health in general?</label>
+            <select id="general_health" name="general_health" required>
+                <option value="" disabled selected>Select your answer</option>
+                <option value="Very Poor">Very Poor</option>
+                <option value="Poor">Poor</option>
+                <option value="Fair">Fair</option>
+                <option value="Good">Good</option>
+                <option value="Very Good">Very Good</option>
+                <option value="Excellent">Excellent</option>
+            </select>
+
+            <!-- 5.2. Have you been severely ill in the last year? -->
+            <label>Have you been severely ill in the last year?</label><br>
+            <input type="radio" name="illness" value="yes" required> Yes
+            <input type="radio" name="illness" value="no" required> No
+
+            <!-- 5.3 Do you have children or are you planning to have children? -->
+            <label>Do you have children or are you planning to have children?</label><br>
+            <input type="radio" name="children" value="yes" required> Yes
+            <input type="radio" name="children" value="no" required> No
+
+            <!-- Submit button -->
+            <button type="submit" class="submit-btn">Submit Preferences</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/language.js') }}"></script>
+</body>
+</html>

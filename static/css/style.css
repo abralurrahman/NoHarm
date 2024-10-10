@@ -10,15 +10,15 @@ body {
 }
 
 /* Shared Container for both Survey and Intro Pages */
-.survey-container, .intro-container {
+ .intro-container {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px;
+    max-width: 900px; /* Increased the width to make it more spacious */
     margin: 20px;
-    text-align: center;
+    text-align: left; 
 }
 
 /* Headings for both Survey and Intro Pages */
@@ -26,7 +26,7 @@ body {
     text-align: center;
     color: #333;
     margin-bottom: 30px;
-    font-size: 2em;
+    font-size: 2.5em; /* Increased heading size */
 }
 
 /* Text Styles for Labels */
@@ -116,6 +116,44 @@ input[type="radio"], input[type="number"], select {
     color: #666;
     line-height: 1.6;
     margin-bottom: 30px;
+}
+
+/* Informed Consent Section */
+.consent-section {
+    margin-top: 30px;
+}
+
+.consent-section h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.consent-section label {
+    font-size: 1.2em;
+    color: #444;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.consent-section input[type="radio"] {
+    margin-right: 10px;
+}
+
+.consent-section button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.consent-section button[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
 /* Ensure container adjusts height smoothly */
@@ -219,5 +257,47 @@ input[type="radio"], input[type="number"], select {
 }
 
 .login-container input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+.choice-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.patients {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.patient {
+    text-align: center;
+}
+
+.patient img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
     background-color: #0056b3;
 }

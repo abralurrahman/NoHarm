@@ -22,28 +22,114 @@
 
 <div class="result-container">
     <h1 id="result-title">Survey Results</h1>
+
+    <!-- Choices Data with IP and Geolocation -->
+    <h2>Patient Choices</h2>
     <table border="1" class="result-table">
         <thead>
             <tr>
-                <th id="id-column">ID</th>
-                <th id="consent-column">Consent</th>
-                <th id="patient-choice-column">Patient Choice</th>
-                <th id="procedure-rating-column">Procedure Rating</th>
-                <th id="age-column">Age</th>
-                <th id="gender-column">Gender</th>
-                <th id="religion-column">Religion</th>
+                <th>ID</th>
+                <th>Patient Choice 1</th>
+                <th>Patient Choice 2</th>
+                <th>Patient Choice 3</th>
+                <th>IP Address</th>
+                <th>City</th>
+                <th>Region</th>
+                <th>Country</th>
             </tr>
         </thead>
         <tbody>
-            {% for survey in surveys %}
+            {% for choice in choices %}
             <tr>
-                <td>{{ survey['id'] }}</td>
-                <td>{{ survey['consent'] }}</td>
-                <td>{{ survey['patient_choice'] }}</td>
-                <td>{{ survey['procedure_rating'] }}</td>
-                <td>{{ survey['age'] }}</td>
-                <td>{{ survey['gender'] }}</td>
-                <td>{{ survey['religion'] }}</td>
+                <td>{{ choice['id'] }}</td>
+                <td>{{ choice['patient_choice_1'] }}</td>
+                <td>{{ choice['patient_choice_2'] }}</td>
+                <td>{{ choice['patient_choice_3'] }}</td>
+                <td>{{ choice['ip_address'] }}</td>
+                <td>{{ choice['city'] }}</td>
+                <td>{{ choice['region'] }}</td>
+                <td>{{ choice['country'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Procedural Ratings Data -->
+    <h2>Procedural Ratings</h2>
+    <table border="1" class="result-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Save Life Years</th>
+                <th>Advantage Disadvantaged</th>
+                <th>Benefit Future</th>
+                <th>First Come</th>
+                <th>Treatment Success</th>
+                <th>Treatment Effort</th>
+                <th>Medication Effect</th>
+                <th>Random Selection</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rating in procedural_ratings %}
+            <tr>
+                <td>{{ rating['id'] }}</td>
+                <td>{{ rating['save_life_years'] }}</td>
+                <td>{{ rating['advantage_disadvantaged'] }}</td>
+                <td>{{ rating['benefit_future'] }}</td>
+                <td>{{ rating['first_come'] }}</td>
+                <td>{{ rating['treatment_success'] }}</td>
+                <td>{{ rating['treatment_effort'] }}</td>
+                <td>{{ rating['medication_effect'] }}</td>
+                <td>{{ rating['random_selection'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Demography Data -->
+    <h2>Demography Data</h2>
+    <table border="1" class="result-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Religion</th>
+                <th>Other Religion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for demo in demography %}
+            <tr>
+                <td>{{ demo['id'] }}</td>
+                <td>{{ demo['gender'] }}</td>
+                <td>{{ demo['age'] }}</td>
+                <td>{{ demo['religion'] }}</td>
+                <td>{{ demo['other_religion'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Group Preferences Data -->
+    <h2>Group Preferences</h2>
+    <table border="1" class="result-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>General Health</th>
+                <th>Illness in Last Year</th>
+                <th>Children/Planning to Have Children</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in group_preferences %}
+            <tr>
+                <td>{{ group['id'] }}</td>
+                <td>{{ group['general_health'] }}</td>
+                <td>{{ group['illness'] }}</td>
+                <td>{{ group['children'] }}</td>
             </tr>
             {% endfor %}
         </tbody>
