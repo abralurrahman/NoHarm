@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Medical Decision Making Survey</title>
+    <title>Medical Decision-Making Survey</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -18,16 +18,34 @@
         <option value="fr">French</option>
         <option value="es">Spanish</option>
         <option value="ar">Arabic</option>
-        <!-- Add other languages here -->
     </select>
 </div>
 
 <div class="intro-container">
+    <h1>How would you decide when confronted with critical life-and-death decisions?</h1>
     <div class="intro-content">
-        <h1 id="intro-title">Welcome to the Medical Decision Making Survey</h1>
-        <p id="intro-paragraph-1">This survey will help us understand your perspective on critical life-and-death decisions.</p>
-        <p id="intro-paragraph-2">Your participation is voluntary and anonymous. The survey will take approximately 5 minutes to complete.</p>
-        <button class="start-btn" onclick="window.location.href='/survey'" id="start-btn">Start Survey</button>
+        <p>Your view on this question is highly valuable. We greatly appreciate your willingness to participate in this survey on medical decision-making.</p>
+        <p>Answering the questions will take you about 5 minutes. Your participation is voluntary, and your information will be collected anonymously, in accordance with data protection regulations. Please read all instructions and questions carefully and answer honestly.</p>
+        <p>Sincerely,<br>
+        Dr. med. Anatol-Fiete Näher, M.A., Hasso Plattner Institute Potsdam<br>
+        Anna Lena Fehlhaber, Leibniz University of Hannover<br>
+        PD Dr. Ivar Krumpal, University of Leipzig
+        </p>
+    </div>
+
+    <!-- Informed Consent Section -->
+    <div class="consent-section">
+        <h2>Informed Consent</h2>
+        <p>Please decide now if you want to give your consent to the use of your answers for scientific purposes. If you do not agree, you will be redirected to the end of the survey.</p>
+        <form method="POST" action="/submit">
+            <label>
+                <input type="radio" name="consent" value="yes"> I consent to the use of my data submitted as part of this questionnaire for research purposes.
+            </label><br>
+            <label>
+                <input type="radio" name="consent" value="no"> I do not consent to the use of my data submitted as part of this questionnaire for research purposes.
+            </label><br>
+            <button type="submit" class="start-btn">Submit Consent</button>
+        </form>
     </div>
 </div>
 

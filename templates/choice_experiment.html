@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Choice Sets</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- Language switcher in the corner -->
+<div class="language-switcher">
+    <label for="language-switcher">Language:</label>
+    <select id="language-switcher">
+        <option value="en">English</option>
+        <option value="de">German</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <option value="ar">Arabic</option>
+    </select>
+</div>
+    <div class="choice-container">
+        <h1>Visual Choice Sets</h1>
+        <p>Not every patient can be treated in a medical emergency. A decision has to be made about which patient to treat and which patient not to treat. Which of the patients shown below should be treated?</p>
+        
+        <form method="POST" action="/submit-choices">
+            <!-- Decision Pair 1 -->
+            <div class="decision-pair">
+                <h2>Decision Pair 1</h2>
+                <div class="patients">
+                    <div class="patient">
+                        <img src="{{ url_for('static', filename='images/Overweight_simpler.jpg') }}" alt="Patient 1" width="150" height="150">
+                        <label><input type="radio" name="patient_choice_1" value="1" required> Patient 1 (Overweight)</label>
+                    </div>
+                    <div class="patient">
+                        <img src="{{ url_for('static', filename='images/Disability.jpg') }}" alt="Patient 2" width="150" height="150">
+                        <label><input type="radio" name="patient_choice_1" value="2" required> Patient 2 (Disability)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decision Pair 2 -->
+            <div class="decision-pair">
+                <h2>Decision Pair 2</h2>
+                <div class="patients">
+                    <div class="patient">
+                        <img src="{{ url_for('static', filename='images/child_simple.jpg') }}" alt="Patient 1" width="150" height="150">
+                        <label><input type="radio" name="patient_choice_2" value="1" required> Patient 1 (Child)</label>
+                    </div>
+                    <div class="patient">
+                        <img src="{{ url_for('static', filename='images/old_male_female_simpler.jpg') }}" alt="Patient 2" width="150" height="150">
+                        <label><input type="radio" name="patient_choice_2" value="2" required> Patient 2 (Elderly Couple)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decision Pair 3 -->
+            <div class="decision-pair">
+                <h2>Decision Pair 3</h2>
+                <p>A data-driven computer model would treat Patient X. Would you like to change your decision again?</p>
+                <div class="patients">
+                    <div class="patient">
+                        <label><input type="radio" name="patient_choice_3" value="1" required> Patient 1 (Young Adult)</label>
+                    </div>
+                    <div class="patient">
+                        <label><input type="radio" name="patient_choice_3" value="2" required> Patient 2 (Senior with Chronic Illness)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Submit Choices</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/language.js') }}"></script>
+</body>
+</html>
