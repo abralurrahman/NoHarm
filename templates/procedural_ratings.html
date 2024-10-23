@@ -10,7 +10,6 @@
 
     <!-- Language switcher in the corner -->
     <div class="language-switcher">
-        <label for="language-switcher">Language:</label>
         <select id="language-switcher">
             <option value="en">English</option>
             <option value="de">German</option>
@@ -22,11 +21,19 @@
 
     <div class="rating-container">
         <h1>Procedural Ratings</h1>
-        <p>Not every patient can be treated in a medical emergency. There are procedures that can be used to determine which patients should be treated in such situations. Please indicate how morally fair you find these procedures.</p>
+        <p>Not every patient can be treated in a medical emergency. There are procedures that can be used to determine which patients should be treated in such situations. Please indicate how morally fair you find these procedures on a scale from <strong>1 (Not Fair)</strong> to <strong>6 (Very Fair)</strong>.</p>
 
         <form method="POST" action="/submit-procedural-ratings">
+            <div class="scale-indicator">
+                <p><strong>Scale:</strong> 1 (Not Fair) - 6 (Very Fair)</p>
+            </div>
+
             <div class="procedure-block">
-                <label>Save the most life years: prioritize those who have the most life years left after overcoming the disease (i.e., treat younger patients first).</label>
+                <label>
+                    <span class="italic-text">Save the most life years:</span>
+                    prioritize those who have the most life years left after overcoming the disease 
+                    (<span class="bold-text">i.e., treat younger patients first</span>).
+                </label>
                 <select name="rating_save_life_years" required>
                     <option value="" disabled selected>Select your answer</option>
                     <option value="1">1 (Not Fair)</option>
@@ -39,7 +46,11 @@
             </div>
 
             <div class="procedure-block">
-                <label>Provide advantage to the disadvantaged: prioritize those who are worse off than others (i.e., treat sickest patients first).</label>
+                <label>
+                    <span class="italic-text">Provide advantage to the disadvantaged:</span>
+                    prioritize those who are worse off than others 
+                    (<span class="bold-text">i.e., treat sickest patients first</span>).
+                </label>
                 <select name="rating_advantage_disadvantaged" required>
                     <option value="" disabled selected>Select your answer</option>
                     <option value="1">1 (Not Fair)</option>
@@ -52,7 +63,11 @@
             </div>
 
             <div class="procedure-block">
-                <label>Benefit to others in the future: prioritize those who are likely to make relevant contributions to the benefit of others (i.e., treat patients who have children or are planning to have children).</label>
+                <label>
+                    <span class="italic-text">Benefit to others in the future:</span>
+                    prioritize those who are likely to make relevant contributions to the benefit of others 
+                    (<span class="bold-text">i.e., treat patients who have children or are planning to have children</span>).
+                </label>
                 <select name="rating_benefit_future" required>
                     <option value="" disabled selected>Select your answer</option>
                     <option value="1">1 (Not Fair)</option>
@@ -65,7 +80,11 @@
             </div>
 
             <div class="procedure-block">
-                <label>First-come, first-served: prioritize those who were first in line (i.e., treat patients who arrived first at the hospital).</label>
+                <label>
+                    <span class="italic-text">First-come, first-served:</span>
+                    prioritize those who were first in line 
+                    (<span class="bold-text">i.e., treat patients who arrived first at the hospital</span>).
+                </label>
                 <select name="rating_first_come" required>
                     <option value="" disabled selected>Select your answer</option>
                     <option value="1">1 (Not Fair)</option>
@@ -78,7 +97,11 @@
             </div>
 
             <div class="procedure-block">
-                <label>Maximize treatment success: prioritize those with the highest probability of survival after treatment (i.e., treat patients with the highest chance of recovery).</label>
+                <label>
+                    <span class="italic-text">Maximize treatment success:</span>
+                    prioritize those with the highest probability of survival after treatment 
+                    (<span class="bold-text">i.e., treat patients with the highest chance of recovery</span>).
+                </label>
                 <select name="rating_treatment_success" required>
                     <option value="" disabled selected>Select your answer</option>
                     <option value="1">1 (Not Fair)</option>
@@ -91,7 +114,11 @@
             </div>
 
             <div class="procedure-block">
-                <label>Minimize treatment effort: prioritize those who will be cured with minimum effort (i.e., treat patients who need the least medication).</label>
+                <label>
+                    <span class="italic-text">Minimize treatment effort:</span>
+                    prioritize those who will be cured with minimum effort 
+                    (<span class="bold-text">i.e., treat patients who need the least medication</span>).
+                </label>
                 <select name="rating_treatment_effort" required>
                     <option value="" disabled selected>Select your answer</option>
                     <option value="1">1 (Not Fair)</option>
@@ -104,7 +131,11 @@
             </div>
 
             <div class="procedure-block">
-                <label>Maximize the medication effect: prioritize those where the improvement per medication is highest (i.e., treat patients who benefit most from a given medication).</label>
+                <label>
+                    <span class="italic-text">Maximize the medication effect:</span>
+                    prioritize those where the improvement per medication is highest 
+                    (<span class="bold-text">i.e., treat patients who benefit most from a given medication</span>).
+                </label>
                 <select name="rating_medication_effect" required>
                     <option value="" disabled selected>Select your answer</option>
                     <option value="1">1 (Not Fair)</option>
@@ -117,7 +148,11 @@
             </div>
 
             <div class="procedure-block">
-                <label>Random selection: treatment should be allocated by random lottery (i.e., individual characteristics should not be considered).</label>
+                <label>
+                    <span class="italic-text">Random selection:</span>
+                    treatment should be allocated by random lottery 
+                    (<span class="bold-text">i.e., individual characteristics should not be considered</span>).
+                </label>
                 <select name="rating_random_selection" required>
                     <option value="" disabled selected>Select your answer</option>
                     <option value="1">1 (Not Fair)</option>
