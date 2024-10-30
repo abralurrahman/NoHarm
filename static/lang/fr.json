@@ -1,34 +1,97 @@
 {
     "intro": {
-        "intro_title": "Bienvenue dans l'enquête sur la prise de décision médicale",
-        "intro_paragraph_1": "Cette enquête nous aidera à comprendre votre point de vue sur des décisions critiques de vie ou de mort.",
-        "intro_paragraph_2": "Votre participation est volontaire et anonyme. L'enquête prendra environ 5 minutes à compléter.",
-        "start_button": "Commencer l'enquête"
+      "intro_title": "Comment décideriez-vous face à des décisions de vie ou de mort?",
+      "intro_paragraph_1": "Votre opinion sur cette question est très précieuse. Nous vous remercions sincèrement de votre volonté de participer à cette enquête sur la prise de décision médicale.",
+      "intro_paragraph_2": "Répondre aux questions vous prendra environ 5 minutes. Votre participation est volontaire, et vos informations seront collectées de manière anonyme conformément aux réglementations sur la protection des données. Veuillez lire attentivement toutes les instructions et questions et répondre honnêtement.",
+      "intro_paragraph_3": "Sincèrement, Dr med. Anatol-Fiete Näher, M.A., Institut Hasso-Plattner Potsdam, Anna Lena Fehlhaber, Université Leibniz de Hanovre, PD Dr. Ivar Krumpal, Université de Leipzig",
+      "consent_title": "Consentement éclairé",
+      "consent_message": "Veuillez décider maintenant si vous consentez à l'utilisation de vos réponses à des fins scientifiques. Si vous n'êtes pas d'accord, vous serez redirigé vers la fin de l'enquête.",
+      "yes_label": "Je consens à l'utilisation de mes données soumises dans le cadre de ce questionnaire à des fins de recherche.",
+      "no_label": "Je ne consens pas à l'utilisation de mes données soumises dans le cadre de ce questionnaire à des fins de recherche.",
+      "start_button": "Soumettre le consentement"
     },
-    "survey": {
-        "survey_title": "Enquête sur la Prise de Décision Médicale",
-        "consent_label": "Consentez-vous à l'utilisation de vos données pour la recherche?",
-        "yes_label": "Oui",
-        "no_label": "Non",
-        "patient_label": "Quel patient doit être traité?",
-        "procedure_label": "Évaluez les procédures suivantes : Sauver le plus d'années de vie:",
-        "gender_label": "Genre:",
-        "age_label": "Âge:",
-        "religion_label": "Religion:",
-        "submit_button": "Soumettre"
+    "choice_experiment": {
+      "survey_title": "Ensembles de choix visuels",
+      "patient_question": "Dans une urgence médicale, tous les patients ne peuvent pas être traités. Il faut décider quel patient traiter et quel patient ne pas traiter. Quel patient parmi ceux ci-dessous devrait être traité?",
+      "decision_pair_1": "Paire de décision 1",
+      "decision_pair_2": "Paire de décision 2",
+      "decision_pair_3": "Paire de décision 3",
+      "patient_1_overweight": "Patient 1 (Surpoids)",
+      "patient_2_disability": "Patient 2 (Handicap)",
+      "patient_1_child": "Patient 1 (Enfant)",
+      "patient_2_elderly_couple": "Patient 2 (Couple âgé)",
+      "patient_1_young_adult": "Patient 1 (Jeune adulte)",
+      "patient_2_senior_ill": "Patient 2 (Senior avec maladie chronique)",
+      "change_decision": "Un modèle informatique basé sur des données traiterait le patient X. Souhaitez-vous changer à nouveau votre décision?",
+      "submit_button": "Soumettre les choix"
     },
-    "result": {
-        "result_title": "Résultats de l'enquête",
-        "id_column": "ID",
-        "consent_column": "Consentement",
-        "patient_choice_column": "Choix du Patient",
-        "procedure_rating_column": "Évaluation de la Procédure",
-        "age_column": "Âge",
-        "gender_column": "Genre",
-        "religion_column": "Religion"
+    "demography": {
+      "demography_title": "Merci beaucoup! Nous aimerions maintenant vous poser quelques questions générales.",
+      "gender_question": "Quel terme vous décrit le mieux?",
+      "female_label": "Femme",
+      "male_label": "Homme",
+      "diverse_label": "Divers",
+      "prefer_not_to_disclose_label": "Je préfère ne pas divulguer",
+      "age_question": "Quel âge avez-vous?",
+      "age_placeholder": "Âge (en années)",
+      "religion_question": "Vous identifiez-vous à l'une des religions suivantes?",
+      "no_religion": "Non, ce n'est pas le cas",
+      "christian_label": "Chrétien",
+      "islam_label": "Islam",
+      "hinduism_label": "Hindouisme",
+      "buddhism_label": "Bouddhisme",
+      "other_label": "Autre",
+      "submit_button": "Soumettre"
     },
+    "group_preferences": {
+      "group_preferences_title": "Préférences liées au groupe",
+      "general_health_question": "Comment est votre état de santé général?",
+      "select_answer": "Sélectionnez votre réponse",
+      "very_poor": "Très mauvais",
+      "poor": "Mauvais",
+      "fair": "Moyen",
+      "good": "Bon",
+      "very_good": "Très bon",
+      "excellent": "Excellent",
+      "illness_question": "Avez-vous été gravement malade l'année dernière?",
+      "illness_yes": "Oui",
+      "illness_no": "Non",
+      "children_question": "Avez-vous des enfants ou envisagez-vous d'en avoir?",
+      "children_yes": "Oui",
+      "children_no": "Non",
+      "submit_button": "Soumettre les préférences"
+    },
+      "procedural_ratings": {
+        "rating_title": "Évaluation des procédures",
+        "rating_intro": "Tous les patients ne peuvent pas être traités en cas d'urgence médicale. Des procédures peuvent être utilisées pour déterminer quels patients doivent être traités dans de telles situations. Veuillez indiquer dans quelle mesure vous trouvez ces procédures moralement justes sur une échelle de 1 (Pas juste) à 6 (Très juste).",
+        "scale_indicator": "Échelle : 1 (Pas juste) - 6 (Très juste)",
+        "select_answer": "Sélectionnez votre réponse",
+        "rating_save_life_years": "Sauver le plus d'années de vie : donner la priorité aux personnes ayant le plus d'années de vie restantes après guérison (c'est-à-dire traiter d'abord les plus jeunes patients).",
+        "rating_advantage_disadvantaged": "Avantage pour les défavorisés : donner la priorité à ceux qui sont dans une situation pire que les autres (c'est-à-dire traiter d'abord les patients les plus malades).",
+        "rating_benefit_future": "Bénéfice pour les générations futures : donner la priorité à ceux qui sont susceptibles d’apporter une contribution bénéfique (c'est-à-dire traiter les patients qui ont ou prévoient d'avoir des enfants).",
+        "rating_first_come": "Premier arrivé, premier servi : donner la priorité à ceux qui étaient les premiers en ligne (c'est-à-dire traiter les patients qui sont arrivés les premiers à l'hôpital).",
+        "rating_treatment_success": "Maximiser le succès du traitement : donner la priorité aux personnes ayant les plus grandes chances de survie après traitement (c'est-à-dire traiter les patients ayant les meilleures chances de guérison).",
+        "rating_treatment_effort": "Minimiser l'effort thérapeutique : donner la priorité à ceux qui seront guéris avec un effort minimal (c'est-à-dire traiter les patients nécessitant le moins de médicaments).",
+        "rating_medication_effect": "Maximiser l'effet du médicament : donner la priorité à ceux pour qui l'amélioration par médicament est la plus élevée (c'est-à-dire traiter les patients qui bénéficient le plus d'un médicament donné).",
+        "rating_random_selection": "Sélection aléatoire : le traitement doit être attribué par tirage au sort (c'est-à-dire ne pas tenir compte des caractéristiques individuelles).",
+        "submit_button": "Soumettre les évaluations des procédures",
+        "not_fair": "Pas juste",
+        "very_fair": "Très juste",
+        "numbers": {
+          "1": "1",
+          "2": "2",
+          "3": "3",
+          "4": "4",
+          "5": "5",
+          "6": "6"
+        }
+      },
     "thank_you": {
-        "thank_you_title": "Merci d'avoir soumis votre enquête!",
-        "thank_you_message": "Vos réponses ont été enregistrées. Nous apprécions votre temps et vos efforts pour nous aider dans cette recherche."
+      "thank_you_title": "Merci d'avoir soumis votre enquête!",
+      "thank_you_message": "Vos réponses ont été enregistrées. Nous apprécions votre temps et vos efforts pour nous aider dans cette recherche."
+    },
+    "no_consent": {
+      "no_consent_title": "Merci pour votre temps!",
+      "no_consent_message": "Comme vous n'avez pas consenti à participer à l'enquête, vos réponses n'ont pas été enregistrées. Nous apprécions votre temps."
     }
-}
+  }
