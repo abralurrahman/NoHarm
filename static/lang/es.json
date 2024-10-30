@@ -1,34 +1,97 @@
 {
     "intro": {
-        "intro_title": "Bienvenido a la Encuesta de Toma de Decisiones Médicas",
-        "intro_paragraph_1": "Esta encuesta nos ayudará a comprender su perspectiva sobre decisiones críticas de vida o muerte.",
-        "intro_paragraph_2": "Su participación es voluntaria y anónima. La encuesta tardará aproximadamente 5 minutos en completarse.",
-        "start_button": "Comenzar la encuesta"
+      "intro_title": "¿Cómo decidirías ante decisiones de vida o muerte?",
+      "intro_paragraph_1": "Tu perspectiva sobre esta cuestión es muy valiosa. Agradecemos sinceramente tu disposición a participar en esta encuesta sobre la toma de decisiones médicas.",
+      "intro_paragraph_2": "Contestar las preguntas te tomará alrededor de 5 minutos. Tu participación es voluntaria y tus datos serán recopilados de forma anónima conforme a las regulaciones de protección de datos. Por favor, lee atentamente todas las instrucciones y preguntas y responde honestamente.",
+      "intro_paragraph_3": "Atentamente, Dr. med. Anatol-Fiete Näher, M.A., Instituto Hasso-Plattner Potsdam, Anna Lena Fehlhaber, Universidad Leibniz de Hannover, PD Dr. Ivar Krumpal, Universidad de Leipzig",
+      "consent_title": "Consentimiento Informado",
+      "consent_message": "Decide ahora si deseas dar tu consentimiento para el uso de tus respuestas con fines científicos. Si no estás de acuerdo, serás redirigido al final de la encuesta.",
+      "yes_label": "Doy mi consentimiento para el uso de mis datos enviados en este cuestionario con fines de investigación.",
+      "no_label": "No doy mi consentimiento para el uso de mis datos enviados en este cuestionario con fines de investigación.",
+      "start_button": "Enviar Consentimiento"
     },
-    "survey": {
-        "survey_title": "Encuesta de Toma de Decisiones Médicas",
-        "consent_label": "¿Acepta que se utilicen sus datos para la investigación?",
-        "yes_label": "Sí",
-        "no_label": "No",
-        "patient_label": "¿Qué paciente debe ser tratado?",
-        "procedure_label": "Califica los siguientes procedimientos: Salvar la mayor cantidad de años de vida:",
-        "gender_label": "Género:",
-        "age_label": "Edad:",
-        "religion_label": "Religión:",
-        "submit_button": "Enviar"
+    "choice_experiment": {
+      "survey_title": "Conjuntos de Opciones Visuales",
+      "patient_question": "En una emergencia médica, no todos los pacientes pueden ser tratados. Se debe decidir qué paciente tratar y cuál no. ¿Cuál de los pacientes mostrados a continuación debería ser tratado?",
+      "decision_pair_1": "Par de Decisión 1",
+      "decision_pair_2": "Par de Decisión 2",
+      "decision_pair_3": "Par de Decisión 3",
+      "patient_1_overweight": "Paciente 1 (Sobrepeso)",
+      "patient_2_disability": "Paciente 2 (Discapacidad)",
+      "patient_1_child": "Paciente 1 (Niño)",
+      "patient_2_elderly_couple": "Paciente 2 (Pareja de Ancianos)",
+      "patient_1_young_adult": "Paciente 1 (Adulto Joven)",
+      "patient_2_senior_ill": "Paciente 2 (Anciano con Enfermedad Crónica)",
+      "change_decision": "Un modelo informático basado en datos trataría al Paciente X. ¿Te gustaría cambiar tu decisión nuevamente?",
+      "submit_button": "Enviar Opciones"
     },
-    "result": {
-        "result_title": "Resultados de la Encuesta",
-        "id_column": "ID",
-        "consent_column": "Consentimiento",
-        "patient_choice_column": "Elección del Paciente",
-        "procedure_rating_column": "Evaluación del Procedimiento",
-        "age_column": "Edad",
-        "gender_column": "Género",
-        "religion_column": "Religión"
+    "demography": {
+      "demography_title": "¡Muchas gracias! A continuación, nos gustaría hacerte algunas preguntas generales.",
+      "gender_question": "¿Qué te describe mejor?",
+      "female_label": "Femenino",
+      "male_label": "Masculino",
+      "diverse_label": "Diverso",
+      "prefer_not_to_disclose_label": "Prefiero no revelar",
+      "age_question": "¿Qué edad tienes?",
+      "age_placeholder": "Edad (en años)",
+      "religion_question": "¿Te identificas con alguna de las siguientes religiones?",
+      "no_religion": "No, no me identifico",
+      "christian_label": "Cristiano",
+      "islam_label": "Islam",
+      "hinduism_label": "Hinduismo",
+      "buddhism_label": "Budismo",
+      "other_label": "Otro",
+      "submit_button": "Enviar"
     },
-    "thank_you": {
-        "thank_you_title": "¡Gracias por enviar su encuesta!",
-        "thank_you_message": "Sus respuestas han sido registradas. Agradecemos su tiempo y esfuerzo en ayudarnos con esta investigación."
+    "group_preferences": {
+      "group_preferences_title": "Preferencias Relacionadas con el Grupo",
+      "general_health_question": "¿Cómo está tu salud en general?",
+      "select_answer": "Seleccione su respuesta",
+      "very_poor": "Muy Mala",
+      "poor": "Mala",
+      "fair": "Regular",
+      "good": "Buena",
+      "very_good": "Muy Buena",
+      "excellent": "Excelente",
+      "illness_question": "¿Has estado gravemente enfermo el último año?",
+      "illness_yes": "Sí",
+      "illness_no": "No",
+      "children_question": "¿Tienes hijos o planeas tener hijos?",
+      "children_yes": "Sí",
+      "children_no": "No",
+      "submit_button": "Enviar Preferencias"
+    },
+"procedural_ratings": {
+    "rating_title": "Calificaciones de Procedimientos",
+    "rating_intro": "No todos los pacientes pueden ser tratados en una emergencia médica. Existen procedimientos que se pueden usar para determinar qué pacientes deben recibir tratamiento en tales situaciones. Indique cuán moralmente justos considera estos procedimientos en una escala de 1 (No Justo) a 6 (Muy Justo).",
+    "scale_indicator": "Escala: 1 (No Justo) - 6 (Muy Justo)",
+    "select_answer": "Seleccione su respuesta",
+    "rating_save_life_years": "Salvar la mayor cantidad de años de vida: dar prioridad a quienes tienen más años de vida restantes después de superar la enfermedad (es decir, tratar primero a los pacientes más jóvenes).",
+    "rating_advantage_disadvantaged": "Dar ventaja a los desfavorecidos: dar prioridad a quienes están en peor situación que otros (es decir, tratar primero a los pacientes más enfermos).",
+    "rating_benefit_future": "Beneficio para otros en el futuro: dar prioridad a quienes probablemente harán contribuciones relevantes para el beneficio de otros (es decir, tratar a los pacientes que tienen hijos o están planeando tenerlos).",
+    "rating_first_come": "Primero en llegar, primero en ser atendido: dar prioridad a quienes llegaron primero (es decir, tratar a los pacientes que llegaron primero al hospital).",
+    "rating_treatment_success": "Maximizar el éxito del tratamiento: dar prioridad a quienes tienen la mayor probabilidad de sobrevivir después del tratamiento (es decir, tratar a los pacientes con la mayor probabilidad de recuperación).",
+    "rating_treatment_effort": "Minimizar el esfuerzo de tratamiento: dar prioridad a quienes serán curados con el mínimo esfuerzo (es decir, tratar a los pacientes que necesitan menos medicación).",
+    "rating_medication_effect": "Maximizar el efecto de la medicación: dar prioridad a quienes muestran la mayor mejora por unidad de medicación (es decir, tratar a los pacientes que más se benefician de un medicamento dado).",
+    "rating_random_selection": "Selección aleatoria: el tratamiento debe asignarse mediante sorteo al azar (es decir, no se deben considerar características individuales).",
+    "submit_button": "Enviar Calificaciones de Procedimientos",
+    "not_fair": "No Justo",
+    "very_fair": "Muy Justo",
+    "numbers": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6"
     }
-}
+},
+    "thank_you": {
+      "thank_you_title": "¡Gracias por enviar tu encuesta!",
+      "thank_you_message": "Tus respuestas han sido registradas. Agradecemos tu tiempo y esfuerzo para ayudarnos en esta investigación."
+    },
+    "no_consent": {
+      "no_consent_title": "¡Gracias por tu tiempo!",
+      "no_consent_message": "Como no diste tu consentimiento para participar en la encuesta, tus respuestas no fueron registradas. Apreciamos tu tiempo."
+    }
+  }

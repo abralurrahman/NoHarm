@@ -7,7 +7,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body data-page="thank_you">
-    <div class="thank-you-container">
+
+    <!-- Language switcher in the corner -->
+    <div class="language-switcher">
+        <select id="language-switcher">
+            <option value="ar">Arabic</option>
+            <option value="bn">Bangla</option>
+            <option value="zh">Chinese</option>
+            <option value="en">English</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="hi">Hindi</option>
+            <option value="ja">Japanese</option>
+            <option value="ru">Russian</option>
+            <option value="es">Spanish</option>
+        </select>
+    </div>
+
+    <div class="thank-you-page-container">
         <h1 id="thank-you-title">Thank you for submitting your survey!</h1>
         <p id="thank-you-message">Your responses have been recorded. We appreciate your time and effort in helping us with this research.</p>
     </div>

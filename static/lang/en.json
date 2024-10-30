@@ -1,34 +1,97 @@
 {
-    "intro": {
-        "intro_title": "Welcome to the Medical Decision Making Survey",
-        "intro_paragraph_1": "This survey will help us understand your perspective on critical life-and-death decisions.",
-        "intro_paragraph_2": "Your participation is voluntary and anonymous. The survey will take approximately 5 minutes to complete.",
-        "start_button": "Start Survey"
-    },
-    "survey": {
-        "survey_title": "Medical Decision Making Survey",
-        "consent_label": "Do you consent to the use of your data for research?",
-        "yes_label": "Yes",
-        "no_label": "No",
-        "patient_label": "Which patient should be treated?",
-        "procedure_label": "Rate the following procedures: Save the most life years:",
-        "gender_label": "Gender:",
-        "age_label": "Age:",
-        "religion_label": "Religion:",
-        "submit_button": "Submit"
-    },
-    "result": {
-        "result_title": "Survey Results",
-        "id_column": "ID",
-        "consent_column": "Consent",
-        "patient_choice_column": "Patient Choice",
-        "procedure_rating_column": "Procedure Rating",
-        "age_column": "Age",
-        "gender_column": "Gender",
-        "religion_column": "Religion"
-    },
-    "thank_you": {
-        "thank_you_title": "Thank you for submitting your survey!",
-        "thank_you_message": "Your responses have been recorded. We appreciate your time and effort in helping us with this research."
+  "intro": {
+    "intro_title": "How would you decide when confronted with critical life-and-death decisions?",
+    "intro_paragraph_1": "Your view on this question is highly valuable. We greatly appreciate your willingness to participate in this survey on medical decision-making.",
+    "intro_paragraph_2": "Answering the questions will take you about 5 minutes. Your participation is voluntary, and your information will be collected anonymously, in accordance with data protection regulations. Please read all instructions and questions carefully and answer honestly.",
+    "intro_paragraph_3": "Sincerely, Dr. med. Anatol-Fiete Näher, M.A., Hasso Plattner Institute Potsdam, Anna Lena Fehlhaber, Leibniz University of Hannover, PD Dr. Ivar Krumpal, University of Leipzig",
+    "consent_title": "Informed Consent",
+    "consent_message": "Please decide now if you want to give your consent to the use of your answers for scientific purposes. If you do not agree, you will be redirected to the end of the survey.",
+    "yes_label": "I consent to the use of my data submitted as part of this questionnaire for research purposes.",
+    "no_label": "I do not consent to the use of my data submitted as part of this questionnaire for research purposes.",
+    "start_button": "Submit Consent"
+  },
+  "choice_experiment": {
+    "survey_title": "Visual Choice Sets",
+    "patient_question": "Not every patient can be treated in a medical emergency. A decision has to be made about which patient to treat and which patient not to treat. Which of the patients shown below should be treated?",
+    "decision_pair_1": "Decision Pair 1",
+    "decision_pair_2": "Decision Pair 2",
+    "decision_pair_3": "Decision Pair 3",
+    "patient_1_overweight": "Patient 1 (Overweight)",
+    "patient_2_disability": "Patient 2 (Disability)",
+    "patient_1_child": "Patient 1 (Child)",
+    "patient_2_elderly_couple": "Patient 2 (Elderly Couple)",
+    "patient_1_young_adult": "Patient 1 (Young Adult)",
+    "patient_2_senior_ill": "Patient 2 (Senior with Chronic Illness)",
+    "change_decision": "A data-driven computer model would treat Patient X. Would you like to change your decision again?",
+    "submit_button": "Submit Choices"
+  },
+  "demography": {
+    "demography_title": "Thank you very much! In the following, we would like to ask you a few more general questions.",
+    "gender_question": "What describes you best?",
+    "female_label": "Female",
+    "male_label": "Male",
+    "diverse_label": "Diverse",
+    "prefer_not_to_disclose_label": "Prefer not to disclose",
+    "age_question": "How old are you?",
+    "age_placeholder": "Age (in years)",
+    "religion_question": "Do you identify yourself with any of the following religions?",
+    "no_religion": "No, I do not",
+    "christian_label": "Christian",
+    "islam_label": "Islam",
+    "hinduism_label": "Hinduism",
+    "buddhism_label": "Buddhism",
+    "other_label": "Other",
+    "submit_button": "Submit"
+  },
+  "group_preferences": {
+    "group_preferences_title": "Group-Related Preferences",
+    "general_health_question": "How is your health in general?",
+    "select_answer": "Select your answer",
+    "very_poor": "Very Poor",
+    "poor": "Poor",
+    "fair": "Fair",
+    "good": "Good",
+    "very_good": "Very Good",
+    "excellent": "Excellent",
+    "illness_question": "Have you been severely ill in the last year?",
+    "illness_yes": "Yes",
+    "illness_no": "No",
+    "children_question": "Do you have children or are you planning to have children?",
+    "children_yes": "Yes",
+    "children_no": "No",
+    "submit_button": "Submit Preferences"
+  },
+  "procedural_ratings": {
+    "rating_title": "Procedural Ratings",
+    "rating_intro": "Not every patient can be treated in a medical emergency. There are procedures that can be used to determine which patients should be treated in such situations. Please indicate how morally fair you find these procedures on a scale from 1 (Not Fair) to 6 (Very Fair).",
+    "scale_indicator": "Scale: 1 (Not Fair) - 6 (Very Fair)",
+    "select_answer": "Select your answer",
+    "rating_save_life_years": "Save the most life years: prioritize those who have the most life years left after overcoming the disease (i.e., treat younger patients first).",
+    "rating_advantage_disadvantaged": "Provide advantage to the disadvantaged: prioritize those who are worse off than others (i.e., treat sickest patients first).",
+    "rating_benefit_future": "Benefit to others in the future: prioritize those who are likely to make relevant contributions to the benefit of others (i.e., treat patients who have children or are planning to have children).",
+    "rating_first_come": "First-come, first-served: prioritize those who were first in line (i.e., treat patients who arrived first at the hospital).",
+    "rating_treatment_success": "Maximize treatment success: prioritize those with the highest probability of survival after treatment (i.e., treat patients with the highest chance of recovery).",
+    "rating_treatment_effort": "Minimize treatment effort: prioritize those who will be cured with minimum effort (i.e., treat patients who need the least medication).",
+    "rating_medication_effect": "Maximize the medication effect: prioritize those where the improvement per medication is highest (i.e., treat patients who benefit most from a given medication).",
+    "rating_random_selection": "Random selection: treatment should be allocated by random lottery (i.e., individual characteristics should not be considered).",
+    "submit_button": "Submit Procedural Ratings",
+    "not_fair": "Not Fair",
+    "very_fair": "Very Fair",
+    "numbers": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6"
     }
+  },
+  "thank_you": {
+    "thank_you_title": "Thank you for submitting your survey!",
+    "thank_you_message": "Your responses have been recorded. We appreciate your time and effort in helping us with this research."
+  },
+  "no_consent": {
+    "no_consent_title": "Thank you for your time!",
+    "no_consent_message": "Since you did not consent to participate in the survey, your responses were not recorded. We appreciate your time."
+  }
 }

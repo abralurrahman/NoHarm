@@ -4,38 +4,105 @@ body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
     margin: 0;
+    padding: 0 20px;
+    overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
-/* Shared Container for both Survey and Intro Pages */
- .intro-container {
+/* Top Space and Language Switcher */
+.top-space {
+    width: 100%;
+    height: 60px; /* Space height at the top */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px 20px; /* Added some space for better alignment */
+    background: transparent;
+}
+
+.language-switcher {
+    background-color: #007bff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    width: 120px; /* Adjusted width for web */
+}
+
+.language-switcher select {
+    padding: 0px 32px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: white;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    appearance: none; /* Removes default browser styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.language-switcher select option {
+    color: #333;
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+/* Shared Container for all pages */
+.intro-container, .choice-container, .thank-you-container, .login-container, .rating-container, .demography-container, .group-preferences-container, .result-container {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 900px; /* Increased the width to make it more spacious */
-    margin: 20px;
-    text-align: left; 
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: 10px; /* Align content with top-space */
 }
 
-/* Headings for both Survey and Intro Pages */
-.survey-form h1, .intro-container h1 {
+/* Headings for all pages */
+h1, h2 {
     text-align: center;
     color: #333;
-    margin-bottom: 30px;
-    font-size: 2.5em; /* Increased heading size */
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
 }
 
-/* Text Styles for Labels */
-label {
+/* Text Styles for Labels and Paragraphs */
+label, p {
     font-size: 1.1em;
-    font-weight: bold;
+    font-weight: normal;
     color: #444;
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* Closer spacing for better layout */
     display: block;
+    font-family: 'Roboto', sans-serif;
+}
+
+.consent-section label, .login-container label {
+    font-size: 1.2em;
+}
+
+/* Question and Answer Styling */
+.choice-container .decision-pair {
+    margin-bottom: 25px; /* Space between decision pairs */
+}
+
+.choice-container p {
+    margin-bottom: 10px; /* Less space below question text */
+}
+
+.choice-container .patients {
+    margin-top: 5px; /* Less space between the question text and answer options */
+    margin-bottom: 20px; /* Keeps a larger space below the answer options to next question */
+}
+
+.patient img {
+    margin-bottom: 5px; /* Space between the image and the label */
 }
 
 /* Radio and Checkbox Inputs */
@@ -47,8 +114,8 @@ input[type="radio"], input[type="checkbox"] {
 input[type="number"], select, input[type="text"], input[type="email"], textarea {
     width: 100%;
     padding: 12px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 5px; /* Closer spacing between input and label */
+    margin-bottom: 10px; /* Less space between form fields */
     border-radius: 8px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
@@ -63,8 +130,8 @@ input[type="number"]:focus, select:focus, input[type="text"]:focus, input[type="
     outline: none;
 }
 
-/* Submit Button and Start Button */
-input[type="submit"], .start-btn {
+/* Buttons */
+input[type="submit"], .submit-btn, .start-btn, .consent-section button[type="submit"] {
     background-color: #007bff;
     color: white;
     border: none;
@@ -76,38 +143,47 @@ input[type="submit"], .start-btn {
     transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover, .start-btn:hover {
+input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover, .consent-section button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-/* Form Blocks */
-.question-block {
-    margin-bottom: 20px;
-}
+/* Adjustments for Mobile */
+@media (max-width: 768px) {
+    .top-space {
+        height: 50px; /* Adjusted space height for mobile */
+        justify-content: center; /* Center align on smaller screens */
+    }
 
-.answer-block {
-    margin-left: 10px;
-}
+    .language-switcher {
+        width: 100px; /* Smaller width for mobile */
+    }
 
-/* Ensure radio, number, and select inputs align properly */
-input[type="radio"], input[type="number"], select {
-    display: inline-block;
-    margin-right: 15px;
-    margin-bottom: 10px;
-}
+    .language-switcher select {
+        font-size: 0.8em;
+        padding: 0px 13px;
+    }
 
-/* Language Switcher */
-.language-switcher {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-}
+    h1, h2 {
+        font-size: 1.8em;
+    }
 
-.language-switcher select {
-    padding: 8px;
-    border-radius: 5px;
-    font-size: 1em;
+    .intro-container, .choice-container, .thank-you-container, .login-container {
+        padding: 20px;
+    }
+
+    .patients {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .patient {
+        flex: 1 1 100%;
+    }
+
+    input[type="submit"], .submit-btn, .start-btn, .consent-section button[type="submit"] {
+        font-size: 1em;
+        padding: 12px;
+    }
 }
 
 /* Intro Page Text */
@@ -116,49 +192,7 @@ input[type="radio"], input[type="number"], select {
     color: #666;
     line-height: 1.6;
     margin-bottom: 30px;
-}
-
-/* Informed Consent Section */
-.consent-section {
-    margin-top: 30px;
-}
-
-.consent-section h2 {
-    font-size: 1.5em;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.consent-section label {
-    font-size: 1.2em;
-    color: #444;
-    display: block;
-    margin-bottom: 15px;
-}
-
-.consent-section input[type="radio"] {
-    margin-right: 10px;
-}
-
-.consent-section button[type="submit"] {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 15px;
-    font-size: 1.2em;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-.consent-section button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-/* Ensure container adjusts height smoothly */
-.intro-container {
-    transition: height 0.3s ease;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Result Page Styling */
@@ -177,6 +211,7 @@ input[type="radio"], input[type="number"], select {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    font-family: 'Roboto', sans-serif;
 }
 
 .result-table th {
@@ -188,56 +223,45 @@ input[type="radio"], input[type="number"], select {
     background-color: #f9f9f9;
 }
 
-/* Thank You Page */
-.thank-you-container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
+/* Choice Container */
+.choice-container {
     text-align: center;
 }
 
-.thank-you-container h1 {
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 20px;
+.patients {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px; /* Reduced space for closer alignment */
+    flex-wrap: wrap;
 }
 
+.patient {
+    text-align: center;
+    flex: 1 1 45%;
+    margin: 5px; /* Reduced margin for a tighter layout */
+}
+
+/* Thank You Page */
 .thank-you-container p {
     font-size: 1.2em;
     color: #666;
     line-height: 1.6;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Highlighted Text (for procedural ratings) */
+.italic-text {
+    font-style: italic;
+}
+
+.bold-text {
+    font-weight: bold;
 }
 
 /* Admin Login Page */
-.login-container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    margin: 20px auto;
-    text-align: center;
-}
-
-.login-container h1 {
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
 .login-container form {
     display: flex;
     flex-direction: column;
-}
-
-.login-container label {
-    font-size: 1.2em;
-    margin-bottom: 10px;
 }
 
 .login-container input[type="password"],
@@ -259,45 +283,46 @@ input[type="radio"], input[type="number"], select {
 .login-container input[type="submit"]:hover {
     background-color: #0056b3;
 }
-.choice-container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
-    text-align: center;
-}
 
-.patients {
-    display: flex;
-    justify-content: space-around;
+/* Styling for Scale Indicator */
+.scale-indicator {
+    text-align: center;
     margin-bottom: 20px;
+    font-size: 1.1em;
+    color: #555;
 }
 
-.patient {
-    text-align: center;
-}
-
-.patient img {
+/* Styling for procedure-block labels with highlighting */
+.procedure-block label {
     display: block;
-    margin: 0 auto;
-    border-radius: 8px;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    color: #444;
+    line-height: 1.4;
 }
 
-.submit-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 15px;
-    font-size: 1.2em;
-    border-radius: 8px;
-    cursor: pointer;
+.italic-text {
+    font-style: italic;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+/* Adjustments for Select Elements */
+.procedure-block select {
+    margin-top: 5px;
+    margin-bottom: 15px; /* Space between select and next block */
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
     width: 100%;
-    transition: background-color 0.3s ease;
 }
 
-.submit-btn:hover {
-    background-color: #0056b3;
+@media (max-width: 768px) {
+    .scale-indicator {
+        font-size: 0.9em; /* Adjusted size for mobile */
+    }
 }
