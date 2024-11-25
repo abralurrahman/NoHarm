@@ -5,17 +5,12 @@ def create_database():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
-    # Create the choices table with IP address and geolocation columns
+    # Create the choices table for individual page-based choices
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS choices (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            patient_choice_1 TEXT NOT NULL,
-            patient_choice_2 TEXT NOT NULL,
-            patient_choice_3 TEXT NOT NULL,
-            ip_address TEXT,  
-            city TEXT,        
-            region TEXT,      
-            country TEXT      
+            page INTEGER NOT NULL,
+            choice TEXT NOT NULL
         )
     ''')
 
@@ -55,6 +50,17 @@ def create_database():
         )
     ''')
 
+    # Create the geolocation table to store user IP and location data
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS geolocation (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ip_address TEXT,
+            city TEXT,
+            region TEXT,
+            country TEXT
+        )
+    ''')
+
     # Commit changes and close the connection
     conn.commit()
     conn.close()
@@ -64,23 +70,29 @@ def add_columns_if_not_exist():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
-    # Check if the ip_address, city, region, and country columns exist in the choices table
+    # Check if the `geolocation` table exists
+    cursor.execute("PRAGMA table_info(geolocation);")
+    geolocation_columns = [col[1] for col in cursor.fetchall()]
+
+    if not geolocation_columns:
+        cursor.execute('''
+            CREATE TABLE geolocation (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ip_address TEXT,
+                city TEXT,
+                region TEXT,
+                country TEXT
+            )
+        ''')
+
+    # Check if the choices table has the page column
     cursor.execute("PRAGMA table_info(choices);")
-    columns = [col[1] for col in cursor.fetchall()]
+    choices_columns = [col[1] for col in cursor.fetchall()]
 
-    if 'ip_address' not in columns:
-        cursor.execute('ALTER TABLE choices ADD COLUMN ip_address TEXT')
-    
-    if 'city' not in columns:
-        cursor.execute('ALTER TABLE choices ADD COLUMN city TEXT')
-    
-    if 'region' not in columns:
-        cursor.execute('ALTER TABLE choices ADD COLUMN region TEXT')
-    
-    if 'country' not in columns:
-        cursor.execute('ALTER TABLE choices ADD COLUMN country TEXT')
+    if 'page' not in choices_columns:
+        cursor.execute('ALTER TABLE choices ADD COLUMN page INTEGER')
 
-    # Commit the changes and close the connection
+    # Commit changes and close the connection
     conn.commit()
     conn.close()
 
