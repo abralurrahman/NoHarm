@@ -132,9 +132,22 @@ label, p {
     display: block;
 }
 
-/* Radio and Checkbox Inputs */
-input[type="radio"], input[type="checkbox"] {
-    margin-right: 10px;
+
+/* For Radio Buttons and Labels Inline */
+.radio-container {
+    display: flex;
+    align-items: center; /* Align the radio button and label text vertically */
+    gap: 8px; /* Space between the radio button and the label */
+}
+
+.radio-container input[type="radio"] {
+    margin: 0; /* Remove any browser-specific margin */
+    transform: translateY(1px); /* Slight vertical adjustment for perfect alignment */
+}
+
+.radio-container label {
+    margin: 0; /* Ensure no additional spacing is added */
+    line-height: 1.4; /* Fine-tune text alignment if necessary */
 }
 
 /* Form Inputs (Number, Select, Text) */
@@ -158,20 +171,25 @@ input[type="number"]:focus, select:focus, input[type="text"]:focus, input[type="
 }
 
 /* Buttons */
-input[type="submit"], .submit-btn, .start-btn, .consent-section button[type="submit"] {
+button, input[type="submit"], .submit-btn, .start-btn, .consent-section button[type="submit"] {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 15px;
+    padding: 15px 30px; /* Larger button size */
     font-size: 1.2em;
+    font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
+    margin-top: 30px; /* Spacing from content */
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover, .consent-section button[type="submit"]:hover {
+/* Button Hover Effect */
+button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
     background-color: #0056b3;
+    transform: scale(1.05); /* Slightly enlarge button */
 }
 
 /* Choice Container */
@@ -269,7 +287,7 @@ input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover, .consent-sectio
         flex: 1 1 100%;
     }
 
-    input[type="submit"], .submit-btn, .start-btn, .consent-section button[type="submit"] {
+    button, input[type="submit"], .submit-btn, .start-btn {
         font-size: 1em;
         padding: 12px;
     }

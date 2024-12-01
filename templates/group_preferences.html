@@ -27,31 +27,30 @@
     <div class="group-preferences-container">
         <h1 id="group-preferences-title">Group-Related Preferences</h1>
 
-        <form method="POST" action="/submit-group-preferences">
-            <!-- General Health -->
-            <label for="general_health" id="general-health-question">How is your health in general?</label>
-            <select id="general_health" name="general_health" required>
-                <option value="" disabled selected id="select-answer">Select your answer</option>
-                <option value="Very Poor" id="very-poor">Very Poor</option>
-                <option value="Poor" id="poor">Poor</option>
-                <option value="Fair" id="fair">Fair</option>
-                <option value="Good" id="good">Good</option>
-                <option value="Very Good" id="very-good">Very Good</option>
-                <option value="Excellent" id="excellent">Excellent</option>
-            </select>
+        <form method="POST" action="/group-preferences">
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <input type="hidden" name="current_index" value="{{ index }}">
 
-            <!-- Severely Ill Last Year -->
-            <label id="illness-question">Have you been severely ill in the last year?</label><br>
-            <input type="radio" id="illness-yes" name="illness" value="yes" required> <label for="illness-yes" id="illness-yes-label">Yes</label>
-            <input type="radio" id="illness-no" name="illness" value="no" required> <label for="illness-no" id="illness-no-label">No</label>
+            <div class="question-block">
+                <label>{{ question.label }}</label>
+                {% if question.type == 'select' %}
+                <select name="answer" required>
+                    <option value="" disabled selected>Select your answer</option>
+                    {% for option in question.options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
+                {% elif question.type == 'radio' %}
+                {% for option in question.options %}
+                <div class="radio-container">
+                    <input type="radio" name="answer" id="{{ option.value }}" value="{{ option.value }}">
+                    <label for="{{ option.value }}">{{ option.label }}</label>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
 
-            <!-- Children Question -->
-            <label id="children-question">Do you have children or are you planning to have children?</label><br>
-            <input type="radio" id="children-yes" name="children" value="yes" required> <label for="children-yes" id="children-yes-label">Yes</label>
-            <input type="radio" id="children-no" name="children" value="no" required> <label for="children-no" id="children-no-label">No</label>
-
-            <!-- Submit button -->
-            <button type="submit" id="submit-button" class="submit-btn">Submit Preferences</button>
+            <button type="submit" class="submit-btn">Next</button>
         </form>
     </div>
 

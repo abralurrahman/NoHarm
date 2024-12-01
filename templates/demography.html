@@ -6,8 +6,7 @@
     <title>Demographic Questions</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body data-page="demography">
-
+<body>
     <!-- Language switcher in the corner -->
     <div class="language-switcher">
         <select id="language-switcher">
@@ -25,37 +24,30 @@
     </div>
 
     <div class="demography-container">
-        <h1 id="demography-title">Thank you very much! In the following, we would like to ask you a few more general questions.</h1>
+        <h1 id="demography-title">Demographic Questions</h1>
+        <p id="demography-intro">Please answer the following questions one at a time.</p>
 
-        <form method="POST" action="/submit-demography">
-            <!-- Gender -->
+        <form method="POST" action="/demography">
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <input type="hidden" name="current_index" value="{{ index }}">
+
             <div class="question-block">
-                <label id="gender-question">What describes you best?</label><br>
-                <input type="radio" id="female-label" name="gender" value="female" required> <label for="female-label" id="female-text">Female</label><br>
-                <input type="radio" id="male-label" name="gender" value="male" required> <label for="male-label" id="male-text">Male</label><br>
-                <input type="radio" id="diverse-label" name="gender" value="diverse" required> <label for="diverse-label" id="diverse-text">Diverse</label><br>
-                <input type="radio" id="prefer-not-to-disclose-label" name="gender" value="prefer_not_to_disclose" required> <label for="prefer-not-to-disclose-label" id="prefer-not-to-disclose-text">Prefer not to disclose</label>
+                <label>{{ question.label }}</label>
+                {% if question.type == "radio" %}
+                    {% for option in question.options %}
+                        <div class="radio-container">
+                            <input type="radio" name="answer" id="{{ option.value }}" value="{{ option.value }}">
+                            <label for="{{ option.value }}">{{ option.label }}</label>
+                        </div>
+                    {% endfor %}
+                {% elif question.type == "text" %}
+                    <input type="text" name="answer" placeholder="{{ question.placeholder }}">
+                {% elif question.type == "number" %}
+                    <input type="number" name="answer" placeholder="{{ question.placeholder }}">
+                {% endif %}
             </div>
 
-            <!-- Age -->
-            <div class="question-block">
-                <label id="age-question">How old are you?</label><br>
-                <input type="number" name="age" id="age-placeholder" placeholder="Age (in years)" required>
-            </div>
-
-            <!-- Religion -->
-            <div class="question-block">
-                <label id="religion-question">Do you identify yourself with any of the following religions?</label><br>
-                <input type="radio" id="no-religion" name="religion" value="none" required> <label for="no-religion" id="no-religion-text">No, I do not</label><br>
-                <input type="radio" id="christian-label" name="religion" value="christian" required> <label for="christian-label" id="christian-text">Christian</label><br>
-                <input type="radio" id="islam-label" name="religion" value="islam" required> <label for="islam-label" id="islam-text">Islam</label><br>
-                <input type="radio" id="hinduism-label" name="religion" value="hinduism" required> <label for="hinduism-label" id="hinduism-text">Hinduism</label><br>
-                <input type="radio" id="buddhism-label" name="religion" value="buddhism" required> <label for="buddhism-label" id="buddhism-text">Buddhism</label><br>
-                <input type="radio" id="other-label" name="religion" value="other" required> <label for="other-label" id="other-text">Other:</label> <input type="text" name="other_religion">
-            </div>
-
-            <!-- Submit button -->
-            <input type="submit" id="submit-button" value="Submit">
+            <button type="submit" class="submit-btn">Next</button>
         </form>
     </div>
 
