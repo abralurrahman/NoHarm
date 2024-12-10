@@ -9,9 +9,10 @@ body {
     margin: 0;
     padding: 0 20px;
     overflow-x: hidden; /* Prevents horizontal scrolling */
+    transform: scale(0.90); /*  zoom-out controlling */
+    transform-origin: top center; /* Ensure the scaling starts from the top center */
 }
 
-/* Top Space and Language Switcher */
 .top-space {
     width: 100%;
     height: 60px; /* Space height at the top */
@@ -23,32 +24,66 @@ body {
 }
 
 .language-switcher {
-    background-color: #007bff;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    padding: 5px;
-    width: 120px; /* Adjusted width for web */
+    position: fixed; /* Fix the button position relative to the viewport */
+    bottom: -50px; /* Slight margin from the bottom of the screen */
+    left: 50%; /* Align it to the center horizontally */
+    transform: translateX(-50%); /* Center the button horizontally */
+    background-color: #007bff; /* Button background color */
+    border-radius: 8px; /* Rounded corners for the button */
+    width: 70px; /* Slightly wider for better design */
+    height: 45px; /* Add height to make the button look more balanced */
+    display: flex; /* Enable flexbox for centering */
+    align-items: center; /* Center the text vertically */
+    justify-content: center; /* Center the text horizontally */
+    cursor: pointer; /* Ensure the button looks clickable */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition effects */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    overflow: hidden; /* Prevent any overflow */
+}
+
+.language-switcher:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+    transform: translateX(-50%) scale(1.05); /* Ensure it scales without shifting position */
 }
 
 .language-switcher select {
-    padding: 0px 32px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    color: white;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    appearance: none; /* Removes default browser styling */
+    appearance: none; /* Remove default styling */
     -webkit-appearance: none;
     -moz-appearance: none;
+    outline: none; /* Remove focus outline */
+    border: none; /* Remove default border */
+    background: transparent; /* Transparent background to blend with parent */
+    width: 100%; /* Take full width of parent */
+    height: 100%; /* Take full height of parent */
+    color: white; /* Text color */
+    font-size: 0.8em; /* Adjust font size */
+    padding: 0; /* Add some padding for better spacing */
+    text-align: center; /* Center the text */
+    cursor: pointer; /* Ensure it's clickable */
+    box-shadow: none; /* Ensure no shadow on the select element */
+}
+
+.language-switcher select:focus {
+    outline: none; /* Remove focus outline */
+    box-shadow: none;
 }
 
 .language-switcher select option {
     color: #333;
-    background-color: #ffffff;
-    padding: 8px;
+    background-color: #f9f9f9;
+    padding: 10px; /* Better spacing for dropdown items */
+    margin: 5px 0; /* Add some spacing between items */
+    border-radius: 5px; /* Rounded corners for options */
+    border: 1px solid #ddd; /* Light border for individual options */
+    font-size: 1em; /* Adjust font size for readability */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Smooth transition for hover */
 }
+
+.language-switcher select option:hover {
+    background-color: #007bff; /* Highlight hovered item with blue */
+    color: white; /* Change text color for contrast */
+}
+
 
 /* Shared Container for all pages */
 .intro-container, .choice-container, .thank-you-container, .login-container, .rating-container, .demography-container, .group-preferences-container, .result-container {
@@ -161,14 +196,17 @@ input[type="number"], select, input[type="text"], input[type="email"], textarea 
     background-color: #f9f9f9;
     font-size: 1em;
     color: #333;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Add transition for hover/focus effect */
+    box-shadow: 0 2px 0 #ddd; /* Add grey shadow under the box */
 }
 
 /* Input Focus Effect */
 input[type="number"]:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
-    border-color: #007bff;
+    border-color: #ddd;
     outline: none;
+    box-shadow: 0 2px 0 #ddd; /* Enhance the shadow on focus for emphasis */
 }
+
 
 /* Buttons */
 button, input[type="submit"], .submit-btn, .start-btn, .consent-section button[type="submit"] {
@@ -256,26 +294,76 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
 
 /* Adjustments for Mobile */
 @media (max-width: 768px) {
+    body {
+        transform: scale(0.85); /* Apply slightly larger scaling for mobile */
+        transform-origin: top center;
+        padding: 10px; /* Add padding for better alignment */
+    }
     .top-space {
         height: 50px; /* Adjusted space height for mobile */
         justify-content: center; /* Center align on smaller screens */
     }
 
+    select {
+        font-size: 0.85em; /* Smaller font for dropdown */
+        padding: 6px; /* Reduced padding for compact size */
+        width: 90%; /* Make dropdown smaller */
+        margin: 10px auto; /* Center-align dropdown */
+    }
+
+    select option {
+        font-size: 0.8em; /* Smaller font size for options */
+        padding: 8px; /* Compact padding for options */
+    }
+
+
     .language-switcher {
-        width: 100px; /* Smaller width for mobile */
+        position: fixed; /* Keep the button fixed */
+        bottom: -50px; /* Position it near the bottom */
+        left: 50%; /* Align to the center horizontally */
+        transform: translateX(-50%); /* Center it horizontally */
+        width: 55px; /* Slightly smaller width for mobile */
+        height: 35px; /* Smaller height for mobile */
+        background-color: #007bff;
+        border-radius: 8px; /* Rounded corners */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
     }
 
     .language-switcher select {
-        font-size: 0.8em;
-        padding: 0px 13px;
+        font-size: 0.7em; /* Slightly smaller font size for mobile */
+        padding: 0; /* Remove unnecessary padding */
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        color: white;
+        text-align: center;
+    }
+
+    .language-switcher:hover {
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Enhance hover shadow */
+        transform: translateX(-50%) scale(1.05); /* Keep it centered while scaling */
     }
 
     h1, h2 {
-        font-size: 1.8em;
+        font-size: 1.6em;
     }
 
-    .intro-container, .choice-container, .thank-you-container, .login-container {
-        padding: 20px;
+    .intro-container, .choice-container,  .thank-you-container, .login-container, .rating-container, .demography-container, .group-preferences-container, .result-container 
+    {
+        padding: 20px; /* Reduced padding for smaller screens */
+        max-width: 100%; /* Utilize full width of mobile */
+        margin: 0 auto; /* Center the container */
+    }
+
+    label, p {
+        font-size: 0.9em; /* Adjust font size for readability */
+        line-height: 1.4; /* Ensure text spacing is comfortable */
     }
 
     .patients {
@@ -290,5 +378,6 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
     button, input[type="submit"], .submit-btn, .start-btn {
         font-size: 1em;
         padding: 12px;
+        margin-top: 15px; /* Adjust spacing */
     }
 }
