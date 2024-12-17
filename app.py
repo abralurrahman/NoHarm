@@ -98,7 +98,7 @@ def choice_experiment():
 
 @app.route('/procedural-ratings', methods=['GET', 'POST'])
 def procedural_ratings():
-    # Define procedural rating questions
+    # Define the list of questions
     questions = [
         {
             "id": "save_life_years",
@@ -135,40 +135,43 @@ def procedural_ratings():
     ]
 
     if request.method == 'POST':
-        # Save the current question's response
+        # Store the current question's response
         question_id = request.form.get('question_id')
         rating = request.form.get('rating')
 
         if 'ratings' not in session:
             session['ratings'] = {}
 
-        session['ratings'][question_id] = rating
+        session['ratings'][question_id] = rating if rating else ""
 
-        # Determine the next question index
+        # Move to the next question
         current_index = int(request.form.get('current_index', 0))
         next_index = current_index + 1
 
-        # If all questions are answered, save to DB and redirect
+        # Check if all questions are answered
         if next_index >= len(questions):
+            # Save all responses to the database
             conn = get_db_connection()
             conn.execute('''
                 INSERT INTO procedural_ratings 
                 (save_life_years, advantage_disadvantaged, benefit_future, first_come, 
                  treatment_success, treatment_effort, medication_effect, random_selection) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
                 [session['ratings'].get(q['id']) for q in questions])
             conn.commit()
             conn.close()
 
-            session.pop('ratings', None)  # Clear the session
+            # Clear session and redirect to demographic page
+            session.pop('ratings', None)
             return redirect('/demography')
 
         # Redirect to the next question
         return redirect(f'/procedural-ratings?index={next_index}')
 
-    # Render the current question
+    # Get the current question based on index
     current_index = int(request.args.get('index', 0))
     question = questions[current_index]
+
     return render_template('procedural_ratings.html', question=question, index=current_index)
 
 

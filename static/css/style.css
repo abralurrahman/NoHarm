@@ -119,7 +119,7 @@ label, p {
 }
 
 .consent-section label, .login-container label {
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 /* Question and Answer Styling */
@@ -292,6 +292,128 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
     background-color: #0056b3;
 }
 
+.rating-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Procedural Ratings Styling */
+.procedure-block {
+    margin-bottom: 40px; /* Space below each question block */
+}
+
+.procedure-block label {
+    display: block;
+    font-size: 1.1em;
+    font-weight: normal;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Rating Scale Container */
+.rating-scale {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    max-width: 800px;
+    position: relative;
+}
+
+/* Gradient Bar */
+.gradient-bar {
+    position: absolute;
+    top: 0;
+    left: 14%;
+    right: 10%;
+    height: 17px;
+    background: linear-gradient(to right, #d3d3d3, #000);
+    border-radius: 10px;
+    z-index: 0;
+}
+
+.rating-scale .scale-label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #555;
+    margin: 0 10px; /* Space around the text */
+    z-index: 1; /* Ensure text stays above the gradient */
+}
+
+/* Scale Buttons */
+.scale-buttons {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    z-index: 1;
+    margin: 0 10px;
+}
+
+.circle-btn {
+    cursor: pointer;
+}
+
+.circle {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.circle-btn input[type="radio"] {
+    display: none; /* Hide the actual radio button */
+}
+
+.circle-btn:hover .circle {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.circle-btn input[type="radio"]:checked + .circle {
+    background-color: #007bff;
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
+}
+
+/* Submit Button */
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 30px auto;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
 /* Adjustments for Mobile */
 @media (max-width: 768px) {
     body {
@@ -380,4 +502,40 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
         padding: 12px;
         margin-top: 15px; /* Adjust spacing */
     }
+
+    .rating-scale {
+        flex-direction: row;
+        padding: 5px 0;
+    }
+
+    .rating-scale .scale-label {
+        font-size: 0.8em;
+        margin: 0 1px;
+        }
+
+    .gradient-bar {
+        width: 60%;
+        left: 24%;
+        height: 10px; /* Adjust height for smaller screens */
+        margin-top: 9px; /* Add spacing above buttons */
+        position: absolute;
+    }
+
+    .scale-buttons {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        margin-top: 1px; /* Add spacing between gradient and circles */
+    }
+
+    .circle {
+        width: 12px; /* Smaller size for circles */
+        height: 12px;
+        border: 1px solid #ccc;
+    }
+
+    .scale-label {
+      white-space: nowrap; /* Ensure labels don’t wrap */
+    }
+
 }

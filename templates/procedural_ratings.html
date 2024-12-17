@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-
-<!-- Language switcher in the corner -->
+<!-- Language switcher -->
 <div class="language-switcher">
     <select id="language-switcher">
         <option value="ar">العربية</option>
@@ -25,29 +24,35 @@
     </select>
 </div>
 
-    <div class="rating-container">
-        <h1>Procedural Ratings</h1>
-        <p>Please rate the following question on a scale from 1 (Not Fair) to 6 (Very Fair).</p>
+<!-- Rating container -->
+<div class="rating-container">
+    <h1>Procedural Ratings</h1>
+    <p>Please rate the following question on a scale from (Not Fair) to (Very Fair).</p>
 
-        <form method="POST" action="/procedural-ratings">
-            <input type="hidden" name="question_id" value="{{ question.id }}">
-            <input type="hidden" name="current_index" value="{{ index }}">
+    <!-- Question Block -->
+    <form method="POST" action="/procedural-ratings">
+        <input type="hidden" name="question_id" value="{{ question.id }}">
+        <input type="hidden" name="current_index" value="{{ index }}">
 
-            <div class="procedure-block">
-                <label>{{ question.label }}</label>
-                <select name="rating">
-                    <option value="" disabled selected>Select your answer</option>
-                    <option value="1">1 (Not Fair)</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6 (Very Fair)</option>
-                </select>
+        <div class="procedure-block">
+            <label class="bold-text">{{ question.label }}</label>
+            <div class="rating-scale">
+                <span class="scale-label">Not fair at all</span>
+                <div class="gradient-bar"></div> <!-- Gradient Bar -->
+                <div class="scale-buttons">
+                    {% for i in range(1, 7) %}
+                        <label class="circle-btn">
+                            <input type="radio" name="rating" value="{{ i }}" >
+                            <div class="circle"></div>
+                        </label>
+                    {% endfor %}
+                </div>
+                <span class="scale-label">Very fair</span>
             </div>
+        </div>
 
-            <button type="submit" class="submit-btn">Next</button>
-        </form>
-    </div>
+        <button type="submit" class="submit-btn">Next</button>
+    </form>
+</div>
 </body>
 </html>
