@@ -36,7 +36,7 @@
             <div class="question-block">
                 <label>{{ question.label }}</label>
                 {% if question.type == 'select' %}
-                <select name="answer" required>
+                <select name="answer">
                     <option value="" disabled selected>Select your answer</option>
                     {% for option in question.options %}
                     <option value="{{ option }}">{{ option }}</option>
