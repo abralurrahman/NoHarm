@@ -25,48 +25,46 @@
     </select>
 </div>
 
+<div class="choice-container">
+    <p id="patient-question">
+        Not every patient can be treated in a medical emergency. A decision has to be made about which patient to treat and which patient not to treat. Which of the patients shown below should be treated?
+    </p>
 
-    <div class="choice-container">
-        <h1 id="survey-title">Visual Choice Sets</h1>
-        <p id="patient-question">
-            Not every patient can be treated in a medical emergency. A decision has to be made about which patient to treat and which patient not to treat. Which of the patients shown below should be treated?
-        </p>
+    <div class="decision-pair">
+        <h2>Decision {{ page }}</h2>
+        <div class="patients">
+            <!-- Patient 1 -->
+            <div class="patient">
+                <img src="{{ url_for('static', filename=images[0].filename) }}" 
+                     alt="Patient 1" 
+                     data-hover-text="{{ images[0].description }}" 
+                     onclick="submitChoice('{{ images[0].filename }}')">
+                <div class="hover-text">{{ images[0].description }}</div>
+            </div>
 
-        <div class="decision-pair">
-            <h2>Decision {{ page }}</h2>
-            <div class="patients">
-                <!-- Patient 1 -->
-                <div class="patient">
-                    <img src="{{ url_for('static', filename='images/' + images[0].filename) }}" 
-                         alt="Patient 1" 
-                         data-hover-text="{{ images[0].description }}" 
-                         onclick="submitChoice('{{ images[0].filename }}')">
-                    <div class="hover-text">{{ images[0].description }}</div>
-                </div>
-
-                <!-- Patient 2 -->
-                <div class="patient">
-                    <img src="{{ url_for('static', filename='images/' + images[1].filename) }}" 
-                         alt="Patient 2" 
-                         data-hover-text="{{ images[1].description }}" 
-                         onclick="submitChoice('{{ images[1].filename }}')">
-                    <div class="hover-text">{{ images[1].description }}</div>
-                </div>
+            <!-- Patient 2 -->
+            <div class="patient">
+                <img src="{{ url_for('static', filename=images[1].filename) }}" 
+                     alt="Patient 2" 
+                     data-hover-text="{{ images[1].description }}" 
+                     onclick="submitChoice('{{ images[1].filename }}')">
+                <div class="hover-text">{{ images[1].description }}</div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Hidden form for submitting selected choice -->
-    <form id="choice-form" method="POST" action="/choice-experiment" style="display:none;">
-        <input type="hidden" name="selected_image" id="selected-image">
-    </form>
+<!-- Hidden form for submitting selected choice -->
+<form id="choice-form" method="POST" action="/choice-experiment" style="display:none;">
+    <input type="hidden" name="selected_image" id="selected-image">
+</form>
 
-    <script>
-        // JavaScript to handle image selection and form submission
-        function submitChoice(selectedImage) {
-            document.getElementById('selected-image').value = selectedImage;
-            document.getElementById('choice-form').submit();
-        }
-    </script>
+<script>
+    // JavaScript to handle image selection and form submission
+    function submitChoice(selectedImage) {
+        document.getElementById('selected-image').value = selectedImage;
+        document.getElementById('choice-form').submit();
+    }
+</script>
 </body>
 </html>

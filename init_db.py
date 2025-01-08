@@ -5,19 +5,14 @@ def create_database():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
-    # Create the choices table for individual page-based choices
+    # Create the user_responses table for consolidated responses
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS choices (
+        CREATE TABLE IF NOT EXISTS user_responses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            page INTEGER NOT NULL,
-            choice TEXT NOT NULL
-        )
-    ''')
-
-    # Create the procedural_ratings table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS procedural_ratings (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            choice1 TEXT,
+            choice2 TEXT,
+            choice3 TEXT,
+            reconsider_choice TEXT,
             save_life_years TEXT,
             advantage_disadvantaged TEXT,
             benefit_future TEXT,
@@ -25,35 +20,13 @@ def create_database():
             treatment_success TEXT,
             treatment_effort TEXT,
             medication_effect TEXT,
-            random_selection TEXT
-        )
-    ''')
-
-    # Create the demography table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS demography (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            random_selection TEXT,
             gender TEXT,
             age INTEGER,
             religion TEXT,
-            other_religion TEXT
-        )
-    ''')
-
-    # Create the group_preferences table
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS group_preferences (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
             general_health TEXT,
             illness TEXT,
-            children TEXT
-        )
-    ''')
-
-    # Create the geolocation table to store user IP and location data
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS geolocation (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            children TEXT,
             ip_address TEXT,
             city TEXT,
             region TEXT,
@@ -70,27 +43,40 @@ def add_columns_if_not_exist():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
-    # Check if the `geolocation` table exists
-    cursor.execute("PRAGMA table_info(geolocation);")
-    geolocation_columns = [col[1] for col in cursor.fetchall()]
+    # Check columns in the user_responses table and add missing ones
+    cursor.execute("PRAGMA table_info(user_responses);")
+    user_responses_columns = [col[1] for col in cursor.fetchall()]
 
-    if not geolocation_columns:
-        cursor.execute('''
-            CREATE TABLE geolocation (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                ip_address TEXT,
-                city TEXT,
-                region TEXT,
-                country TEXT
-            )
-        ''')
+    # Define required columns and their SQL types
+    required_columns = {
+        "choice1": "TEXT",
+        "choice2": "TEXT",
+        "choice3": "TEXT",
+        "reconsider_choice": "TEXT",
+        "save_life_years": "TEXT",
+        "advantage_disadvantaged": "TEXT",
+        "benefit_future": "TEXT",
+        "first_come": "TEXT",
+        "treatment_success": "TEXT",
+        "treatment_effort": "TEXT",
+        "medication_effect": "TEXT",
+        "random_selection": "TEXT",
+        "gender": "TEXT",
+        "age": "INTEGER",
+        "religion": "TEXT",
+        "general_health": "TEXT",  # Fixed typo (removed extra space)
+        "illness": "TEXT",
+        "children": "TEXT",
+        "ip_address": "TEXT",
+        "city": "TEXT",
+        "region": "TEXT",
+        "country": "TEXT"
+    }
 
-    # Check if the choices table has the page column
-    cursor.execute("PRAGMA table_info(choices);")
-    choices_columns = [col[1] for col in cursor.fetchall()]
-
-    if 'page' not in choices_columns:
-        cursor.execute('ALTER TABLE choices ADD COLUMN page INTEGER')
+    # Add missing columns
+    for column, column_type in required_columns.items():
+        if column not in user_responses_columns:
+            cursor.execute(f'ALTER TABLE user_responses ADD COLUMN {column} {column_type}')
 
     # Commit changes and close the connection
     conn.commit()

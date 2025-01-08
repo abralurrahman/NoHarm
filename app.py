@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Response
+import csv
 import sqlite3
 import random
 
@@ -51,7 +53,6 @@ def submit():
     else:
         return redirect('/no-consent')
 
-# List of images with descriptions
 IMAGES = [
     {"filename": "child_simple.jpg", "description": "Child"},
     {"filename": "Disability.jpg", "description": "Person with Disability"},
@@ -64,6 +65,10 @@ IMAGES = [
     {"filename": "test_1_3_2_2_1.jpg", "description": "Test Image 5"}
 ]
 
+# Update the filename paths to use the resized directory
+for image in IMAGES:
+    image["filename"] = f"resized_images/{image['filename']}"
+
 
 @app.route('/choice-experiment', methods=['GET', 'POST'])
 def choice_experiment():
@@ -74,9 +79,9 @@ def choice_experiment():
             session['selected_images'] = []
         session['selected_images'].append(selected_image)
 
-        # Redirect to the ratings page after three decisions
+        # Redirect to the reconsideration page after three decisions
         if len(session['selected_images']) >= 3:
-            return redirect('/procedural-ratings')
+            return redirect('/reconsider-decision')
 
         # Increment the page counter
         session['current_page'] += 1
@@ -92,13 +97,50 @@ def choice_experiment():
     if len(available_images) >= 2:
         images = random.sample(available_images, 2)
     else:
-        return redirect('/procedural-ratings')  # Fallback if fewer than two images are available
+        return redirect('/reconsider-decision')  # Fallback if fewer than two images are available
 
     return render_template('choice_experiment.html', images=images, page=page)
+@app.route('/reconsider-decision', methods=['GET', 'POST'])
+def reconsider_decision():
+    if request.method == 'POST':
+        # Retrieve the reconsideration choice from the form
+        reconsider_choice = request.form.get('reconsider')
+
+        # Save the user's decisions into the database
+        conn = get_db_connection()
+        conn.execute(
+            '''
+            INSERT INTO user_responses (choice1, choice2, choice3, reconsider_choice)
+            VALUES (?, ?, ?, ?)
+            ''',
+            (
+                session['selected_images'][0] if len(session['selected_images']) > 0 else None,
+                session['selected_images'][1] if len(session['selected_images']) > 1 else None,
+                session['selected_images'][2] if len(session['selected_images']) > 2 else None,
+                reconsider_choice
+            )
+        )
+        conn.commit()
+        conn.close()
+
+        # Redirect based on the reconsideration choice
+        if reconsider_choice == 'yes':
+            return redirect('/choice-experiment')  # Allow the user to change their decision
+        else:
+            return redirect('/procedural-ratings')  # Proceed to the next step
+
+    # Retrieve a random selected image for reconsideration
+    if 'selected_images' in session and session['selected_images']:
+        reconsider_image = random.choice(session['selected_images'])
+    else:
+        return redirect('/choice-experiment')  # Fallback if no images were selected
+
+    # Render the reconsideration page
+    return render_template('reconsider_decision.html', reconsider_image=reconsider_image)
 
 @app.route('/procedural-ratings', methods=['GET', 'POST'])
 def procedural_ratings():
-    # Define the list of questions
+    # List of questions with short IDs and full labels
     questions = [
         {
             "id": "save_life_years",
@@ -135,49 +177,58 @@ def procedural_ratings():
     ]
 
     if request.method == 'POST':
-        # Store the current question's response
+        # Get the current question's ID and user's response
         question_id = request.form.get('question_id')
         rating = request.form.get('rating')
 
+        # Initialize session for ratings if not already done
         if 'ratings' not in session:
             session['ratings'] = {}
 
-        session['ratings'][question_id] = rating if rating else ""
+        # Store the response using the question's ID
+        session['ratings'][question_id] = rating
 
         # Move to the next question
-        current_index = int(request.form.get('current_index', 0))
+        current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1)
         next_index = current_index + 1
 
-        # Check if all questions are answered
         if next_index >= len(questions):
             # Save all responses to the database
             conn = get_db_connection()
             conn.execute('''
-                INSERT INTO procedural_ratings 
-                (save_life_years, advantage_disadvantaged, benefit_future, first_come, 
-                 treatment_success, treatment_effort, medication_effect, random_selection) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
-                [session['ratings'].get(q['id']) for q in questions])
+                UPDATE user_responses
+                SET save_life_years = ?, advantage_disadvantaged = ?, benefit_future = ?, first_come = ?,
+                    treatment_success = ?, treatment_effort = ?, medication_effect = ?, random_selection = ?
+                WHERE id = (SELECT MAX(id) FROM user_responses)
+            ''', [
+                session['ratings'].get('save_life_years'),
+                session['ratings'].get('advantage_disadvantaged'),
+                session['ratings'].get('benefit_future'),
+                session['ratings'].get('first_come'),
+                session['ratings'].get('treatment_success'),
+                session['ratings'].get('treatment_effort'),
+                session['ratings'].get('medication_effect'),
+                session['ratings'].get('random_selection'),
+            ])
             conn.commit()
             conn.close()
 
-            # Clear session and redirect to demographic page
+            # Clear the ratings session data
             session.pop('ratings', None)
             return redirect('/demography')
 
         # Redirect to the next question
         return redirect(f'/procedural-ratings?index={next_index}')
 
-    # Get the current question based on index
+    # Get the current question based on the index in the query parameter
     current_index = int(request.args.get('index', 0))
     question = questions[current_index]
-
     return render_template('procedural_ratings.html', question=question, index=current_index)
 
 
 @app.route('/demography', methods=['GET', 'POST'])
 def demography():
-    # Define demographic questions
+    # List of demographic questions with short IDs and full labels
     questions = [
         {
             "id": "gender",
@@ -212,50 +263,52 @@ def demography():
     ]
 
     if request.method == 'POST':
-        # Save the current question's answer
+        # Get the current question's ID and user's response
         question_id = request.form.get('question_id')
         answer = request.form.get('answer')
 
+        # Initialize session for demographic answers if not already done
         if 'demography_answers' not in session:
             session['demography_answers'] = {}
 
+        # Store the response using the question's ID
         session['demography_answers'][question_id] = answer
 
-        # Determine the next question index
-        current_index = int(request.form.get('current_index', 0))
+        # Move to the next question
+        current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1)
         next_index = current_index + 1
 
         if next_index >= len(questions):
-            # Save all answers to the database when all questions are answered
+            # Save all responses to the database
             conn = get_db_connection()
             conn.execute('''
-                INSERT INTO demography (gender, age, religion, other_religion)
-                VALUES (?, ?, ?, ?)''',
-                (
-                    session['demography_answers'].get('gender'),
-                    session['demography_answers'].get('age'),
-                    session['demography_answers'].get('religion'),
-                    session['demography_answers'].get('other_religion')
-                )
-            )
+                UPDATE user_responses
+                SET gender = ?, age = ?, religion = ?
+                WHERE id = (SELECT MAX(id) FROM user_responses)
+            ''', [
+                session['demography_answers'].get('gender'),
+                session['demography_answers'].get('age'),
+                session['demography_answers'].get('religion'),
+            ])
             conn.commit()
             conn.close()
 
-            session.pop('demography_answers', None)  # Clear session answers
+            # Clear the demographic answers session data
+            session.pop('demography_answers', None)
             return redirect('/group-preferences')
 
         # Redirect to the next question
         return redirect(f'/demography?index={next_index}')
 
-    # Get the current question index
+    # Get the current question based on the index in the query parameter
     current_index = int(request.args.get('index', 0))
     question = questions[current_index]
-
     return render_template('demography.html', question=question, index=current_index)
 
-# Route for group-related preferences page
+
 @app.route('/group-preferences', methods=['GET', 'POST'])
 def group_preferences():
+    # List of group preference questions with short IDs and full labels
     questions = [
         {
             "id": "general_health",
@@ -278,40 +331,50 @@ def group_preferences():
     ]
 
     if request.method == 'POST':
-        # Save the current question's answer
+        # Get the current question's ID and user's response
         question_id = request.form.get('question_id')
         answer = request.form.get('answer')
 
+        # Initialize session for group preferences if not already done
         if 'preferences' not in session:
             session['preferences'] = {}
 
+        # Store the response using the question's ID
         session['preferences'][question_id] = answer
 
-        # Determine the next question index
-        current_index = int(request.form.get('current_index', 0))
+        # Move to the next question
+        current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1)
         next_index = current_index + 1
 
         if next_index >= len(questions):
-            # Save all answers to the database when all questions are answered
-            conn = get_db_connection()
-            conn.execute(
-                '''
-                INSERT INTO group_preferences (general_health, illness, children)
-                VALUES (?, ?, ?)
-                ''',
-                [session['preferences'].get(q['id']) for q in questions]
-            )
-            conn.commit()
-            conn.close()
-            session.pop('preferences', None)  # Clear session preferences
-            return redirect('/thank-you')
-        else:
-            return redirect(f'/group-preferences?index={next_index}')
+            # Save all responses to the database
+            try:
+                conn = get_db_connection()
+                conn.execute('''
+                    UPDATE user_responses
+                    SET general_health = ?, illness = ?, children = ?
+                    WHERE id = (SELECT MAX(id) FROM user_responses)
+                ''', [
+                    session['preferences'].get('general_health'),
+                    session['preferences'].get('illness'),
+                    session['preferences'].get('children'),
+                ])
+                conn.commit()
+                conn.close()
+            except Exception as e:
+                print(f"Error saving group preferences: {e}")
+                return "An error occurred while saving your responses. Please try again."
 
-    # Get the current question index
+            # Clear the session preferences data
+            session.pop('preferences', None)
+            return redirect('/thank-you')
+
+        # Redirect to the next question
+        return redirect(f'/group-preferences?index={next_index}')
+
+    # Get the current question based on the index in the query parameter
     current_index = int(request.args.get('index', 0))
     question = questions[current_index]
-
     return render_template('group_preferences.html', question=question, index=current_index)
 
 
@@ -340,25 +403,56 @@ def admin():
     return render_template('admin_login.html', language=session.get('language'))
 
 
-# Route to view survey results (admin only)
 @app.route('/results')
 def results():
     if 'admin' in session:
+        # Connect to the database
         conn = get_db_connection()
-        choices = conn.execute('SELECT * FROM choices').fetchall()
-        procedural_ratings = conn.execute('SELECT * FROM procedural_ratings').fetchall()
-        demography = conn.execute('SELECT * FROM demography').fetchall()
-        group_preferences = conn.execute('SELECT * FROM group_preferences').fetchall()
+
+        # Fetch all user responses
+        user_responses = conn.execute('SELECT * FROM user_responses').fetchall()
         conn.close()
 
-        return render_template('results.html',
-                               choices=choices,
-                               procedural_ratings=procedural_ratings,
-                               demography=demography,
-                               group_preferences=group_preferences,
-                               language=session.get('language'))
-    else:
-        return redirect('/admin')
+        # Render the results page with user responses
+        return render_template('results.html', user_responses=user_responses)
+
+    # If the user is not logged in as admin, redirect to admin login
+    return redirect('/admin')
+
+from flask import Response
+import csv
+
+@app.route('/download-csv')
+def download_csv():
+    if 'admin' in session:
+        # Connect to the database
+        conn = get_db_connection()
+        user_responses = conn.execute('SELECT * FROM user_responses').fetchall()
+        conn.close()
+
+        # Prepare the CSV content
+        def generate_csv():
+            # Create a CSV output
+            output = []
+            # Write header row (column names)
+            output.append(",".join([key for key in user_responses[0].keys()]))
+
+            # Write each row
+            for row in user_responses:
+                output.append(",".join([str(row[key]) for key in row.keys()]))
+
+            return "\n".join(output)
+
+        # Generate the CSV content
+        csv_content = generate_csv()
+
+        # Create a Response object for the CSV file
+        response = Response(csv_content, mimetype='text/csv')
+        response.headers.set("Content-Disposition", "attachment", filename="survey_results.csv")
+        return response
+
+    return redirect('/admin')  # Redirect to admin login if not logged in
+
 
 
 # Route to logout admin

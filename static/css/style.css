@@ -137,13 +137,13 @@ label, p {
 }
 
 .patient img {
-    margin-bottom: 5px; /* Space between the image and the label */
-    border-radius: 10px;
-    cursor: pointer;
     width: 150px;
     height: 150px;
+    border-radius: 10px;
+    cursor: pointer;
     transition: transform 0.2s ease;
 }
+
 
 .patient img:hover {
     transform: scale(1.1);
@@ -413,6 +413,54 @@ p {
     background-color: #0056b3;
     transform: scale(1.05);
 }
+
+.result-container {
+    overflow-x: auto;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.result-table th, .result-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.result-table th {
+    background-color: #f2f2f2;
+}
+
+.download-container {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.download-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 6px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.download-button i {
+    margin-right: 8px;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
 
 /* Adjustments for Mobile */
 @media (max-width: 768px) {

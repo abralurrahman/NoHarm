@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconsider Decision</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="reconsider-container">
+        <h1>A data-driven computer model suggests:</h1>
+        <p>The recommended patient for treatment is:</p>
+
+        {% if reconsider_image %}
+        <img src="{{ url_for('static', filename=reconsider_image) }}" 
+             alt="Recommended Patient">
+        {% else %}
+        <p>No selection made.</p>
+        {% endif %}
+
+        <form method="POST" action="/reconsider-decision">
+            <p>Would you like to change your decision?</p>
+            <button type="submit" name="reconsider" value="yes">Yes</button>
+            <button type="submit" name="reconsider" value="no">No</button>
+        </form>
+    </div>
+</body>
+</html>
