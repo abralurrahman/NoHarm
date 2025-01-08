@@ -25,47 +25,25 @@
     </select>
 </div>
 
-
 <div class="result-container">
-    <h1 id="result-title">Survey Results</h1>
 
-    <!-- Choices Data with IP and Geolocation -->
-    <h2>Patient Choices</h2>
+    <!-- Download button -->
+    <div class="download-container">
+        <a href="{{ url_for('download_csv') }}" class="download-button">
+            <i class="fas fa-file-csv"></i> Download Survey Results (CSV)
+        </a>
+    </div>
+
+    <!-- User Responses Data -->
+    <h2>User Responses</h2>
     <table border="1" class="result-table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Patient Choice 1</th>
-                <th>Patient Choice 2</th>
-                <th>Patient Choice 3</th>
-                <th>IP Address</th>
-                <th>City</th>
-                <th>Region</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for choice in choices %}
-            <tr>
-                <td>{{ choice['id'] }}</td>
-                <td>{{ choice['patient_choice_1'] }}</td>
-                <td>{{ choice['patient_choice_2'] }}</td>
-                <td>{{ choice['patient_choice_3'] }}</td>
-                <td>{{ choice['ip_address'] }}</td>
-                <td>{{ choice['city'] }}</td>
-                <td>{{ choice['region'] }}</td>
-                <td>{{ choice['country'] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <!-- Procedural Ratings Data -->
-    <h2>Procedural Ratings</h2>
-    <table border="1" class="result-table">
-        <thead>
-            <tr>
-                <th>ID</th>
+                <th>Choice 1</th>
+                <th>Choice 2</th>
+                <th>Choice 3</th>
+                <th>Reconsider Choice</th>
                 <th>Save Life Years</th>
                 <th>Advantage Disadvantaged</th>
                 <th>Benefit Future</th>
@@ -74,68 +52,44 @@
                 <th>Treatment Effort</th>
                 <th>Medication Effect</th>
                 <th>Random Selection</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for rating in procedural_ratings %}
-            <tr>
-                <td>{{ rating['id'] }}</td>
-                <td>{{ rating['save_life_years'] }}</td>
-                <td>{{ rating['advantage_disadvantaged'] }}</td>
-                <td>{{ rating['benefit_future'] }}</td>
-                <td>{{ rating['first_come'] }}</td>
-                <td>{{ rating['treatment_success'] }}</td>
-                <td>{{ rating['treatment_effort'] }}</td>
-                <td>{{ rating['medication_effect'] }}</td>
-                <td>{{ rating['random_selection'] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <!-- Demography Data -->
-    <h2>Demography Data</h2>
-    <table border="1" class="result-table">
-        <thead>
-            <tr>
-                <th>ID</th>
                 <th>Gender</th>
                 <th>Age</th>
                 <th>Religion</th>
-                <th>Other Religion</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for demo in demography %}
-            <tr>
-                <td>{{ demo['id'] }}</td>
-                <td>{{ demo['gender'] }}</td>
-                <td>{{ demo['age'] }}</td>
-                <td>{{ demo['religion'] }}</td>
-                <td>{{ demo['other_religion'] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <!-- Group Preferences Data -->
-    <h2>Group Preferences</h2>
-    <table border="1" class="result-table">
-        <thead>
-            <tr>
-                <th>ID</th>
                 <th>General Health</th>
-                <th>Illness in Last Year</th>
-                <th>Children/Planning to Have Children</th>
+                <th>Illness</th>
+                <th>Children</th>
+                <th>IP Address</th>
+                <th>City</th>
+                <th>Region</th>
+                <th>Country</th>
             </tr>
         </thead>
         <tbody>
-            {% for group in group_preferences %}
+            {% for response in user_responses %}
             <tr>
-                <td>{{ group['id'] }}</td>
-                <td>{{ group['general_health'] }}</td>
-                <td>{{ group['illness'] }}</td>
-                <td>{{ group['children'] }}</td>
+                <td>{{ response['id'] }}</td>
+                <td>{{ response['choice1'] }}</td>
+                <td>{{ response['choice2'] }}</td>
+                <td>{{ response['choice3'] }}</td>
+                <td>{{ response['reconsider_choice'] }}</td>
+                <td>{{ response['save_life_years'] }}</td>
+                <td>{{ response['advantage_disadvantaged'] }}</td>
+                <td>{{ response['benefit_future'] }}</td>
+                <td>{{ response['first_come'] }}</td>
+                <td>{{ response['treatment_success'] }}</td>
+                <td>{{ response['treatment_effort'] }}</td>
+                <td>{{ response['medication_effect'] }}</td>
+                <td>{{ response['random_selection'] }}</td>
+                <td>{{ response['gender'] }}</td>
+                <td>{{ response['age'] }}</td>
+                <td>{{ response['religion'] }}</td>
+                <td>{{ response['general_health'] }}</td>
+                <td>{{ response['illness'] }}</td>
+                <td>{{ response['children'] }}</td>
+                <td>{{ response['ip_address'] }}</td>
+                <td>{{ response['city'] }}</td>
+                <td>{{ response['region'] }}</td>
+                <td>{{ response['country'] }}</td>
             </tr>
             {% endfor %}
         </tbody>
