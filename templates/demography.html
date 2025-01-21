@@ -7,29 +7,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-
-<!-- Language switcher in the corner -->
-<div class="language-switcher">
-    <select id="language-switcher">
-        <option value="ar">العربية</option>
-        <option value="bn">বাংলা</option>
-        <option value="zh">中文</option>
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-        <option value="hi">हिन्दी</option>
-        <option value="ja">日本語</option>
-        <option value="ru">Русский</option>
-        <option value="es">Español</option>
-        <option value="ur">اردو</option>
-    </select>
-</div>
-
+    <!-- Language switcher in the corner -->
+    <div class="language-switcher">
+        <select id="language-switcher">
+            <option value="ar">العربية</option>
+            <option value="bn">বাংলা</option>
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="hi">हिन्दी</option>
+            <option value="ja">日本語</option>
+            <option value="ru">Русский</option>
+            <option value="es">Español</option>
+            <option value="ur">اردو</option>
+        </select>
+    </div>
 
     <div class="demography-container">
         <p id="demography-intro">Please answer the following questions one at a time.</p>
 
-        <form method="POST" action="/demography">
+        <form method="POST" action="/demography" id="demography-form">
             <input type="hidden" name="question_id" value="{{ question.id }}">
             <input type="hidden" name="current_index" value="{{ index }}">
 
@@ -38,14 +36,14 @@
                 {% if question.type == "radio" %}
                     {% for option in question.options %}
                         <div class="radio-container">
-                            <input type="radio" name="answer" id="{{ option.value }}" value="{{ option.value }}">
+                            <input type="radio" name="answer" id="{{ option.value }}" value="{{ option.value }}" >
                             <label for="{{ option.value }}">{{ option.label }}</label>
                         </div>
                     {% endfor %}
                 {% elif question.type == "text" %}
-                    <input type="text" name="answer" placeholder="{{ question.placeholder }}">
+                    <input type="text" name="answer" placeholder="{{ question.placeholder }}" >
                 {% elif question.type == "number" %}
-                    <input type="number" name="answer" placeholder="{{ question.placeholder }}">
+                    <input type="number" name="answer" id="age-input" placeholder="{{ question.placeholder }}" min="16" max="120" >
                 {% endif %}
             </div>
 
@@ -53,6 +51,5 @@
         </form>
     </div>
 
-    <script src="{{ url_for('static', filename='js/language.js') }}"></script>
 </body>
 </html>

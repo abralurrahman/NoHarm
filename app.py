@@ -286,6 +286,15 @@ def demography():
         question_id = request.form.get('question_id')
         answer = request.form.get('answer')
 
+        # Validate age if the question is about age
+        if question_id == "age":
+            try:
+                age = int(answer)
+                if age < 16 or age > 120:
+                    return "Invalid age. Please enter a value between 16 and 120.", 400
+            except ValueError:
+                return "Invalid age input. Please enter a number.", 400
+
         # Initialize session for demographic answers if not already done
         if 'demography_answers' not in session:
             session['demography_answers'] = {}
@@ -300,6 +309,14 @@ def demography():
         if next_index >= len(questions):
             # Save all responses to the database
             conn = get_db_connection()
+
+            # Insert a row if no entry exists
+            cursor = conn.cursor()
+            cursor.execute('SELECT COUNT(*) FROM user_responses')
+            if cursor.fetchone()[0] == 0:
+                cursor.execute('INSERT INTO user_responses DEFAULT VALUES')
+
+            # Update the existing row with demographic answers
             conn.execute('''
                 UPDATE user_responses
                 SET gender = ?, age = ?, religion = ?
@@ -437,9 +454,6 @@ def results():
 
     # If the user is not logged in as admin, redirect to admin login
     return redirect('/admin')
-
-from flask import Response
-import csv
 
 @app.route('/download-csv')
 def download_csv():
