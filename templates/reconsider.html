@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choice Experiment</title>
+    <title>Reconsider Decision</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -24,26 +24,30 @@
         </select>
     </div>
 
-    <div class="choice-container">
-        <h2>Decision {{ page }}</h2>
-        <p>Which of the patients shown below should be treated?</p>
+    <div class="popup-container">
+        <h1>A data-driven tool suggests</h1>
+        <p>The recommended patient for treatment is:</p>
+        {% if reconsider_image %}
+        <div class="recommended-patient">
+            <img src="{{ url_for('static', filename=reconsider_image) }}" alt="Recommended Patient">
+            <p>{{ opposite_image_description }}</p>
+        </div>
+        {% else %}
+        <p>No recommendation available.</p>
+        {% endif %}
+        <p>You can reconsider your decision by clciking below:</p>
         <div class="patients">
             {% for image in images %}
-            <div class="patient">
-                <img src="{{ url_for('static', filename=image['filename']) }}" 
-                     alt="Patient {{ loop.index }}" 
-                     onclick="submitChoice('{{ image['filename'] }}')"
-                     style="cursor:pointer;">
-                <div class="hover-text">{{ image['description'] }}</div>
-            </div>
+            <form method="POST" action="/reconsider" style="display:inline-block;">
+                <input type="hidden" name="selected_image" value="{{ image['filename'] }}">
+                <button type="submit" style="border:none;background:none;">
+                    <img src="{{ url_for('static', filename=image['filename']) }}" 
+                         alt="{{ image['description'] }}" 
+                         style="cursor:pointer; max-width:200px;">
+                </button>
+            </form>
             {% endfor %}
         </div>
     </div>
-
-    <form id="choice-form" method="POST" action="/choice-experiment">
-        <input type="hidden" name="selected_image" id="selected-image">
-    </form>
-
-    <script src="{{ url_for('static', filename='js/choice.js') }}"></script>
 </body>
 </html>
