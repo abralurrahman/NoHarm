@@ -1,6 +1,5 @@
 
-from flask import Flask, render_template, request, redirect, session, url_for
-from flask import Response
+from flask import Flask, render_template, request, redirect, session, Response, url_for
 import csv
 import sqlite3
 import random
@@ -47,24 +46,24 @@ def change_language():
 def submit():
     consent = request.form.get('consent')
     if consent == 'yes':
-        # Reset session variables for a new survey
+        # Insert a new row into the database for the new user
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO user_responses (id) VALUES (NULL)')
+        session['user_id'] = cursor.lastrowid
+        conn.commit()
+        conn.close()
+
+        # Reset session variables for the new survey
         session['selected_images'] = []
         session['current_page'] = 1
         session['popup_triggered'] = False  # Ensure pop-up can show again
         session.pop('stored_images', None)  # Clear stored images
+
         return redirect('/choice-experiment')
     else:
         return redirect('/no-consent')
 
-
-@app.route('/start-survey')
-def start_survey():
-    session.clear()  # Clear all previous session variables
-    session['selected_images'] = []  # List of selected images
-    session['popup_triggered'] = False  # Popup has not yet been triggered
-    session['popup_shown_set'] = random.randint(1, 3)  # Randomly choose one set for the popup
-    session['stored_images'] = None  # Reset stored images
-    return redirect('/choice-experiment')  # Redirect to the choice experiment
 
 
 IMAGES = [
@@ -95,6 +94,9 @@ for image in IMAGES:
 
 @app.route('/choice-experiment', methods=['GET', 'POST'])
 def choice_experiment():
+    if 'user_id' not in session:
+        return redirect('/')
+
     # Initialize session variables if not already set
     if 'selected_images' not in session:
         session['selected_images'] = []
@@ -111,17 +113,27 @@ def choice_experiment():
         # Save the selected image in session
         session['selected_images'].append(selected_image)
 
+        # Save to the database immediately
+        conn = get_db_connection()
+        conn.execute(f'''
+            UPDATE user_responses
+            SET choice{len(session["selected_images"])} = ?
+            WHERE id = ?
+        ''', (selected_image, session['user_id']))
+        conn.commit()
+        conn.close()
+
         # Handle the popup logic
-        current_set_number = len(session['selected_images'])  # Determine the current set number
+        current_set_number = len(session['selected_images'])
         if current_set_number == session['popup_shown_set'] and not session['popup_triggered']:
             session['popup_triggered'] = True
-            session['stored_images'] = session['current_images']  # Store current images for reconsideration
+            session['stored_images'] = session['current_images']
             session['opposite_image'] = (
                 session['current_images'][1]
                 if session['current_images'][0] == selected_image
                 else session['current_images'][0]
             )
-            return redirect('/reconsider')  # Redirect to the reconsideration page
+            return redirect('/reconsider')
 
         # Redirect to procedural ratings if this was the last set (3 sets assumed)
         if len(session['selected_images']) >= 3:
@@ -129,22 +141,16 @@ def choice_experiment():
 
     # Reload the same images if the popup was triggered
     if session['popup_triggered'] and session['stored_images']:
-        images = [
-            next(img for img in IMAGES if img["filename"] == session['stored_images'][0]),
-            next(img for img in IMAGES if img["filename"] == session['stored_images'][1]),
-        ]
+        images = session['stored_images']
     else:
-        # Select two random images from the available ones
-        used_images = set(session.get('selected_images', []))
-        available_images = [img for img in IMAGES if img["filename"] not in used_images]
-
+        available_images = [img for img in IMAGES if img["filename"] not in session.get('selected_images', [])]
         if len(available_images) < 2:
             return redirect('/procedural-ratings')  # No more images, go to ratings
 
         images = random.sample(available_images, 2)
-        session['current_images'] = [img["filename"] for img in images]  # Store the current pair
+        session['current_images'] = [img["filename"] for img in images]
 
-    return render_template('choice_experiment.html', images=images, page=len(session['selected_images']) + 1)
+    return render_template('choice_experiment.html', images=images)
 
 
 
@@ -156,6 +162,16 @@ def reconsider():
 
         # Update the last selected image with the reconsidered choice
         session['selected_images'][-1] = final_choice
+
+        # Save the reconsidered choice to the database immediately
+        conn = get_db_connection()
+        conn.execute('''
+            UPDATE user_responses
+            SET reconsider_choice = ?
+            WHERE id = ?
+        ''', (final_choice, session['user_id']))
+        conn.commit()
+        conn.close()
 
         # If this is the last set, redirect to ratings
         if len(session['selected_images']) >= 3:
@@ -183,6 +199,7 @@ def reconsider():
         ]
     )
 
+
 @app.route('/procedural-ratings', methods=['GET', 'POST'])
 def procedural_ratings():
     # List of questions with short IDs and full labels
@@ -201,41 +218,35 @@ def procedural_ratings():
         question_id = request.form.get('question_id')
         rating = request.form.get('rating')
 
-        # Store ratings in session
-        if 'ratings' not in session:
-            session['ratings'] = {}
+        # Save the response to the database immediately
+        conn = get_db_connection()
 
-        session['ratings'][question_id] = rating
-
-        # Save to database when all questions are completed
-        if len(session['ratings']) == len(questions):
-            conn = get_db_connection()
-            conn.execute('''
-                UPDATE user_responses
-                SET save_life_years = ?, advantage_disadvantaged = ?, benefit_future = ?, first_come = ?,
-                    treatment_success = ?, treatment_effort = ?, medication_effect = ?, random_selection = ?
-                WHERE id = (SELECT MAX(id) FROM user_responses)
-            ''', [
-                session['ratings'].get('save_life_years'),
-                session['ratings'].get('advantage_disadvantaged'),
-                session['ratings'].get('benefit_future'),
-                session['ratings'].get('first_come'),
-                session['ratings'].get('treatment_success'),
-                session['ratings'].get('treatment_effort'),
-                session['ratings'].get('medication_effect'),
-                session['ratings'].get('random_selection'),
-            ])
+        # Insert a row for the user if it doesn't already exist
+        if 'user_id' not in session:
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO user_responses DEFAULT VALUES')
+            session['user_id'] = cursor.lastrowid
             conn.commit()
-            conn.close()
 
-            session.pop('ratings', None)
-            return redirect('/demography')
+        # Update the specific procedural rating response
+        conn.execute(f'''
+            UPDATE user_responses
+            SET {question_id} = ?
+            WHERE id = ?
+        ''', (rating, session['user_id']))
+        conn.commit()
+        conn.close()
 
         # Move to the next question
-        current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1) + 1
-        if current_index >= len(questions):
-            return redirect('/demography')  # Redirect to demography if all questions are answered
-        return redirect(f'/procedural-ratings?index={current_index}')
+        current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1)
+        next_index = current_index + 1
+
+        # Redirect to the next section if all questions are answered
+        if next_index >= len(questions):
+            return redirect('/demography')
+
+        # Redirect to the next question
+        return redirect(f'/procedural-ratings?index={next_index}')
 
     # Get the current question based on the index in the query parameter
     current_index = int(request.args.get('index', 0))
@@ -295,42 +306,32 @@ def demography():
             except ValueError:
                 return "Invalid age input. Please enter a number.", 400
 
-        # Initialize session for demographic answers if not already done
-        if 'demography_answers' not in session:
-            session['demography_answers'] = {}
+        # Save the response to the database immediately
+        conn = get_db_connection()
 
-        # Store the response using the question's ID
-        session['demography_answers'][question_id] = answer
+        # Insert a row for this user if it doesn't already exist
+        if 'user_id' not in session:
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO user_responses DEFAULT VALUES')
+            session['user_id'] = cursor.lastrowid
+            conn.commit()
+
+        # Update the specific demographic response
+        if question_id in ['gender', 'age', 'religion']:
+            conn.execute(f'''
+                UPDATE user_responses
+                SET {question_id} = ?
+                WHERE id = ?
+            ''', (answer, session['user_id']))
+            conn.commit()
+        conn.close()
 
         # Move to the next question
         current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1)
         next_index = current_index + 1
 
+        # If all questions are answered, redirect to the next section
         if next_index >= len(questions):
-            # Save all responses to the database
-            conn = get_db_connection()
-
-            # Insert a row if no entry exists
-            cursor = conn.cursor()
-            cursor.execute('SELECT COUNT(*) FROM user_responses')
-            if cursor.fetchone()[0] == 0:
-                cursor.execute('INSERT INTO user_responses DEFAULT VALUES')
-
-            # Update the existing row with demographic answers
-            conn.execute('''
-                UPDATE user_responses
-                SET gender = ?, age = ?, religion = ?
-                WHERE id = (SELECT MAX(id) FROM user_responses)
-            ''', [
-                session['demography_answers'].get('gender'),
-                session['demography_answers'].get('age'),
-                session['demography_answers'].get('religion'),
-            ])
-            conn.commit()
-            conn.close()
-
-            # Clear the demographic answers session data
-            session.pop('demography_answers', None)
             return redirect('/group-preferences')
 
         # Redirect to the next question
@@ -371,38 +372,31 @@ def group_preferences():
         question_id = request.form.get('question_id')
         answer = request.form.get('answer')
 
-        # Initialize session for group preferences if not already done
-        if 'preferences' not in session:
-            session['preferences'] = {}
+        # Save the response to the database immediately
+        conn = get_db_connection()
 
-        # Store the response using the question's ID
-        session['preferences'][question_id] = answer
+        # Insert a row for the user if it doesn't already exist
+        if 'user_id' not in session:
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO user_responses DEFAULT VALUES')
+            session['user_id'] = cursor.lastrowid
+            conn.commit()
+
+        # Update the specific group preference response
+        conn.execute(f'''
+            UPDATE user_responses
+            SET {question_id} = ?
+            WHERE id = ?
+        ''', (answer, session['user_id']))
+        conn.commit()
+        conn.close()
 
         # Move to the next question
         current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1)
         next_index = current_index + 1
 
+        # Redirect to the thank-you page if all questions are answered
         if next_index >= len(questions):
-            # Save all responses to the database
-            try:
-                conn = get_db_connection()
-                conn.execute('''
-                    UPDATE user_responses
-                    SET general_health = ?, illness = ?, children = ?
-                    WHERE id = (SELECT MAX(id) FROM user_responses)
-                ''', [
-                    session['preferences'].get('general_health'),
-                    session['preferences'].get('illness'),
-                    session['preferences'].get('children'),
-                ])
-                conn.commit()
-                conn.close()
-            except Exception as e:
-                print(f"Error saving group preferences: {e}")
-                return "An error occurred while saving your responses. Please try again."
-
-            # Clear the session preferences data
-            session.pop('preferences', None)
             return redirect('/thank-you')
 
         # Redirect to the next question
@@ -412,6 +406,7 @@ def group_preferences():
     current_index = int(request.args.get('index', 0))
     question = questions[current_index]
     return render_template('group_preferences.html', question=question, index=current_index)
+
 
 
 # Route to thank users after survey submission
@@ -442,18 +437,30 @@ def admin():
 @app.route('/results')
 def results():
     if 'admin' in session:
-        # Connect to the database
-        conn = get_db_connection()
+        try:
+            # Connect to the database
+            conn = get_db_connection()
 
-        # Fetch all user responses
-        user_responses = conn.execute('SELECT * FROM user_responses').fetchall()
-        conn.close()
+            # Check if the `user_responses` table exists
+            conn.execute("SELECT 1 FROM user_responses LIMIT 1;")
 
-        # Render the results page with user responses
-        return render_template('results.html', user_responses=user_responses)
+            # Fetch all user responses
+            user_responses = conn.execute('SELECT * FROM user_responses').fetchall()
+            conn.close()
+
+            # Render the results page with user responses
+            return render_template('results.html', user_responses=user_responses)
+
+        except sqlite3.OperationalError as e:
+            # Handle the case where the table does not exist
+            if "no such table" in str(e):
+                return "Error: The 'user_responses' table does not exist. Please ensure the database is initialized.", 500
+            else:
+                return f"Database error: {str(e)}", 500
 
     # If the user is not logged in as admin, redirect to admin login
     return redirect('/admin')
+
 
 @app.route('/download-csv')
 def download_csv():
