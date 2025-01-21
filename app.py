@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask import Response
 import csv
@@ -42,28 +43,50 @@ def change_language():
     return redirect(request.referrer)  # Redirect back to the page the user was on
 
 
-# Route to handle consent and redirect to choice experiment page or no consent page
 @app.route('/submit', methods=['POST'])
 def submit():
     consent = request.form.get('consent')
     if consent == 'yes':
-        session['selected_images'] = []  # Initialize session to track shown images
-        session['current_page'] = 1  # Start with the first page
+        # Reset session variables for a new survey
+        session['selected_images'] = []
+        session['current_page'] = 1
+        session['popup_triggered'] = False  # Ensure pop-up can show again
+        session.pop('stored_images', None)  # Clear stored images
         return redirect('/choice-experiment')
     else:
         return redirect('/no-consent')
 
+
+@app.route('/start-survey')
+def start_survey():
+    session.clear()  # Clear all previous session variables
+    session['selected_images'] = []  # List of selected images
+    session['popup_triggered'] = False  # Popup has not yet been triggered
+    session['popup_shown_set'] = random.randint(1, 3)  # Randomly choose one set for the popup
+    session['stored_images'] = None  # Reset stored images
+    return redirect('/choice-experiment')  # Redirect to the choice experiment
+
+
 IMAGES = [
-    {"filename": "child_simple.jpg", "description": "Child"},
-    {"filename": "Disability.jpg", "description": "Person with Disability"},
-    {"filename": "old_male_female_simpler.jpg", "description": "Elderly Couple"},
-    {"filename": "Overweight_simpler.jpg", "description": "Overweight Person"},
-    {"filename": "test_0_0_1_1_0.jpg", "description": "Test Image 1"},
-    {"filename": "test_0_0_2_3_1.jpg", "description": "Test Image 2"},
-    {"filename": "test_0_2_3_3_2.jpg", "description": "Test Image 3"},
-    {"filename": "test_1_0_3_2_0.jpg", "description": "Test Image 4"},
-    {"filename": "test_1_3_2_2_1.jpg", "description": "Test Image 5"}
+    {"id": 1, "filename": "child_simple.jpg", "description": "Child"},
+    {"id": 2, "filename": "Disability.jpg", "description": "Person with Disability"},
+    {"id": 3, "filename": "old_male_female_simpler.jpg", "description": "Elderly Couple"},
+    {"id": 4, "filename": "Overweight_simpler.jpg", "description": "Overweight Person"},
+    {"id": 5, "filename": "test_0_0_1_1_0.jpg", "description": "Test Image 1"},
+    {"id": 6, "filename": "test_0_0_2_3_1.jpg", "description": "Test Image 2"},
+    {"id": 7, "filename": "test_0_2_3_3_2.jpg", "description": "Test Image 3"},
+    {"id": 8, "filename": "test_1_0_3_2_0.jpg", "description": "Test Image 4"},
+    {"id": 9, "filename": "test_1_3_2_2_1.jpg", "description": "Test Image 5"},
+    {"id": 10, "filename": "Patient_at_Laptop_with_Head_Bandage.png", "description": "Patient at Laptop with Head Bandage"},
+    {"id": 11, "filename": "Patient_on_a_Stretcher.png", "description": "Patient on a Stretcher"},
+    {"id": 12, "filename": "Patient_with_Arm_Sling.png", "description": "Patient with Arm Sling"},
+    {"id": 13, "filename": "Patient_with_IV_and_Arm_Sling.jpg", "description": "Patient with IV and Arm Sling"},
+    {"id": 14, "filename": "Patient_with_IV_Drip.png", "description": "Patient with IV Drip"},
+    {"id": 15, "filename": "pregnant_woman_care.webp", "description": "Pregnant Woman Care"},
+    {"id": 16, "filename": "Pregnant_woman_lying_on_hospital_bed.png", "description": "Pregnant Woman Lying on Hospital Bed"},
+    {"id": 17, "filename": "Walking_Patient_with_Crutches.jpg", "description": "Walking Patient with Crutches"}
 ]
+
 
 # Update the filename paths to use the resized directory
 for image in IMAGES:
@@ -72,128 +95,120 @@ for image in IMAGES:
 
 @app.route('/choice-experiment', methods=['GET', 'POST'])
 def choice_experiment():
+    # Initialize session variables if not already set
+    if 'selected_images' not in session:
+        session['selected_images'] = []
+    if 'popup_triggered' not in session:
+        session['popup_triggered'] = False
+    if 'popup_shown_set' not in session:
+        session['popup_shown_set'] = random.randint(1, 3)  # Randomly select one set for popup
+    if 'stored_images' not in session:
+        session['stored_images'] = None  # Initialize storage for popup images
+
     if request.method == 'POST':
-        # Store the selected image in the session
         selected_image = request.form.get('selected_image')
-        if 'selected_images' not in session:
-            session['selected_images'] = []
+
+        # Save the selected image in session
         session['selected_images'].append(selected_image)
 
-        # Redirect to the reconsideration page after three decisions
-        if len(session['selected_images']) >= 3:
-            return redirect('/reconsider-decision')
-
-        # Increment the page counter
-        session['current_page'] += 1
-
-    # Determine the current decision pair number (1, 2, or 3)
-    page = session.get('current_page', 1)
-
-    # Select two random images that haven't been used yet
-    used_images = set(session.get('selected_images', []))
-    available_images = [img for img in IMAGES if img["filename"] not in used_images]
-
-    # Ensure exactly two images are available for the pair
-    if len(available_images) >= 2:
-        images = random.sample(available_images, 2)
-    else:
-        return redirect('/reconsider-decision')  # Fallback if fewer than two images are available
-
-    return render_template('choice_experiment.html', images=images, page=page)
-@app.route('/reconsider-decision', methods=['GET', 'POST'])
-def reconsider_decision():
-    if request.method == 'POST':
-        # Retrieve the reconsideration choice from the form
-        reconsider_choice = request.form.get('reconsider')
-
-        # Save the user's decisions into the database
-        conn = get_db_connection()
-        conn.execute(
-            '''
-            INSERT INTO user_responses (choice1, choice2, choice3, reconsider_choice)
-            VALUES (?, ?, ?, ?)
-            ''',
-            (
-                session['selected_images'][0] if len(session['selected_images']) > 0 else None,
-                session['selected_images'][1] if len(session['selected_images']) > 1 else None,
-                session['selected_images'][2] if len(session['selected_images']) > 2 else None,
-                reconsider_choice
+        # Handle the popup logic
+        current_set_number = len(session['selected_images'])  # Determine the current set number
+        if current_set_number == session['popup_shown_set'] and not session['popup_triggered']:
+            session['popup_triggered'] = True
+            session['stored_images'] = session['current_images']  # Store current images for reconsideration
+            session['opposite_image'] = (
+                session['current_images'][1]
+                if session['current_images'][0] == selected_image
+                else session['current_images'][0]
             )
-        )
-        conn.commit()
-        conn.close()
+            return redirect('/reconsider')  # Redirect to the reconsideration page
 
-        # Redirect based on the reconsideration choice
-        if reconsider_choice == 'yes':
-            return redirect('/choice-experiment')  # Allow the user to change their decision
-        else:
-            return redirect('/procedural-ratings')  # Proceed to the next step
+        # Redirect to procedural ratings if this was the last set (3 sets assumed)
+        if len(session['selected_images']) >= 3:
+            return redirect('/procedural-ratings')
 
-    # Retrieve a random selected image for reconsideration
-    if 'selected_images' in session and session['selected_images']:
-        reconsider_image = random.choice(session['selected_images'])
+    # Reload the same images if the popup was triggered
+    if session['popup_triggered'] and session['stored_images']:
+        images = [
+            next(img for img in IMAGES if img["filename"] == session['stored_images'][0]),
+            next(img for img in IMAGES if img["filename"] == session['stored_images'][1]),
+        ]
     else:
-        return redirect('/choice-experiment')  # Fallback if no images were selected
+        # Select two random images from the available ones
+        used_images = set(session.get('selected_images', []))
+        available_images = [img for img in IMAGES if img["filename"] not in used_images]
 
-    # Render the reconsideration page
-    return render_template('reconsider_decision.html', reconsider_image=reconsider_image)
+        if len(available_images) < 2:
+            return redirect('/procedural-ratings')  # No more images, go to ratings
+
+        images = random.sample(available_images, 2)
+        session['current_images'] = [img["filename"] for img in images]  # Store the current pair
+
+    return render_template('choice_experiment.html', images=images, page=len(session['selected_images']) + 1)
+
+
+
+@app.route('/reconsider', methods=['GET', 'POST'])
+def reconsider():
+    if request.method == 'POST':
+        # Get the final reconsidered choice
+        final_choice = request.form.get('selected_image')
+
+        # Update the last selected image with the reconsidered choice
+        session['selected_images'][-1] = final_choice
+
+        # If this is the last set, redirect to ratings
+        if len(session['selected_images']) >= 3:
+            return redirect('/procedural-ratings')
+
+        # Reset the popup state and redirect back to the choice experiment
+        session['popup_triggered'] = False
+        return redirect('/choice-experiment')
+
+    # Render the reconsideration page with stored images
+    stored_images = session.get('stored_images', [])
+    reconsider_image = session.get('opposite_image')
+    opposite_image_description = next(
+        (img["description"] for img in IMAGES if img["filename"] == reconsider_image),
+        "No description available"
+    )
+
+    return render_template(
+        'reconsider.html',
+        reconsider_image=reconsider_image,
+        opposite_image_description=opposite_image_description,
+        images=[
+            next(img for img in IMAGES if img["filename"] == stored_images[0]),
+            next(img for img in IMAGES if img["filename"] == stored_images[1]),
+        ]
+    )
 
 @app.route('/procedural-ratings', methods=['GET', 'POST'])
 def procedural_ratings():
     # List of questions with short IDs and full labels
     questions = [
-        {
-            "id": "save_life_years",
-            "label": "Save the most life years: prioritize those who have the most life years left after overcoming the disease (e.g., treat younger patients first)."
-        },
-        {
-            "id": "advantage_disadvantaged",
-            "label": "Provide advantage to the disadvantaged: prioritize those who are worse off than others (e.g., treat the sickest patients first)."
-        },
-        {
-            "id": "benefit_future",
-            "label": "Benefit to others in the future: prioritize those likely to make contributions to others (e.g., treat patients who have children or plan to)."
-        },
-        {
-            "id": "first_come",
-            "label": "First-come, first-served: prioritize those who were first in line (e.g., treat patients who arrived first at the hospital)."
-        },
-        {
-            "id": "treatment_success",
-            "label": "Maximize treatment success: prioritize those with the highest probability of survival after treatment (e.g., treat patients with the highest chance of recovery)."
-        },
-        {
-            "id": "treatment_effort",
-            "label": "Minimize treatment effort: prioritize those who will be cured with minimum effort (e.g., treat patients who need the least medication)."
-        },
-        {
-            "id": "medication_effect",
-            "label": "Maximize the medication effect: prioritize those where improvement per medication is highest (e.g., treat patients who benefit most from the medication)."
-        },
-        {
-            "id": "random_selection",
-            "label": "Random selection: allocate treatment by lottery (e.g., no individual characteristics considered)."
-        },
+        {"id": "save_life_years", "label": "Save the most life years..."},
+        {"id": "advantage_disadvantaged", "label": "Provide advantage to the disadvantaged..."},
+        {"id": "benefit_future", "label": "Benefit to others in the future..."},
+        {"id": "first_come", "label": "First-come, first-served..."},
+        {"id": "treatment_success", "label": "Maximize treatment success..."},
+        {"id": "treatment_effort", "label": "Minimize treatment effort..."},
+        {"id": "medication_effect", "label": "Maximize the medication effect..."},
+        {"id": "random_selection", "label": "Random selection..."},
     ]
 
     if request.method == 'POST':
-        # Get the current question's ID and user's response
         question_id = request.form.get('question_id')
         rating = request.form.get('rating')
 
-        # Initialize session for ratings if not already done
+        # Store ratings in session
         if 'ratings' not in session:
             session['ratings'] = {}
 
-        # Store the response using the question's ID
         session['ratings'][question_id] = rating
 
-        # Move to the next question
-        current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1)
-        next_index = current_index + 1
-
-        if next_index >= len(questions):
-            # Save all responses to the database
+        # Save to database when all questions are completed
+        if len(session['ratings']) == len(questions):
             conn = get_db_connection()
             conn.execute('''
                 UPDATE user_responses
@@ -213,15 +228,19 @@ def procedural_ratings():
             conn.commit()
             conn.close()
 
-            # Clear the ratings session data
             session.pop('ratings', None)
             return redirect('/demography')
 
-        # Redirect to the next question
-        return redirect(f'/procedural-ratings?index={next_index}')
+        # Move to the next question
+        current_index = next((i for i, q in enumerate(questions) if q['id'] == question_id), -1) + 1
+        if current_index >= len(questions):
+            return redirect('/demography')  # Redirect to demography if all questions are answered
+        return redirect(f'/procedural-ratings?index={current_index}')
 
     # Get the current question based on the index in the query parameter
     current_index = int(request.args.get('index', 0))
+    if current_index >= len(questions):
+        return redirect('/demography')  # Redirect to demography if index exceeds the number of questions
     question = questions[current_index]
     return render_template('procedural_ratings.html', question=question, index=current_index)
 

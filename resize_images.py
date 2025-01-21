@@ -11,7 +11,7 @@ os.makedirs(output_dir, exist_ok=True)
 
 # Loop through all images in the directory
 for filename in os.listdir(image_dir):
-    if filename.endswith(('.jpg', '.jpeg', '.png')):  # Add more formats if needed
+    if filename.endswith(('.jpg', '.jpeg', '.png', '.webp')):  # Add more formats if needed
         img_path = os.path.join(image_dir, filename)
         output_path = os.path.join(output_dir, filename)
 
