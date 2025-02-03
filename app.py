@@ -243,7 +243,7 @@ def procedural_ratings():
 
         # Redirect to the next section if all questions are answered
         if next_index >= len(questions):
-            return redirect('/demography')
+            return redirect('/instructions')
 
         # Redirect to the next question
         return redirect(f'/procedural-ratings?index={next_index}')
@@ -251,9 +251,17 @@ def procedural_ratings():
     # Get the current question based on the index in the query parameter
     current_index = int(request.args.get('index', 0))
     if current_index >= len(questions):
-        return redirect('/demography')  # Redirect to demography if index exceeds the number of questions
+        return redirect('/instructions')  # Redirect to demography if index exceeds the number of questions
     question = questions[current_index]
     return render_template('procedural_ratings.html', question=question, index=current_index)
+
+
+@app.route('/instructions', methods=['GET', 'POST'])
+def instructions():
+    if request.method == 'POST':
+        # Once the user is ready, redirect them to the demography page.
+        return redirect('/demography')
+    return render_template('instructions.html')
 
 
 @app.route('/demography', methods=['GET', 'POST'])

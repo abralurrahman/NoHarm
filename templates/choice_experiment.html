@@ -25,12 +25,11 @@
     </div>
 
     <div class="choice-container">
-        <h2>Decision {{ page }}</h2>
-        <p>Which of the patients shown below should be treated?</p>
+        <p>Not every patient can be treated in a medical emergency. A decision has to be made about which patient to treat and which patient not to treat. Which of the patients shown below should be treated?</p> <br>
         <div class="patients">
             {% for image in images %}
             <div class="patient">
-                <img src="{{ url_for('static', filename=image['filename']) }}" 
+                <img src="{{ url_for('static', filename=image['filename']) }}"
                      alt="Patient {{ loop.index }}" 
                      onclick="submitChoice('{{ image['filename'] }}')"
                      style="cursor:pointer;">
