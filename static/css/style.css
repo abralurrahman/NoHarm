@@ -13,6 +13,13 @@ body {
     transform-origin: top center; /* Ensure the scaling starts from the top center */
 }
 
+.signature {
+    margin-bottom: 0;
+    line-height: 1.4;
+    /* Additional custom styles */
+}
+
+
 .top-space {
     width: 100%;
     height: 60px; /* Space height at the top */
@@ -86,7 +93,7 @@ body {
 
 
 /* Shared Container for all pages */
-.intro-container, .choice-container, .thank-you-container, .login-container, .rating-container, .demography-container, .group-preferences-container, .result-container {
+.intro-container, .choice-container, .instruction-container, .thank-you-container, .login-container, .rating-container, .demography-container, .group-preferences-container, .result-container {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 15px;
@@ -257,6 +264,10 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
     font-family: 'Roboto', sans-serif;
 }
 
+.instruction-container form {
+    text-align: center;
+}
+
 /* Highlighted Text (for procedural ratings) */
 .italic-text {
     font-style: italic;
@@ -393,6 +404,11 @@ p {
     border-color: #007bff;
     box-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
 }
+
+.bold-text {
+    font-weight: bold;
+}
+
 
 /* Submit Button */
 .submit-btn {
@@ -601,7 +617,7 @@ p {
         font-size: 1.6em;
     }
 
-    .intro-container, .choice-container,  .thank-you-container, .login-container, .rating-container, .demography-container, .group-preferences-container, .result-container 
+    .intro-container, .choice-container, .instruction-container, .thank-you-container, .login-container, .rating-container, .demography-container, .group-preferences-container, .result-container 
     {
         padding: 20px; /* Reduced padding for smaller screens */
         max-width: 100%; /* Utilize full width of mobile */
