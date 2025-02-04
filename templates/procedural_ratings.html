@@ -26,8 +26,7 @@
 
 <!-- Rating container -->
 <div class="rating-container">
-    <p>Not every patient can be treated in a medical emergency. There are procedures that can be used to determine which patients should be treated in such situations. In the following, please indicate how morally fair you find these procedures. </p>
-    <p>Rating scale 1 (not fair at all) -> 6 (very fair) for each of the following procedures: </p>
+    <p>Not every patient can be treated in a medical emergency. There are procedures that can be used to determine which patients should be treated in such situations. In the following, please indicate how morally fair you find these procedures.</p>
 
     <!-- Question Block -->
     <form method="POST" action="/procedural-ratings">
@@ -35,23 +34,28 @@
         <input type="hidden" name="current_index" value="{{ index }}">
 
         <div class="procedure-block">
-            <label class="bold-text">{{ question.label }}</label>
-            <div class="rating-scale">
-                <span class="scale-label">Not fair at all</span>
-                <div class="gradient-bar"></div> <!-- Gradient Bar -->
-                <div class="scale-buttons">
-                    {% for i in range(1, 7) %}
-                        <label class="circle-btn">
-                            <input type="radio" name="rating" value="{{ i }}" >
-                            <div class="circle"></div>
-                        </label>
-                    {% endfor %}
+            <div class="question-text">
+                <label class="bold-text question-label">{{ question.label }}</label>
+                <p class="question-description">{{ question.full_text.replace(question.label + ': ', '') }}</p>
+            </div>
+            <div class="rating-components">
+                <div class="gradient-bar"></div>
+                <div class="rating-scale">
+                    <div class="scale-buttons">
+                        {% for i in range(1, 7) %}
+                            <label class="circle-btn">
+                                <input type="radio" name="rating" value="{{ i }}" onchange="this.form.submit()">
+                                <div class="circle"></div>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <div class="scale-labels">
+                        <span class="scale-label">Not fair at all</span>
+                        <span class="scale-label">Very fair</span>
+                    </div>
                 </div>
-                <span class="scale-label">Very fair</span>
             </div>
         </div>
-
-        <button type="submit" class="submit-btn">Next</button>
     </form>
 </div>
 </body>

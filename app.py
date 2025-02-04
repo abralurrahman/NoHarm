@@ -202,33 +202,65 @@ def reconsider():
 
 @app.route('/procedural-ratings', methods=['GET', 'POST'])
 def procedural_ratings():
-    # List of questions with short IDs and full labels
+    # List of questions with short IDs, labels, and full descriptions
     questions = [
-        {"id": "save_life_years", "label": "Save the most life years..."},
-        {"id": "advantage_disadvantaged", "label": "Provide advantage to the disadvantaged..."},
-        {"id": "benefit_future", "label": "Benefit to others in the future..."},
-        {"id": "first_come", "label": "First-come, first-served..."},
-        {"id": "treatment_success", "label": "Maximize treatment success..."},
-        {"id": "treatment_effort", "label": "Minimize treatment effort..."},
-        {"id": "medication_effect", "label": "Maximize the medication effect..."},
-        {"id": "random_selection", "label": "Random selection..."},
+        {
+            "id": "save_life_years",
+            "label": "Save the most life years",
+            "full_text": "Save the most life years: prioritize those who have the most life years left after overcoming the disease; i.e., treat younger patients first."
+        },
+        {
+            "id": "advantage_disadvantaged",
+            "label": "Provide advantage to the disadvantaged",
+            "full_text": "Provide advantage to the disadvantaged: prioritize those who are worse off than others; i.e., treat sickest patients first."
+        },
+        {
+            "id": "benefit_future",
+            "label": "Benefit to others in the future",
+            "full_text": "Benefit to others in the future: prioritize those who are likely to make relevant contributions to the benefit of others; i.e., treat patients who have children or are planning to have children."
+        },
+        {
+            "id": "first_come",
+            "label": "First-come, first-served",
+            "full_text": "First-come, first-served: prioritize those who were first in line; i.e., treat patients who arrived first at the hospital."
+        },
+        {
+            "id": "treatment_success",
+            "label": "Maximize treatment success",
+            "full_text": "Maximize treatment success: prioritize those with the highest probability of survival after treatment; i.e., treat patients with the highest chance of recovery."
+        },
+        {
+            "id": "treatment_effort",
+            "label": "Minimize treatment effort",
+            "full_text": "Minimize treatment effort: prioritize those who will be cured with minimum effort; i.e., treat patients who need the least medication."
+        },
+        {
+            "id": "medication_effect",
+            "label": "Maximize the medication effect",
+            "full_text": "Maximize the medication effect: prioritize those where the improvement per medication is highest; i.e., treat patients who benefit most from a given medication."
+        },
+        {
+            "id": "random_selection",
+            "label": "Random selection",
+            "full_text": "Random selection: treatment should be allocated by random lottery; i.e., individual characteristics should not be considered."
+        },
     ]
 
     if request.method == 'POST':
         question_id = request.form.get('question_id')
         rating = request.form.get('rating')
 
-        # Save the response to the database immediately
+        # Save the response to the database
         conn = get_db_connection()
 
-        # Insert a row for the user if it doesn't already exist
+        # Ensure user ID exists
         if 'user_id' not in session:
             cursor = conn.cursor()
             cursor.execute('INSERT INTO user_responses DEFAULT VALUES')
             session['user_id'] = cursor.lastrowid
             conn.commit()
 
-        # Update the specific procedural rating response
+        # Store the response for the current question
         conn.execute(f'''
             UPDATE user_responses
             SET {question_id} = ?
@@ -251,9 +283,11 @@ def procedural_ratings():
     # Get the current question based on the index in the query parameter
     current_index = int(request.args.get('index', 0))
     if current_index >= len(questions):
-        return redirect('/instructions')  # Redirect to demography if index exceeds the number of questions
+        return redirect('/instructions')  # Redirect to next section if all are answered
     question = questions[current_index]
+
     return render_template('procedural_ratings.html', question=question, index=current_index)
+
 
 
 @app.route('/instructions', methods=['GET', 'POST'])

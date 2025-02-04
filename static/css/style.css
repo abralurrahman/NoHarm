@@ -326,84 +326,107 @@ p {
     margin-bottom: 20px;
 }
 
-/* Procedural Ratings Styling */
+/* Modified Rating Container Styles */
 .procedure-block {
-    margin-bottom: 40px; /* Space below each question block */
-}
-
-.procedure-block label {
-    display: block;
-    font-size: 1.1em;
-    font-weight: normal;
-    color: #444;
-    margin-bottom: 15px;
-}
-
-/* Rating Scale Container */
-.rating-scale {
     display: flex;
     justify-content: space-between;
-    margin: 20px auto;
-    max-width: 800px;
-    position: relative;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    gap: 30px;
 }
 
-/* Gradient Bar */
+/* Ensure text stays on the left side */
+.question-text {
+    flex: 1;
+    text-align: left;
+    max-width: 45%; /* Adjusted width to prevent text overflow */
+    word-wrap: break-word;
+}
+
+/* Label text alignment */
+.question-label {
+    flex: 1;
+    font-size: 1.1em;
+    margin: 0;
+    text-align: left;
+    white-space: pre-line;
+    margin-right: 20px; /* Adjusted margin to ensure proper spacing */
+    line-height: 1.6;
+}
+
+.question-description {
+    font-size: 1.1em;
+    line-height: 1.4;
+    color: #444;
+}
+
+/* Ensure rating components align properly */
+.rating-components {
+    flex: 1;
+    position: relative;
+    max-width: 50%; /* Prevents shifting */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Gradient Bar Positioning */
 .gradient-bar {
-    position: absolute;
-    top: 0;
-    left: 14%;
-    right: 10%;
-    height: 17px;
+    width: 100%;
+    height: 12px;
     background: linear-gradient(to right, #d3d3d3, #000);
     border-radius: 10px;
-    z-index: 0;
+    margin-bottom: 25px;
 }
 
-.rating-scale .scale-label {
-    font-size: 1em;
-    font-weight: 600;
-    color: #555;
-    margin: 0 10px; /* Space around the text */
-    z-index: 1; /* Ensure text stays above the gradient */
+/* Rating Scale Adjustments */
+.rating-scale {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
-/* Scale Buttons */
+/* Ensure radio button labels are evenly spaced */
 .scale-buttons {
     display: flex;
     justify-content: space-between;
-    flex: 1;
-    z-index: 1;
-    margin: 0 10px;
+    width: 100%;
 }
 
-.circle-btn {
-    cursor: pointer;
+/* Keep scale labels properly aligned */
+.scale-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 8px;
 }
 
-.circle {
-    width: 12px;
-    height: 12px;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    background-color: #fff;
+.scale-label {
+    font-size: 0.9em;
+    color: #666;
 }
 
-.circle-btn input[type="radio"] {
-    display: none; /* Hide the actual radio button */
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .procedure-block {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .question-text {
+        max-width: 100%;
+    }
+
+    .rating-components {
+        max-width: 100%;
+    }
+
+    .scale-buttons {
+        width: 100%;
+    }
 }
 
-.circle-btn:hover .circle {
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-}
-
-.circle-btn input[type="radio"]:checked + .circle {
-    background-color: #007bff;
-    border-color: #007bff;
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
-}
 
 .bold-text {
     font-weight: bold;
@@ -642,41 +665,6 @@ p {
         font-size: 1em;
         padding: 12px;
         margin-top: 15px; /* Adjust spacing */
-    }
-
-    .rating-scale {
-        flex-direction: row;
-        padding: 5px 0;
-    }
-
-    .rating-scale .scale-label {
-        font-size: 0.8em;
-        margin: 0 1px;
-        }
-
-    .gradient-bar {
-        width: 60%;
-        left: 24%;
-        height: 10px; /* Adjust height for smaller screens */
-        margin-top: 9px; /* Add spacing above buttons */
-        position: absolute;
-    }
-
-    .scale-buttons {
-        display: flex;
-        justify-content: space-evenly;
-        width: 100%;
-        margin-top: 1px; /* Add spacing between gradient and circles */
-    }
-
-    .circle {
-        width: 12px; /* Smaller size for circles */
-        height: 12px;
-        border: 1px solid #ccc;
-    }
-
-    .scale-label {
-      white-space: nowrap; /* Ensure labels don’t wrap */
     }
 
 }
