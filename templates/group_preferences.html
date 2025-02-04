@@ -26,35 +26,54 @@
 </div>
 
 
-    <div class="group-preferences-container">
+<div class="group-preferences-container">
+    <form method="POST" action="/group-preferences">
+        <input type="hidden" name="question_id" value="{{ question.id }}">
+        <input type="hidden" name="current_index" value="{{ index }}">
 
-        <form method="POST" action="/group-preferences">
-            <input type="hidden" name="question_id" value="{{ question.id }}">
-            <input type="hidden" name="current_index" value="{{ index }}">
+        <div class="question-block">
+            {% if question.id == 'general_health' %}
+                <!-- Health Gradient Question -->
+                <div class="health-question-container">
+                    <label class="health-question-label">{{ question.label }}</label>
 
-            <div class="question-block">
-                <label>{{ question.label }}</label>
-                {% if question.type == 'select' %}
-                <select name="answer">
-                    <option value="" disabled selected>Select your answer</option>
-                    {% for option in question.options %}
-                    <option value="{{ option }}">{{ option }}</option>
-                    {% endfor %}
-                </select>
-                {% elif question.type == 'radio' %}
-                {% for option in question.options %}
-                <div class="radio-container">
-                    <input type="radio" name="answer" id="{{ option.value }}" value="{{ option.value }}">
-                    <label for="{{ option.value }}">{{ option.label }}</label>
+                    <div class="health-gradient-container">
+                        <div class="health-gradient-bar"></div>
+
+                        <div class="health-scale-buttons">
+                            {% for option in question.options %}
+                            <button type="button" class="health-circle-btn" data-value="{{ option }}">
+                                <div class="health-circle"></div>
+                            </button>
+                            {% endfor %}
+                        </div>
+
+                        <div class="health-scale-labels">
+                            <span>Very Poor</span>
+                            <span>Excellent</span>
+                        </div>
+                    </div>
+
+                    <!-- Hidden input to store the selected value -->
+                    <input type="hidden" name="answer" id="healthValue">
                 </div>
+            {% else %}
+                <!-- Radio Button Questions -->
+                <label class="question-label">{{ question.label }}</label>
+                {% for option in question.options %}
+                <label class="radio-container">
+                    <input type="radio" name="answer" value="{{ option.value }}" required onchange="this.form.submit()">
+                    <span class="radio-label">{{ option.label }}</span>
+                </label>
                 {% endfor %}
-                {% endif %}
-            </div>
+            {% endif %}
+        </div>
+    </form>
+</div>
 
-            <button type="submit" class="submit-btn">Next</button>
-        </form>
-    </div>
 
     <script src="{{ url_for('static', filename='js/language.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/health.js') }}"></script>
+
 </body>
 </html>

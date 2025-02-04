@@ -392,7 +392,7 @@ def group_preferences():
         {
             "id": "general_health",
             "label": "How is your health in general?",
-            "type": "select",
+            "type": "gradient",
             "options": ["Very Poor", "Poor", "Fair", "Good", "Very Good", "Excellent"]
         },
         {
@@ -414,17 +414,19 @@ def group_preferences():
         question_id = request.form.get('question_id')
         answer = request.form.get('answer')
 
-        # Save the response to the database immediately
+        # Prevent empty submissions
+        if not answer:
+            return redirect(f'/group-preferences?index={request.form.get("current_index")}')
+
+        # Save the response to the database
         conn = get_db_connection()
 
-        # Insert a row for the user if it doesn't already exist
         if 'user_id' not in session:
             cursor = conn.cursor()
             cursor.execute('INSERT INTO user_responses DEFAULT VALUES')
             session['user_id'] = cursor.lastrowid
             conn.commit()
 
-        # Update the specific group preference response
         conn.execute(f'''
             UPDATE user_responses
             SET {question_id} = ?
@@ -441,11 +443,15 @@ def group_preferences():
         if next_index >= len(questions):
             return redirect('/thank-you')
 
-        # Redirect to the next question
         return redirect(f'/group-preferences?index={next_index}')
 
     # Get the current question based on the index in the query parameter
     current_index = int(request.args.get('index', 0))
+
+    # Prevent index out of range
+    if current_index >= len(questions):
+        return redirect('/thank-you')
+
     question = questions[current_index]
     return render_template('group_preferences.html', question=question, index=current_index)
 
