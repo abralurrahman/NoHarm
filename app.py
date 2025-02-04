@@ -217,32 +217,32 @@ def procedural_ratings():
         {
             "id": "benefit_future",
             "label": "Benefit to others in the future",
-            "full_text": "Benefit to others in the future: prioritize those who are likely to make relevant contributions to the benefit of others; i.e., treat patients who have children or are planning to have children."
+            "full_text": "Benefit to others in the future: Prioritize those who are likely to make relevant contributions to the benefit of others; i.e., treat patients who have children or are planning to have children."
         },
         {
             "id": "first_come",
             "label": "First-come, first-served",
-            "full_text": "First-come, first-served: prioritize those who were first in line; i.e., treat patients who arrived first at the hospital."
+            "full_text": "First-come, first-served: Prioritize those who were first in line; i.e., treat patients who arrived first at the hospital."
         },
         {
             "id": "treatment_success",
             "label": "Maximize treatment success",
-            "full_text": "Maximize treatment success: prioritize those with the highest probability of survival after treatment; i.e., treat patients with the highest chance of recovery."
+            "full_text": "Maximize treatment success: Prioritize those with the highest probability of survival after treatment; i.e., treat patients with the highest chance of recovery."
         },
         {
             "id": "treatment_effort",
             "label": "Minimize treatment effort",
-            "full_text": "Minimize treatment effort: prioritize those who will be cured with minimum effort; i.e., treat patients who need the least medication."
+            "full_text": "Minimize treatment effort: Prioritize those who will be cured with minimum effort; i.e., treat patients who need the least medication."
         },
         {
             "id": "medication_effect",
             "label": "Maximize the medication effect",
-            "full_text": "Maximize the medication effect: prioritize those where the improvement per medication is highest; i.e., treat patients who benefit most from a given medication."
+            "full_text": "Maximize the medication effect: Prioritize those where the improvement per medication is highest; i.e., treat patients who benefit most from a given medication."
         },
         {
             "id": "random_selection",
             "label": "Random selection",
-            "full_text": "Random selection: treatment should be allocated by random lottery; i.e., individual characteristics should not be considered."
+            "full_text": "Random selection: Treatment should be allocated by random lottery; i.e., individual characteristics should not be considered."
         },
     ]
 
