@@ -407,25 +407,74 @@ p {
     color: #666;
 }
 
-/* Mobile Adjustments */
+/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
+    .rating-container {
+        padding: 20px;
+        max-width: 95%; /* Utilize more screen width */
+    }
+
     .procedure-block {
-        flex-direction: column;
-        gap: 20px;
+        flex-direction: column; /* Stack elements vertically */
+        gap: 15px; /* Reduce gap for better spacing */
+        align-items: center; /* Center content */
     }
 
     .question-text {
-        max-width: 100%;
+        max-width: 90%; /* Allow text to fit better */
+        font-size: 1em; /* Reduce text size for readability */
+        text-align: left;
+    }
+
+    .question-label {
+        font-size: 1.1em;
+        line-height: 1.4;
+        text-align: left;
+    }
+
+    .question-description {
+        font-size: 0.95em; /* Reduce text size */
+        line-height: 1.4;
     }
 
     .rating-components {
-        max-width: 100%;
+        max-width: 100%; /* Changed to full width */
+        width: 100%;
+        padding: 0 2.5%; /* Matching padding with gradient bar */
+    }
+
+    /* Gradient Bar Adjustments */
+    .gradient-bar {
+        width: 95%; /* Match scale-buttons width */
+        margin: 10px 0; /* Remove auto margin for precise alignment */
+    }
+
+    /* Rating Scale Alignment Fix */
+    .rating-scale {
+        width: 100%;
+        padding: 0 2.5%; /* Match gradient bar padding */
     }
 
     .scale-buttons {
-        width: 100%;
+        width: 95%; /* Exact same width as gradient bar */
+        gap: 0; /* Remove gap for perfect distribution */
+        justify-content: space-between; /* Evenly distribute circles */
+        margin: 0 auto; /* Center the buttons container */
+        padding: 0;
+    }
+
+    .scale-labels {
+        width: 95%; /* Match gradient bar width */
+        margin: 5px auto 0; /* Center align labels */
+        padding: 0;
+    }
+
+    /* Circle Button Fine-tuning */
+    .circle-btn {
+        transform: translateX(0); /* Remove any potential positioning offsets */
     }
 }
+
 
 
 .bold-text {
