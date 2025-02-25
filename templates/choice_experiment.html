@@ -24,7 +24,6 @@
     </div>
 
     <div class="choice-container">
-        <h2>Choice Set {{ current_set }} of 3</h2>
         <div class="instruction-text">
             <p>Not every patient can be treated in a medical emergency. A decision has to be made about which patient to treat. Which of the patients shown below should be treated?</p>
         </div>
@@ -47,8 +46,8 @@
                 <img src="{{ url_for('static', filename='images/doctor_image.jpg') }}"
                      alt="Physician"
                      class="doctor-image"
-                     draggable="true"
-                     id="draggableDoctor">
+                     id="draggableDoctor"
+                     style="cursor: grab;">
                 <div class="arrow-controls">
                     <button class="arrow-btn left" onclick="moveDoctor('left')">←</button>
                     <button class="arrow-btn right" onclick="moveDoctor('right')">→</button>
