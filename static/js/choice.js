@@ -1,118 +1,218 @@
 function submitChoice(selectedImage) {
+    console.log("Submitting choice:", selectedImage);
+    
     const selectedInput = document.getElementById('selected-image');
     const choiceForm = document.getElementById('choice-form');
-    const patientCards = document.querySelectorAll('.patient-card');
-
-    if (selectedInput && choiceForm) {
-        patientCards.forEach(card => {
-            const cardImage = card.querySelector('img');
-            if (cardImage.src.includes(selectedImage)) {
-                card.classList.add('selected');
-                cardImage.style.opacity = '1';
-            } else {
-                cardImage.style.opacity = '0.5';
-            }
-        });
-
-        selectedInput.value = selectedImage;
-        
-        const formData = new FormData(choiceForm);
-        fetch(choiceForm.action, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.show_reconsider) {
-                showReconsiderModal(data);
-            } else {
-                // No reconsider needed, reload page to go to the next choice
-                window.location.reload();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    
+    if (!selectedInput || !choiceForm) {
+        console.error("Form elements not found");
+        return;
     }
+    
+    // Set the selected image value
+    selectedInput.value = selectedImage;
+    
+    // Visual feedback - fade other patient
+    const patientCards = document.querySelectorAll('.patient-card');
+    patientCards.forEach(card => {
+        const cardImage = card.querySelector('img');
+        if (cardImage.src.includes(selectedImage)) {
+            card.classList.add('selected');
+            cardImage.style.opacity = '1';
+        } else {
+            cardImage.style.opacity = '0.5';
+        }
+    });
+    
+    // Create form data and submit
+    const formData = new FormData(choiceForm);
+    
+    fetch(choiceForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Response received:", data);
+        
+        if (data.show_reconsider) {
+            showReconsiderModal(data);
+        } else {
+            console.log("Reloading page...");
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Fallback - direct form submission if fetch fails
+        choiceForm.submit();
+    });
 }
-
-
 
 function moveDoctor(direction) {
     const doctor = document.getElementById('draggableDoctor');
     const patients = document.querySelectorAll('.patient-card');
     const target = direction === 'left' ? patients[0] : patients[1];
     
+    // Add smooth animation class
+    doctor.classList.remove('move-right', 'move-left');
+    doctor.classList.add(direction === 'left' ? 'move-left' : 'move-right');
+    doctor.style.transition = 'transform 0.5s ease';
+    
     const targetRect = target.getBoundingClientRect();
     const doctorRect = doctor.getBoundingClientRect();
     
     const moveX = targetRect.left + (targetRect.width/2) - doctorRect.left - (doctorRect.width/2);
     const moveY = targetRect.top + (targetRect.height/2) - doctorRect.top - (doctorRect.height/2);
-
+    
     doctor.style.transform = `translate(${moveX}px, ${moveY}px)`;
     
+    // Submit the patient's image after animation completes
     setTimeout(() => {
         const patientImage = target.querySelector('.patient-image');
         submitChoice(patientImage.dataset.filename);
-    }, 600);
+    }, 500);
 }
 
 function initDraggableDoctor() {
     const doctor = document.getElementById('draggableDoctor');
+    if (!doctor) return;
+    
+    // Clear any existing transforms/transitions that might interfere
+    doctor.style.animation = 'none';
+    doctor.style.transition = 'none';
+    doctor.style.opacity = '1';
+    
     let isDragging = false;
-    let currentX;
-    let currentY;
-    let initialX;
-    let initialY;
-
-    doctor.addEventListener('mousedown', startDragging);
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', stopDragging);
-
-    function startDragging(e) {
-        initialX = e.clientX - doctor.offsetLeft;
-        initialY = e.clientY - doctor.offsetTop;
+    let startX, startY;
+    let initialTransform = { x: 0, y: 0 };
+    
+    function startDrag(e) {
+        // Prevent default to avoid browser's native drag
+        e.preventDefault();
+        
+        // Get initial position - handle both mouse and touch
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        
+        if (!clientX || !clientY) return;
+        
         isDragging = true;
+        startX = clientX;
+        startY = clientY;
+        
+        // Get current transform
+        const style = window.getComputedStyle(doctor);
+        const transform = style.getPropertyValue('transform');
+        
+        // Parse current transform
+        if (transform && transform !== 'none') {
+            try {
+                const matrix = new DOMMatrix(transform);
+                initialTransform.x = matrix.m41;
+                initialTransform.y = matrix.m42;
+            } catch (e) {
+                console.error("Transform parsing error:", e);
+                initialTransform = { x: 0, y: 0 };
+            }
+        }
+        
+        // Apply visual feedback
+        doctor.style.cursor = 'grabbing';
         doctor.style.transition = 'none';
+        doctor.classList.add('dragging');
+        
+        console.log("Drag started", { startX, startY, initialTransform });
     }
-
-    function drag(e) {
-        if (isDragging) {
-            e.preventDefault();
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-            doctor.style.transform = `translate(${currentX}px, ${currentY}px)`;
-            checkOverlap();
-        }
+    
+    function moveDrag(e) {
+        if (!isDragging) return;
+        
+        // Get current position - handle both mouse and touch
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        
+        if (!clientX || !clientY) return;
+        
+        // Calculate movement
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+        
+        // Apply new position
+        const newX = initialTransform.x + dx;
+        const newY = initialTransform.y + dy;
+        doctor.style.transform = `translate(${newX}px, ${newY}px)`;
+        
+        // Check for overlap with patients
+        checkPatientOverlap(doctor);
+        
+        console.log("Dragging", { dx, dy, newX, newY });
     }
-
-    function stopDragging() {
-        if (isDragging) {
-            isDragging = false;
-            doctor.style.transition = 'transform 0.3s ease';
-        }
+    
+    function stopDrag() {
+        if (!isDragging) return;
+        
+        isDragging = false;
+        doctor.style.cursor = 'grab';
+        doctor.style.transition = 'transform 0.3s ease';
+        doctor.classList.remove('dragging');
+        
+        console.log("Drag stopped");
     }
-
-    function checkOverlap() {
+    
+    function checkPatientOverlap(doctor) {
         const doctorRect = doctor.getBoundingClientRect();
         const patients = document.querySelectorAll('.patient-card');
         
         patients.forEach(patient => {
             const patientRect = patient.getBoundingClientRect();
-            if (isOverlapping(doctorRect, patientRect)) {
-                const patientImage = patient.querySelector('.patient-image');
-                submitChoice(patientImage.dataset.filename);
+            
+            // Check if rectangles overlap
+            if (!(doctorRect.right < patientRect.left || 
+                  doctorRect.left > patientRect.right || 
+                  doctorRect.bottom < patientRect.top || 
+                  doctorRect.top > patientRect.bottom)) {
+                
+                // Found overlap
+                console.log("Overlap detected with patient");
+                patient.classList.add('highlight');
+                
+                // Get the image and submit the choice
+                const img = patient.querySelector('.patient-image');
+                if (img && img.dataset.filename) {
+                    submitChoice(img.dataset.filename);
+                    isDragging = false;
+                }
+            } else {
+                patient.classList.remove('highlight');
             }
         });
     }
-
-    function isOverlapping(rect1, rect2) {
-        return !(rect1.right < rect2.left || 
-                rect1.left > rect2.right || 
-                rect1.bottom < rect2.top || 
-                rect1.top > rect2.bottom);
-    }
+    
+    // Mouse events
+    doctor.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', moveDrag);
+    document.addEventListener('mouseup', stopDrag);
+    
+    // Touch events
+    doctor.addEventListener('touchstart', startDrag, { passive: false });
+    document.addEventListener('touchmove', moveDrag, { passive: false });
+    document.addEventListener('touchend', stopDrag);
+    
+    // Prevent browser's native drag
+    doctor.addEventListener('dragstart', e => e.preventDefault());
+    
+    console.log("Doctor draggable initialized");
 }
+
 
 function showReconsiderModal(data) {
     const modal = document.getElementById('reconsider-modal');
@@ -130,7 +230,6 @@ function showReconsiderModal(data) {
     setTimeout(() => modal.classList.add('active'), 10); // Allow CSS transition
 }
 
-
 function handleReconsider(change) {
     fetch('/reconsider', {
         method: 'POST',
@@ -143,9 +242,15 @@ function handleReconsider(change) {
     }).then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Just hide the modal without reloading the page
+            // Hide the modal
             const modal = document.getElementById('reconsider-modal');
             modal.classList.remove('active');
+            
+            // Reset the doctor position to center
+            const doctor = document.getElementById('draggableDoctor');
+            doctor.classList.remove('move-left', 'move-right');
+            doctor.style.transform = 'translateX(0)';
+            
             setTimeout(() => {
                 modal.style.display = 'none';
             }, 300); // Short delay to allow transition to complete
@@ -158,7 +263,7 @@ function handleReconsider(change) {
                 card.classList.remove('selected');
             });
             
-            // Optional: Show message to user to make final selection
+            // Show message to user to make final selection
             const instructionText = document.querySelector('.instruction-text p');
             if (instructionText) {
                 instructionText.textContent = "Now please make your final selection for which patient to treat.";
@@ -172,13 +277,11 @@ function handleReconsider(change) {
     });
 }
 
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Initializing doctor movement");
     initDraggableDoctor();
     
+    // Animate in the elements
     const patients = document.querySelectorAll('.patient-card');
     patients.forEach((patient, index) => {
         setTimeout(() => {
@@ -187,6 +290,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     setTimeout(() => {
-        document.getElementById('draggableDoctor').style.opacity = '1';
+        const doctor = document.getElementById('draggableDoctor');
+        if (doctor) {
+            doctor.style.opacity = '1';
+        } else {
+            console.error("Doctor element not found during animation setup");
+        }
     }, 1000);
 });
