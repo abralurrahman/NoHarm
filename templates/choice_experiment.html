@@ -49,9 +49,11 @@
                      class="doctor-image"
                      draggable="true"
                      id="draggableDoctor">
+                <div class="arrow-controls">
+                    <button class="arrow-btn left" onclick="moveDoctor('left')">←</button>
+                    <button class="arrow-btn right" onclick="moveDoctor('right')">→</button>
+                </div>
             </div>
-
-
 
             <!-- Second Patient -->
             <div class="patient-card">
@@ -60,16 +62,56 @@
                     <img src="{{ url_for('static', filename=images[1]['filename']) }}"
                          alt="{{ images[1]['description'] }}"
                          class="patient-image"
-                         data-filename="{{ images[0]['filename'] }}">
+                         data-filename="{{ images[1]['filename'] }}">
                     <div class="hover-description">{{ images[1]['description'] }}</div>
                 </div>
             </div>
         </div>
     </div>
 
+  <!-- Enhanced Reconsider Modal -->
+<div id="reconsider-modal" class="modal">
+    <div class="modal-content">
+        <div class="alert-message">
+            <p class="highlight-text">A data-driven computer model suggests treating the other patient!</p>
+            <p class="decision-text">Would you like to change your decision?</p>
+        </div>
+
+        <div class="comparison-grid">
+            <!-- Originally Selected Patient -->
+            <div class="patient-card faded" data-patient="1">
+                <div class="selection-label">Originally Selected</div>
+                <div class="image-container">
+                    <img src="" alt="Originally Selected Patient" class="patient-image" id="original-choice">
+                    <div class="image-description" id="original-choice-description"></div>
+                </div>
+            </div>
+
+            <!-- Suggested Alternative Patient -->
+            <div class="patient-card highlighted" data-patient="2">
+                <div class="selection-label">Recommendation</div>
+                <div class="image-container">
+                    <img src="" alt="Suggested Alternative Patient" class="patient-image" id="suggested-choice">
+                    <div class="image-description" id="suggested-choice-description"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="decision-buttons">
+            <button type="button" class="btn-change" onclick="handleReconsider(true)">
+                Yes
+            </button>
+            <button type="button" class="btn-keep" onclick="handleReconsider(false)">
+                No
+            </button>
+        </div>
+    </div>
+</div>
+
     <!-- Hidden form for submission -->
     <form id="choice-form" method="POST" action="{{ url_for('choice_experiment') }}">
         <input type="hidden" name="selected_image" id="selected-image">
+        <input type="hidden" name="reconsider_set" value="{{ reconsider_set }}">
     </form>
 
     <script src="{{ url_for('static', filename='js/choice.js') }}"></script>

@@ -20,7 +20,7 @@ def create_database():
             choice2_final TEXT,                        -- Final selection after reconsideration for choice 2
             choice3_final TEXT,                        -- Final selection after reconsideration for choice 3
             reconsider_set INTEGER,                    -- Which set triggered reconsideration (1-3)
-            data_driven_tool_suggestion  TEXT,                        -- data_driven_tool_suggestion  suggested alternative
+            data_driven_tool_suggestion TEXT,          -- Data driven tool suggestion
             changed_decision BOOLEAN,                  -- Whether user changed their decision
             save_life_years INTEGER,                   -- Rating: Save life years
             advantage_disadvantaged INTEGER,           -- Rating: Advantage to disadvantaged
@@ -69,7 +69,7 @@ def add_columns_if_not_exist():
         "choice2_final": "TEXT",
         "choice3_final": "TEXT",
         "reconsider_set": "INTEGER",
-        "data_driven_tool_suggestion ": "TEXT",
+        "data_driven_tool_suggestion": "TEXT",
         "changed_decision": "BOOLEAN",
         "save_life_years": "INTEGER",
         "advantage_disadvantaged": "INTEGER",
