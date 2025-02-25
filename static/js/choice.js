@@ -40,22 +40,37 @@ function submitChoice(selectedImage) {
 
 function moveDoctor(direction) {
     const doctor = document.getElementById('draggableDoctor');
-    const patients = document.querySelectorAll('.patient-card');
-    const target = direction === 'left' ? patients[0] : patients[1];
+    const firstPatient = document.querySelector('.patient-card:first-child');
+    const secondPatient = document.querySelector('.patient-card:last-child');
     
-    const targetRect = target.getBoundingClientRect();
-    const doctorRect = doctor.getBoundingClientRect();
+    // Get the images from the patient cards
+    const firstPatientImg = firstPatient.querySelector('.patient-image');
+    const secondPatientImg = secondPatient.querySelector('.patient-image');
     
-    const moveX = targetRect.left + (targetRect.width/2) - doctorRect.left - (doctorRect.width/2);
-    const moveY = targetRect.top + (targetRect.height/2) - doctorRect.top - (doctorRect.height/2);
-
-    doctor.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    
-    setTimeout(() => {
-        const patientImage = target.querySelector('.patient-image');
-        submitChoice(patientImage.dataset.filename);
-    }, 600);
+    if (direction === 'left') {
+        // Add smooth animation class
+        doctor.classList.remove('move-right');
+        doctor.classList.add('move-left');
+        doctor.style.transform = 'translateX(-120%)';
+        
+        // Submit the first patient's image after animation completes
+        setTimeout(() => {
+            submitChoice(firstPatientImg.dataset.filename);
+        }, 500);
+    } else {
+        // Add smooth animation class
+        doctor.classList.remove('move-left');
+        doctor.classList.add('move-right');
+        doctor.style.transform = 'translateX(120%)';
+        
+        // Submit the second patient's image after animation completes
+        setTimeout(() => {
+            submitChoice(secondPatientImg.dataset.filename);
+        }, 500);
+    }
 }
+
+
 
 function initDraggableDoctor() {
     const doctor = document.getElementById('draggableDoctor');
@@ -64,6 +79,7 @@ function initDraggableDoctor() {
     let currentY;
     let initialX;
     let initialY;
+    let hasSelected = false; // Track if selection was made
 
     doctor.addEventListener('mousedown', startDragging);
     document.addEventListener('mousemove', drag);
@@ -73,6 +89,7 @@ function initDraggableDoctor() {
         initialX = e.clientX - doctor.offsetLeft;
         initialY = e.clientY - doctor.offsetTop;
         isDragging = true;
+        hasSelected = false; // Reset selection status
         doctor.style.transition = 'none';
     }
 
@@ -90,10 +107,17 @@ function initDraggableDoctor() {
         if (isDragging) {
             isDragging = false;
             doctor.style.transition = 'transform 0.3s ease';
+            
+            // If no selection was made during drag, return to center
+            if (!hasSelected) {
+                doctor.style.transform = 'translate(0, 0)';
+            }
         }
     }
 
     function checkOverlap() {
+        if (hasSelected) return; // Prevent multiple selections
+        
         const doctorRect = doctor.getBoundingClientRect();
         const patients = document.querySelectorAll('.patient-card');
         
@@ -101,7 +125,10 @@ function initDraggableDoctor() {
             const patientRect = patient.getBoundingClientRect();
             if (isOverlapping(doctorRect, patientRect)) {
                 const patientImage = patient.querySelector('.patient-image');
-                submitChoice(patientImage.dataset.filename);
+                if (patientImage && patientImage.dataset.filename) {
+                    submitChoice(patientImage.dataset.filename);
+                    hasSelected = true;
+                }
             }
         });
     }
@@ -113,6 +140,7 @@ function initDraggableDoctor() {
                 rect1.top > rect2.bottom);
     }
 }
+
 
 function showReconsiderModal(data) {
     const modal = document.getElementById('reconsider-modal');

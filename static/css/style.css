@@ -248,18 +248,6 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
 .patients-grid, .comparison-grid {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    gap: 4rem;  /* Increased from 2rem */
-    align-items: center;
-    justify-items: center;
-    margin: 2rem auto;
-    max-width: 1000px;  /* Increased from 800px */
-}
-
-
-/* Patient Cards and Grid Layout */
-.patients-grid {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
     gap: 4rem;
     align-items: center;
     justify-items: center;
@@ -267,42 +255,94 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
     max-width: 1000px;
 }
 
+/* Patient label styling */
+.patient-label {
+    font-style: italic;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+/* First patient label appears after doctor */
+.patient-card:nth-child(1) .patient-label {
+    animation-delay: 2s;
+}
+
+/* First patient image appears next */
+.patient-card:nth-child(1) .patient-image {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
+    animation-delay: 3s;
+}
+
+/* Second patient label appears next */
+.patient-card:nth-child(3) .patient-label {
+    animation-delay: 4s;
+}
+
+/* Second patient image appears next */
+.patient-card:nth-child(3) .patient-image {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
+    animation-delay: 5s;
+}
+
+/* Doctor instruction text */
+.doctor-instruction {
+    text-align: center;
+    font-size: 1rem;
+    color: #333;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
+    animation-delay: 6s; /* Appears after both patients */
+}
+
+/* Arrow controls appear last */
+.arrow-controls {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
+    animation-delay: 7s;
+}
+
+/* Enhanced Patient Card Animations */
 .patient-card {
     position: relative;
     width: 200px;
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.patient-card:nth-child(1) { animation-delay: 0.3s; }
-.patient-card:nth-child(3) { animation-delay: 1.2s; }
-
-/* Doctor Section */
+/* Enhanced Doctor Animation */
 .doctor-section {
     position: relative;
     width: 200px;
-    height: 200px;
+    height: auto;
     margin: 0 20px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    opacity: 0;
-    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: 2s;
 }
 
+/* Smoother doctor image movement */
 .doctor-image {
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 120px; /* Added explicit width for consistency */
+    height: auto;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     cursor: grab;
     user-select: none;
     z-index: 1000;
     margin-bottom: 20px;
+    will-change: transform;
+    opacity: 0;
+    animation: doctorFadeIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation-delay: 1s; /* First to appear */
 }
 
 .doctor-image:active {
@@ -392,14 +432,15 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
     margin: 30px 0;
 }
 
-.modal-buttons {
+/* Fixed: Decision buttons side by side */
+.decision-buttons {
     display: flex;
     justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
 }
 
-.btn-change {
+.btn-change, .btn-keep {
     background-color: #28a745;
     color: white;
     padding: 12px 30px;
@@ -409,18 +450,12 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex: 0 1 auto; /* Prevent buttons from stretching */
+    min-width: 120px; /* Ensure minimum width */
 }
 
 .btn-keep {
     background-color: #dc3545;
-    color: white;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 .btn-change:hover, .btn-keep:hover {
@@ -441,42 +476,193 @@ button:hover, input[type="submit"]:hover, .submit-btn:hover, .start-btn:hover {
     margin-bottom: 2rem;
 }
 
-
-/* Animations */
+/* Fixed fadeIn animation */
 @keyframes fadeIn {
-    from {
+    0% {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(25px);
     }
-    to {
+    100% {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .patients-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+/* Doctor animation */
+@keyframes doctorFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(15px) scale(0.95);
     }
-
-    .doctor-section {
-        width: 150px;
-        height: 150px;
-        margin: 2rem auto;
+    70% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.02);
     }
-
-    .patient-card {
-        width: 150px;
-    }
-
-    .arrow-controls {
-        position: relative;
-        bottom: 0;
-        margin-top: 1rem;
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
+
+/* Smooth movement classes */
+.doctor-image.move-left, .doctor-image.move-right {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Subtle bounce effect when doctor reaches patient */
+.doctor-image.move-left {
+    animation: moveLeftBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.doctor-image.move-right {
+    animation: moveRightBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes moveLeftBounce {
+    0% { transform: translateX(0); }
+    80% { transform: translateX(-125%); }
+    100% { transform: translateX(-120%); }
+}
+
+@keyframes moveRightBounce {
+    0% { transform: translateX(0); }
+    80% { transform: translateX(125%); }
+    100% { transform: translateX(120%); }
+}
+
+/* Improved mobile optimizations - keep side-by-side layout but scale everything down */
+@media screen and (max-width: 768px) {
+    /* Make the container fit the screen better */
+    .choice-container {
+        padding: 15px; /* Reduced padding */
+        max-width: 100%; /* Allow full width */
+        margin: 0 auto;
+        border-radius: 10px; /* Slightly smaller border radius */
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+        transform-origin: top center;
+    }
+    
+     /* Adjust the instruction text */
+     .instruction-text p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    
+    h2 {
+        font-size: 1.8rem; /* Smaller heading */
+        margin-bottom: 10px;
+    }
+    /* Keep the grid layout but make everything smaller */
+    .patients-grid {
+        grid-template-columns: 1fr auto 1fr; /* Keep side-by-side */
+        gap: 0.6rem; /* Reduced gap for smaller screens */
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .patient-card {
+        width: 110px; /* Smaller cards */
+        padding: 0.5rem;
+    }
+    
+    .patient-label {
+        font-size: 0.8rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .doctor-section {
+        width: 80px; /* Smaller doctor section */
+        height: auto;
+    }
+    
+    .doctor-image {
+        width: 60px; /* Smaller doctor image */
+        margin-bottom: 8px;
+    }
+    
+    .doctor-instruction {
+        font-size: 0.75rem;
+        margin: 0.4rem 0;
+        max-width: 80px;
+        line-height: 1.2;
+    }
+    
+    .arrow-controls {
+        gap: 0.8rem; /* Smaller gap between arrows */
+    }
+    
+    .arrow-btn {
+        width: 30px; /* Smaller buttons */
+        height: 22px;
+        font-size: 16px;
+    }
+    
+    /* Ensure decision buttons stay side-by-side */
+    .decision-buttons {
+        flex-direction: row;
+        gap: 1rem;
+    }
+    
+    .btn-change, .btn-keep {
+        padding: 8px 15px;
+        font-size: 0.8em;
+        min-width: 80px;
+    }
+    
+    /* Patient image size control */
+    .patient-image {
+        max-width: 100px;
+        height: auto;
+    }
+    
+    /* Control modal size for mobile */
+    .modal-content {
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+    
+    .comparison-grid {
+        gap: 15px;
+    }
+    
+    .highlight-text {
+        font-size: 1.1em;
+    }
+    
+    .decision-text {
+        font-size: 0.9em;
+    }
+    
+    /* Ensure animations still work on mobile */
+    .patient-card, .doctor-section {
+        transform-origin: center center;
+        will-change: opacity, transform;
+    }
+    /* Handle very small screens */
+    @media screen and (max-width: 360px) {
+        .choice-container {
+            padding: 10px;
+        }
+        
+        .patients-grid {
+            gap: 0.4rem;
+        }
+        
+        .patient-card {
+            width: 90px;
+            padding: 0.4rem;
+        }
+        
+        .doctor-section {
+            width: 70px;
+        }
+        
+        .doctor-image {
+            width: 50px;
+        }
+    }
+}
+
 
 
 /* Thank You Page */
