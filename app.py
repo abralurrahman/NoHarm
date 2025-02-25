@@ -1,8 +1,9 @@
 
-from flask import Flask, render_template, request, redirect, session, Response, url_for
+from flask import Flask, render_template, request, redirect, session, Response, url_for, jsonify
 import csv
 import sqlite3
 import random
+import os
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'  # Secret key for session management
@@ -57,7 +58,7 @@ def submit():
         # Reset session variables for the new survey
         session['selected_images'] = []
         session['current_page'] = 1
-        session['popup_triggered'] = False  # Ensure pop-up can show again
+        session['popup_shown'] = False  # Ensure pop-up can show again
         session.pop('stored_images', None)  # Clear stored images
 
         return redirect('/choice-experiment')
@@ -92,112 +93,157 @@ for image in IMAGES:
     image["filename"] = f"resized_images/{image['filename']}"
 
 
+
 @app.route('/choice-experiment', methods=['GET', 'POST'])
 def choice_experiment():
     if 'user_id' not in session:
         return redirect('/')
 
-    # Initialize session variables if not already set
-    if 'selected_images' not in session:
+    # Initialize session variables only once
+    if 'reconsider_set' not in session:
+        session['reconsider_set'] = random.randint(1, 3)
         session['selected_images'] = []
-    if 'popup_triggered' not in session:
-        session['popup_triggered'] = False
-    if 'popup_shown_set' not in session:
-        session['popup_shown_set'] = random.randint(1, 3)  # Randomly select one set for popup
-    if 'stored_images' not in session:
-        session['stored_images'] = None  # Initialize storage for popup images
+        session['initial_choices'] = []
+        session['final_choices'] = []
+        session['stored_images'] = None
+        session['current_images'] = None
+        session['popup_shown'] = False
+        session['awaiting_final_selection'] = False
 
+    # Check if we've already completed 3 choices
+    if len(session.get('selected_images', [])) >= 3:
+        return redirect('/procedural-ratings')
+    
     if request.method == 'POST':
         selected_image = request.form.get('selected_image')
+        current_set = len(session.get('selected_images', [])) + 1
+        
+        # Handle final selection after reconsider popup
+        if session.get('awaiting_final_selection', False):
+            # This is the final selection after the reconsider popup
+            session['awaiting_final_selection'] = False
+            
+            # Store this as the final choice
+            session.setdefault('final_choices', []).append(selected_image)
+            
+            # Add to selected images to move to next set
+            session.setdefault('selected_images', []).append(selected_image)
+            session.modified = True
+            
+            # Get initial choice for this set
+            initial_choice = session['initial_choices'][-1]
+            
+            # Update database with both initial and final choices
+            conn = get_db_connection()
+            conn.execute(f'''
+                UPDATE user_responses
+                SET choice{current_set} = ?,
+                    choice{current_set}_initial = ?,
+                    choice{current_set}_final = ?
+                WHERE id = ?
+            ''', (selected_image, initial_choice, selected_image, session['user_id']))
+            conn.commit()
+            conn.close()
+            
+            return jsonify({'show_reconsider': False})
+        
+        # Handle initial selection
+        # Store the initial choice
+        session.setdefault('initial_choices', []).append(selected_image)
+        session.modified = True  # Mark session as modified
 
-        # Save the selected image in session
-        session['selected_images'].append(selected_image)
+        # Check if current set is the reconsider set and popup hasn't been shown
+        if current_set == session['reconsider_set'] and not session.get('popup_shown', False):
+            session['popup_shown'] = True
+            session.modified = True  # Mark session as modified
+            
+            other_image = session['current_images'][1] if session['current_images'][0] == selected_image else session['current_images'][0]
+            session['data_driven_tool_suggestion'] = other_image
+            
+            # Get descriptions for both images
+            original_desc = next(img['description'] for img in IMAGES if img['filename'] == selected_image)
+            suggestion_desc = next(img['description'] for img in IMAGES if img['filename'] == other_image)
+            
+            return jsonify({
+                'show_reconsider': True,
+                'original': selected_image,
+                'suggestion': other_image,
+                'original_desc': original_desc,
+                'suggestion_desc': suggestion_desc
+            })
+        
+        # Normal selection (not the reconsider set)
+        # Update selected images list and move to next set
+        session.setdefault('selected_images', []).append(selected_image)
+        session.modified = True
 
-        # Save to the database immediately
-        conn = get_db_connection()
-        conn.execute(f'''
-            UPDATE user_responses
-            SET choice{len(session["selected_images"])} = ?
-            WHERE id = ?
-        ''', (selected_image, session['user_id']))
-        conn.commit()
-        conn.close()
-
-        # Handle the popup logic
-        current_set_number = len(session['selected_images'])
-        if current_set_number == session['popup_shown_set'] and not session['popup_triggered']:
-            session['popup_triggered'] = True
-            session['stored_images'] = session['current_images']
-            session['opposite_image'] = (
-                session['current_images'][1]
-                if session['current_images'][0] == selected_image
-                else session['current_images'][0]
-            )
-            return redirect('/reconsider')
-
-        # Redirect to procedural ratings if this was the last set (3 sets assumed)
-        if len(session['selected_images']) >= 3:
-            return redirect('/procedural-ratings')
-
-    # Reload the same images if the popup was triggered
-    if session['popup_triggered'] and session['stored_images']:
-        images = session['stored_images']
-    else:
-        available_images = [img for img in IMAGES if img["filename"] not in session.get('selected_images', [])]
-        if len(available_images) < 2:
-            return redirect('/procedural-ratings')  # No more images, go to ratings
-
-        images = random.sample(available_images, 2)
-        session['current_images'] = [img["filename"] for img in images]
-
-    return render_template('choice_experiment.html', images=images)
-
-
-
-@app.route('/reconsider', methods=['GET', 'POST'])
-def reconsider():
-    if request.method == 'POST':
-        # Get the final reconsidered choice
-        final_choice = request.form.get('selected_image')
-
-        # Update the last selected image with the reconsidered choice
-        session['selected_images'][-1] = final_choice
-
-        # Save the reconsidered choice to the database immediately
+        # Update database
         conn = get_db_connection()
         conn.execute('''
             UPDATE user_responses
-            SET reconsider_choice = ?
+            SET choice{0} = ?,
+                choice{0}_initial = ?,
+                choice{0}_final = ?
             WHERE id = ?
-        ''', (final_choice, session['user_id']))
+        '''.format(current_set), (selected_image, selected_image, selected_image, session['user_id']))
         conn.commit()
         conn.close()
 
-        # If this is the last set, redirect to ratings
-        if len(session['selected_images']) >= 3:
-            return redirect('/procedural-ratings')
+        return jsonify({'show_reconsider': False})
 
-        # Reset the popup state and redirect back to the choice experiment
-        session['popup_triggered'] = False
-        return redirect('/choice-experiment')
+    # Handle GET request
+    available_images = [img for img in IMAGES if img["filename"] not in session.get('selected_images', [])]
+    images = random.sample(available_images, 2)
+    session['current_images'] = [img["filename"] for img in images]
 
-    # Render the reconsideration page with stored images
-    stored_images = session.get('stored_images', [])
-    reconsider_image = session.get('opposite_image')
-    opposite_image_description = next(
-        (img["description"] for img in IMAGES if img["filename"] == reconsider_image),
-        "No description available"
-    )
+    return render_template('choice_experiment.html',
+                         images=images,
+                         current_set=len(session.get('selected_images', [])) + 1)
 
-    return render_template(
-        'reconsider.html',
-        reconsider_image=reconsider_image,
-        opposite_image_description=opposite_image_description,
-        images=[
-            next(img for img in IMAGES if img["filename"] == stored_images[0]),
-            next(img for img in IMAGES if img["filename"] == stored_images[1]),
-        ]
-    )
+
+@app.route('/reconsider', methods=['POST'])
+def reconsider():
+    data = request.get_json()
+    if not data or 'change_decision' not in data:
+        return jsonify({'error': 'Invalid data'}), 400
+
+    # Check for required session data
+    required_session_keys = ['reconsider_set', 'data_driven_tool_suggestion', 'initial_choices', 'user_id']
+    if any(key not in session for key in required_session_keys):
+        return jsonify({'error': 'Session data missing'}), 400
+
+    changed_decision = data['change_decision']
+    current_set = session['reconsider_set']
+    
+    # Store the user's decision about changing their choice
+    session['changed_decision'] = changed_decision
+    session.modified = True
+    
+    # Get selected choice based on user decision
+    suggested_choice = session['data_driven_tool_suggestion']
+    initial_choice = session['initial_choices'][-1]
+    
+    # Set a flag to indicate that we're waiting for the final selection
+    session['awaiting_final_selection'] = True
+    session.modified = True
+
+    # Update database with the reconsideration data
+    conn = get_db_connection()
+    try:
+        conn.execute(f'''
+            UPDATE user_responses
+            SET data_driven_tool_suggestion = ?,
+                changed_decision = ?
+            WHERE id = ?
+        ''', (suggested_choice, changed_decision, session['user_id']))
+        conn.commit()
+    except sqlite3.Error as e:
+        conn.close()
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+    return jsonify({'success': True})
 
 
 @app.route('/procedural-ratings', methods=['GET', 'POST'])

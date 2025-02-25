@@ -34,20 +34,17 @@
                 {% if question.type == "radio" %}
                     {% for option in question.options %}
                         <div class="radio-container">
-                            <input type="radio" name="answer" id="{{ option.value }}" value="{{ option.value }}" >
+                            <input type="radio" name="answer" id="{{ option.value }}" value="{{ option.value }}" onchange="this.form.submit()">
                             <label for="{{ option.value }}">{{ option.label }}</label>
                         </div>
                     {% endfor %}
                 {% elif question.type == "text" %}
-                    <input type="text" name="answer" placeholder="{{ question.placeholder }}" >
+                    <input type="text" name="answer" placeholder="{{ question.placeholder }}" onchange="this.form.submit()">
                 {% elif question.type == "number" %}
-                    <input type="number" name="answer" id="age-input" placeholder="{{ question.placeholder }}" min="16" max="120" >
+                    <input type="number" name="answer" id="age-input" placeholder="{{ question.placeholder }}" min="16" max="120" onchange="this.form.submit()">
                 {% endif %}
             </div>
-
-            <button type="submit" class="submit-btn">Next</button>
         </form>
     </div>
-
 </body>
 </html>
