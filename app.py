@@ -4,6 +4,8 @@ import csv
 import sqlite3
 import random
 import os
+import datetime
+import socket
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'  # Secret key for session management
@@ -28,6 +30,26 @@ def get_random_images(total_images, selected_images):
     available_images = [i for i in range(1, total_images + 1) if i not in selected_images]
     return random.sample(available_images, 2)
 
+# Add a function to get user location info (optional)
+def get_user_location():
+    try:
+        # This is a simplified example - you might want to use a geolocation API
+        ip = request.remote_addr
+        hostname = socket.gethostbyaddr(ip)[0] if ip != '127.0.0.1' else 'localhost'
+        return {
+            'ip_address': ip,
+            'city': 'Unknown',
+            'region': 'Unknown',
+            'country': 'Unknown'
+        }
+    except:
+        return {
+            'ip_address': 'Unknown',
+            'city': 'Unknown',
+            'region': 'Unknown',
+            'country': 'Unknown'
+        }
+
 
 # Home route to display the intro page
 @app.route('/')
@@ -43,6 +65,7 @@ def change_language():
     return redirect(request.referrer)  # Redirect back to the page the user was on
 
 
+# Modify the submit route to store initial session data
 @app.route('/submit', methods=['POST'])
 def submit():
     consent = request.form.get('consent')
@@ -50,7 +73,43 @@ def submit():
         # Insert a new row into the database for the new user
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO user_responses (id) VALUES (NULL)')
+        
+        # Get user location info
+        try:
+            ip = request.remote_addr
+            ip_address = ip if ip else 'Unknown'
+        except:
+            ip_address = 'Unknown'
+        
+        # Record session start time
+        session_start = datetime.datetime.now().isoformat() if 'datetime' in globals() else None
+        
+        # Check if language column exists
+        cursor.execute("PRAGMA table_info(user_responses);")
+        columns = [col[1] for col in cursor.fetchall()]
+        
+        if 'language' in columns:
+            # If language column exists, include it
+            cursor.execute('''
+                INSERT INTO user_responses 
+                (session_start, ip_address, language) 
+                VALUES (?, ?, ?)
+            ''', (
+                session_start, 
+                ip_address,
+                session.get('language', 'en')
+            ))
+        else:
+            # Otherwise just insert without language
+            cursor.execute('''
+                INSERT INTO user_responses 
+                (session_start, ip_address) 
+                VALUES (?, ?)
+            ''', (
+                session_start, 
+                ip_address
+            ))
+        
         session['user_id'] = cursor.lastrowid
         conn.commit()
         conn.close()
@@ -58,13 +117,12 @@ def submit():
         # Reset session variables for the new survey
         session['selected_images'] = []
         session['current_page'] = 1
-        session['popup_shown'] = False  # Ensure pop-up can show again
-        session.pop('stored_images', None)  # Clear stored images
+        session['popup_shown'] = False
+        session.pop('stored_images', None)
 
         return redirect('/choice-experiment')
     else:
         return redirect('/no-consent')
-
 
 
 IMAGES = [
@@ -161,8 +219,8 @@ def choice_experiment():
             session['data_driven_tool_suggestion'] = other_image
             
             # Get descriptions for both images
-            original_desc = next(img['description'] for img in IMAGES if img['filename'] == selected_image)
-            suggestion_desc = next(img['description'] for img in IMAGES if img['filename'] == other_image)
+            original_desc = next((img['description'] for img in IMAGES if img['filename'].split('/')[-1] == selected_image.split('/')[-1]), "Unknown")
+            suggestion_desc = next((img['description'] for img in IMAGES if img['filename'] == other_image), "Unknown")
             
             return jsonify({
                 'show_reconsider': True,
@@ -503,11 +561,22 @@ def group_preferences():
 
 
 
-# Route to thank users after survey submission
+# Modify the thank-you route to store session end time
 @app.route('/thank-you')
 def thank_you():
+    # Record session end time
+    if 'user_id' in session:
+        conn = get_db_connection()
+        session_end = datetime.datetime.now().isoformat()
+        conn.execute('''
+            UPDATE user_responses
+            SET session_end = ?
+            WHERE id = ?
+        ''', (session_end, session['user_id']))
+        conn.commit()
+        conn.close()
+    
     return render_template('thank_you.html', language=session.get('language'))
-
 
 # Route for no consent page
 @app.route('/no-consent')
@@ -561,7 +630,15 @@ def download_csv():
     if 'admin' in session:
         # Connect to the database
         conn = get_db_connection()
-        user_responses = conn.execute('SELECT * FROM user_responses').fetchall()
+        cursor = conn.cursor()
+        
+        # Get column names
+        cursor.execute("PRAGMA table_info(user_responses);")
+        columns = [col[1] for col in cursor.fetchall()]
+        
+        # Get all data
+        cursor.execute(f"SELECT {', '.join(columns)} FROM user_responses")
+        user_responses = cursor.fetchall()
         conn.close()
 
         # Prepare the CSV content

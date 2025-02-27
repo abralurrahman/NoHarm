@@ -1,97 +1,170 @@
 {
-    "intro": {
-      "intro_title": "Comment décideriez-vous face à des décisions de vie ou de mort?",
-      "intro_paragraph_1": "Votre opinion sur cette question est très précieuse. Nous vous remercions sincèrement de votre volonté de participer à cette enquête sur la prise de décision médicale.",
-      "intro_paragraph_2": "Répondre aux questions vous prendra environ 5 minutes. Votre participation est volontaire, et vos informations seront collectées de manière anonyme conformément aux réglementations sur la protection des données. Veuillez lire attentivement toutes les instructions et questions et répondre honnêtement.",
-      "intro_paragraph_3": "Sincèrement, Dr med. Anatol-Fiete Näher, M.A., Institut Hasso-Plattner Potsdam, Anna Lena Fehlhaber, Université Leibniz de Hanovre, PD Dr. Ivar Krumpal, Université de Leipzig",
-      "consent_title": "Consentement éclairé",
-      "consent_message": "Veuillez décider maintenant si vous consentez à l'utilisation de vos réponses à des fins scientifiques. Si vous n'êtes pas d'accord, vous serez redirigé vers la fin de l'enquête.",
-      "yes_label": "Je consens à l'utilisation de mes données soumises dans le cadre de ce questionnaire à des fins de recherche.",
-      "no_label": "Je ne consens pas à l'utilisation de mes données soumises dans le cadre de ce questionnaire à des fins de recherche.",
-      "start_button": "Soumettre le consentement"
-    },
-    "choice_experiment": {
-      "survey_title": "Ensembles de choix visuels",
-      "patient_question": "Dans une urgence médicale, tous les patients ne peuvent pas être traités. Il faut décider quel patient traiter et quel patient ne pas traiter. Quel patient parmi ceux ci-dessous devrait être traité?",
-      "decision_pair_1": "Paire de décision 1",
-      "decision_pair_2": "Paire de décision 2",
-      "decision_pair_3": "Paire de décision 3",
-      "patient_1_overweight": "Patient 1 (Surpoids)",
-      "patient_2_disability": "Patient 2 (Handicap)",
-      "patient_1_child": "Patient 1 (Enfant)",
-      "patient_2_elderly_couple": "Patient 2 (Couple âgé)",
-      "patient_1_young_adult": "Patient 1 (Jeune adulte)",
-      "patient_2_senior_ill": "Patient 2 (Senior avec maladie chronique)",
-      "change_decision": "Un modèle informatique basé sur des données traiterait le patient X. Souhaitez-vous changer à nouveau votre décision?",
-      "submit_button": "Soumettre les choix"
-    },
-    "demography": {
-      "demography_title": "Merci beaucoup! Nous aimerions maintenant vous poser quelques questions générales.",
-      "gender_question": "Quel terme vous décrit le mieux?",
-      "female_label": "Femme",
-      "male_label": "Homme",
-      "diverse_label": "Divers",
-      "prefer_not_to_disclose_label": "Je préfère ne pas divulguer",
-      "age_question": "Quel âge avez-vous?",
-      "age_placeholder": "Âge (en années)",
-      "religion_question": "Vous identifiez-vous à l'une des religions suivantes?",
-      "no_religion": "Non, ce n'est pas le cas",
-      "christian_label": "Chrétien",
-      "islam_label": "Islam",
-      "hinduism_label": "Hindouisme",
-      "buddhism_label": "Bouddhisme",
-      "other_label": "Autre",
-      "submit_button": "Soumettre"
-    },
-    "group_preferences": {
-      "group_preferences_title": "Préférences liées au groupe",
-      "general_health_question": "Comment est votre état de santé général?",
-      "select_answer": "Sélectionnez votre réponse",
-      "very_poor": "Très mauvais",
-      "poor": "Mauvais",
-      "fair": "Moyen",
-      "good": "Bon",
-      "very_good": "Très bon",
-      "excellent": "Excellent",
-      "illness_question": "Avez-vous été gravement malade l'année dernière?",
-      "illness_yes": "Oui",
-      "illness_no": "Non",
-      "children_question": "Avez-vous des enfants ou envisagez-vous d'en avoir?",
-      "children_yes": "Oui",
-      "children_no": "Non",
-      "submit_button": "Soumettre les préférences"
-    },
-      "procedural_ratings": {
-        "rating_title": "Évaluation des procédures",
-        "rating_intro": "Tous les patients ne peuvent pas être traités en cas d'urgence médicale. Des procédures peuvent être utilisées pour déterminer quels patients doivent être traités dans de telles situations. Veuillez indiquer dans quelle mesure vous trouvez ces procédures moralement justes sur une échelle de 1 (Pas juste) à 6 (Très juste).",
-        "scale_indicator": "Échelle : 1 (Pas juste) - 6 (Très juste)",
-        "select_answer": "Sélectionnez votre réponse",
-        "rating_save_life_years": "Sauver le plus d'années de vie : donner la priorité aux personnes ayant le plus d'années de vie restantes après guérison (c'est-à-dire traiter d'abord les plus jeunes patients).",
-        "rating_advantage_disadvantaged": "Avantage pour les défavorisés : donner la priorité à ceux qui sont dans une situation pire que les autres (c'est-à-dire traiter d'abord les patients les plus malades).",
-        "rating_benefit_future": "Bénéfice pour les générations futures : donner la priorité à ceux qui sont susceptibles d’apporter une contribution bénéfique (c'est-à-dire traiter les patients qui ont ou prévoient d'avoir des enfants).",
-        "rating_first_come": "Premier arrivé, premier servi : donner la priorité à ceux qui étaient les premiers en ligne (c'est-à-dire traiter les patients qui sont arrivés les premiers à l'hôpital).",
-        "rating_treatment_success": "Maximiser le succès du traitement : donner la priorité aux personnes ayant les plus grandes chances de survie après traitement (c'est-à-dire traiter les patients ayant les meilleures chances de guérison).",
-        "rating_treatment_effort": "Minimiser l'effort thérapeutique : donner la priorité à ceux qui seront guéris avec un effort minimal (c'est-à-dire traiter les patients nécessitant le moins de médicaments).",
-        "rating_medication_effect": "Maximiser l'effet du médicament : donner la priorité à ceux pour qui l'amélioration par médicament est la plus élevée (c'est-à-dire traiter les patients qui bénéficient le plus d'un médicament donné).",
-        "rating_random_selection": "Sélection aléatoire : le traitement doit être attribué par tirage au sort (c'est-à-dire ne pas tenir compte des caractéristiques individuelles).",
-        "submit_button": "Soumettre les évaluations des procédures",
-        "not_fair": "Pas juste",
-        "very_fair": "Très juste",
-        "numbers": {
-          "1": "1",
-          "2": "2",
-          "3": "3",
-          "4": "4",
-          "5": "5",
-          "6": "6"
-        }
+  "admin_login": {
+    "title": "Connexion administrateur",
+    "password_label": "Entrez le mot de passe administrateur :",
+    "login_button": "Connexion"
+  },
+  "choice_experiment": {
+    "title": "Expérience de choix",
+    "instruction_text": "En cas d'urgence médicale, tous les patients ne peuvent pas être traités. Une décision doit être prise concernant quel patient traiter. Lequel des patients ci-dessous devrait être traité ?",
+    "patient_label_1": "1er patient",
+    "patient_label_2": "2ème patient",
+    "doctor_instruction": "Déplacez le médecin vers le patient à traiter !",
+    "reconsider_message": "Un modèle informatique basé sur les données suggère de traiter l'autre patient !",
+    "decision_text": "Souhaitez-vous changer votre décision ?",
+    "originally_selected": "Initialement sélectionné",
+    "recommendation": "Recommandation",
+    "yes_button": "Oui",
+    "no_button": "Non",
+    "final_selection_instruction": "Veuillez maintenant faire votre sélection finale pour quel patient traiter."
+  },
+  "demography": {
+    "title": "Questions démographiques",
+    "gender_question": "Quel est votre genre ?",
+    "female_label": "Femme",
+    "male_label": "Homme",
+    "diverse_label": "Divers",
+    "prefer_not_to_disclose_label": "Préfère ne pas répondre",
+    "age_question": "Quel âge avez-vous ?",
+    "age_placeholder": "Entrez votre âge",
+    "religion_question": "Quelle est votre religion ?",
+    "no_religion": "Non, je n'en ai pas",
+    "christian_label": "Chrétienne",
+    "islam_label": "Islam",
+    "hinduism_label": "Hindouisme",
+    "buddhism_label": "Bouddhisme",
+    "other_label": "Autre"
+  },
+  "group_preferences": {
+    "group_preferences_title": "Préférences liées aux groupes",
+    "general_health_question": "Comment évaluez-vous votre état de santé général ?",
+    "select_answer": "Sélectionnez une réponse",
+    "very_poor": "Très mauvais",
+    "poor": "Mauvais",
+    "fair": "Moyen",
+    "good": "Bon",
+    "very_good": "Très bon",
+    "excellent": "Excellent",
+    "illness_question": "Avez-vous été gravement malade au cours de l'année dernière ?",
+    "illness_yes": "Oui",
+    "illness_no": "Non",
+    "children_question": "Avez-vous des enfants ou prévoyez-vous d'avoir des enfants ?",
+    "children_yes": "Oui",
+    "children_no": "Non",
+    "submit_button": "Soumettre"
+  },
+  "instructions": {
+    "title": "Merci beaucoup ! Dans ce qui suit, nous aimerions vous poser quelques questions générales supplémentaires.",
+    "continue_button": "Continuer"
+  },
+  "intro": {
+    "intro_title": "Comment décideriez-vous face à des décisions critiques de vie ou de mort ?",
+    "intro_paragraph_1": "Votre point de vue sur cette question est très précieux. Nous apprécions grandement votre volonté de participer à cette enquête sur la prise de décision médicale.",
+    "intro_paragraph_2": "Votre participation est volontaire, et vos informations seront recueillies de manière anonyme, conformément aux réglementations de protection des données. Veuillez lire attentivement toutes les instructions et questions et répondre honnêtement.",
+    "signature": "Cordialement,<br>Dr. med. Anatol-Fiete Näher, M.A., Institut Hasso Plattner de Potsdam<br>Anna Lena Fehlhaber, Université Leibniz de Hanovre<br>PD Dr. Ivar Krumpal, Université de Leipzig",
+    "consent_title": "Consentement éclairé",
+    "consent_message": "Veuillez décider maintenant si vous souhaitez donner votre consentement à l'utilisation de vos réponses à des fins scientifiques. Si vous n'êtes pas d'accord, vous serez redirigé vers la fin de l'enquête.",
+    "yes_label": "Je consens à l'utilisation de mes données soumises dans le cadre de ce questionnaire à des fins de recherche.",
+    "no_label": "Je ne consens pas à l'utilisation de mes données soumises dans le cadre de ce questionnaire à des fins de recherche.",
+    "start_button": "Soumettre le consentement"
+  },
+  "no_consent": {
+    "no_consent_title": "Merci pour votre temps !",
+    "no_consent_message": "Comme vous n'avez pas consenti à participer à l'enquête, vos réponses n'ont pas été enregistrées. Nous vous remercions pour votre temps."
+  },
+  "procedural_ratings": {
+    "rating_title": "Évaluations d'équité procédurale",
+    "rating_intro": "En cas d'urgence médicale, tous les patients ne peuvent pas être traités. Il existe des procédures qui peuvent être utilisées pour déterminer quels patients doivent être traités dans de telles situations. Dans ce qui suit, veuillez indiquer dans quelle mesure vous trouvez ces procédures moralement équitables.",
+    "scale_indicator": "Veuillez évaluer sur une échelle de 1 à 6 :",
+    "not_fair": "Pas du tout équitable",
+    "very_fair": "Très équitable",
+    "rating_save_life_years": "Traiter les patients qui gagneront le plus d'années de vie",
+    "rating_advantage_disadvantaged": "Donner la priorité aux patients défavorisés",
+    "rating_benefit_future": "Traiter les patients qui bénéficieront aux autres à l'avenir",
+    "rating_first_come": "Principe du premier arrivé, premier servi",
+    "rating_treatment_success": "Traiter les patients ayant les meilleures chances de réussite du traitement",
+    "rating_treatment_effort": "Prioriser les patients nécessitant le moins d'effort de traitement",
+    "rating_medication_effect": "Sélectionner les patients pour lesquels les médicaments sont les plus efficaces",
+    "rating_random_selection": "Sélection aléatoire des patients",
+    "select_answer": "Sélectionner une évaluation",
+    "questions": [
+      {
+        "id": "save_life_years",
+        "label": "Sauver le plus d'années de vie",
+        "full_text": "Sauver le plus d'années de vie : prioriser ceux qui ont le plus d'années de vie restantes après avoir surmonté la maladie ; c'est-à-dire traiter d'abord les patients plus jeunes."
       },
-    "thank_you": {
-      "thank_you_title": "Merci d'avoir soumis votre enquête!",
-      "thank_you_message": "Vos réponses ont été enregistrées. Nous apprécions votre temps et vos efforts pour nous aider dans cette recherche."
+      {
+        "id": "advantage_disadvantaged",
+        "label": "Avantager les défavorisés",
+        "full_text": "Avantager les défavorisés : prioriser ceux qui sont dans une situation pire que les autres ; c'est-à-dire traiter d'abord les patients les plus malades."
+      },
+      {
+        "id": "benefit_future",
+        "label": "Bénéfice pour les autres à l'avenir",
+        "full_text": "Bénéfice pour les autres à l'avenir : Prioriser ceux qui sont susceptibles d'apporter des contributions pertinentes au bénéfice des autres ; c'est-à-dire traiter les patients qui ont des enfants ou qui prévoient d'avoir des enfants."
+      },
+      {
+        "id": "first_come",
+        "label": "Premier arrivé, premier servi",
+        "full_text": "Premier arrivé, premier servi : Prioriser ceux qui étaient les premiers dans la file d'attente ; c'est-à-dire traiter les patients qui sont arrivés en premier à l'hôpital."
+      },
+      {
+        "id": "treatment_success",
+        "label": "Maximiser le succès du traitement",
+        "full_text": "Maximiser le succès du traitement : Prioriser ceux qui ont la plus grande probabilité de survie après le traitement ; c'est-à-dire traiter les patients ayant les meilleures chances de guérison."
+      },
+      {
+        "id": "treatment_effort",
+        "label": "Minimiser l'effort de traitement",
+        "full_text": "Minimiser l'effort de traitement : Prioriser ceux qui seront guéris avec un minimum d'effort ; c'est-à-dire traiter les patients qui ont besoin du moins de médicaments."
+      },
+      {
+        "id": "medication_effect",
+        "label": "Maximiser l'effet des médicaments",
+        "full_text": "Maximiser l'effet des médicaments : Prioriser ceux où l'amélioration par médicament est la plus élevée ; c'est-à-dire traiter les patients qui bénéficient le plus d'un médicament donné."
+      },
+      {
+        "id": "random_selection",
+        "label": "Sélection aléatoire",
+        "full_text": "Sélection aléatoire : Le traitement devrait être attribué par tirage au sort aléatoire ; c'est-à-dire que les caractéristiques individuelles ne devraient pas être prises en compte."
+      }
+    ],
+    "numbers": {
+      "1": "1",
+      "2": "2", 
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6"
     },
-    "no_consent": {
-      "no_consent_title": "Merci pour votre temps!",
-      "no_consent_message": "Comme vous n'avez pas consenti à participer à l'enquête, vos réponses n'ont pas été enregistrées. Nous apprécions votre temps."
-    }
+    "submit_button": "Soumettre"
+  },
+  "results": {
+    "title": "Résultats de l'enquête",
+    "download_button": "Télécharger les résultats de l'enquête (CSV)",
+    "user_responses": "Réponses des utilisateurs"
+  },
+  "thank_you": {
+    "thank_you_title": "Merci d'avoir soumis votre enquête !",
+    "thank_you_message": "Vos réponses ont été enregistrées. Nous apprécions votre temps et vos efforts pour nous aider dans cette recherche."
+  },
+  "images": {
+    "child_simple.jpg": "Enfant",
+    "Disability.jpg": "Personne en situation de handicap",
+    "old_male_female_simpler.jpg": "Couple âgé",
+    "Overweight_simpler.jpg": "Personne en surpoids",
+    "test_0_0_1_1_0.jpg": "Image test 1",
+    "test_0_0_2_3_1.jpg": "Image test 2",
+    "test_0_2_3_3_2.jpg": "Image test 3",
+    "test_1_0_3_2_0.jpg": "Image test 4",
+    "test_1_3_2_2_1.jpg": "Image test 5",
+    "Patient_at_Laptop_with_Head_Bandage.png": "Patient à l'ordinateur portable avec bandage à la tête",
+    "Patient_on_a_Stretcher.png": "Patient sur un brancard",
+    "Patient_with_Arm_Sling.png": "Patient avec une écharpe pour le bras",
+    "Patient_with_IV_and_Arm_Sling.jpg": "Patient avec perfusion et écharpe pour le bras",
+    "Patient_with_IV_Drip.png": "Patient avec perfusion",
+    "pregnant_woman_care.webp": "Soins de femme enceinte",
+    "Pregnant_woman_lying_on_hospital_bed.png": "Femme enceinte allongée sur un lit d'hôpital",
+    "Walking_Patient_with_Crutches.jpg": "Patient marchant avec des béquilles"
   }
+}

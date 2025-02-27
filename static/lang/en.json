@@ -1,52 +1,44 @@
 {
-  "intro": {
-    "intro_title": "How would you decide when confronted with critical life-and-death decisions?",
-    "intro_paragraph_1": "Your view on this question is highly valuable. We greatly appreciate your willingness to participate in this survey on medical decision-making.",
-    "intro_paragraph_2": "Answering the questions will take you about 5 minutes. Your participation is voluntary, and your information will be collected anonymously, in accordance with data protection regulations. Please read all instructions and questions carefully and answer honestly.",
-    "intro_paragraph_3": "Sincerely, Dr. med. Anatol-Fiete Näher, M.A., Hasso Plattner Institute Potsdam, Anna Lena Fehlhaber, Leibniz University of Hannover, PD Dr. Ivar Krumpal, University of Leipzig",
-    "consent_title": "Informed Consent",
-    "consent_message": "Please decide now if you want to give your consent to the use of your answers for scientific purposes. If you do not agree, you will be redirected to the end of the survey.",
-    "yes_label": "I consent to the use of my data submitted as part of this questionnaire for research purposes.",
-    "no_label": "I do not consent to the use of my data submitted as part of this questionnaire for research purposes.",
-    "start_button": "Submit Consent"
+  "admin_login": {
+    "title": "Admin Login",
+    "password_label": "Enter Admin Password:",
+    "login_button": "Login"
   },
   "choice_experiment": {
-    "survey_title": "Visual Choice Sets",
-    "patient_question": "Not every patient can be treated in a medical emergency. A decision has to be made about which patient to treat and which patient not to treat. Which of the patients shown below should be treated?",
-    "decision_pair_1": "Decision Pair 1",
-    "decision_pair_2": "Decision Pair 2",
-    "decision_pair_3": "Decision Pair 3",
-    "patient_1_overweight": "Patient 1 (Overweight)",
-    "patient_2_disability": "Patient 2 (Disability)",
-    "patient_1_child": "Patient 1 (Child)",
-    "patient_2_elderly_couple": "Patient 2 (Elderly Couple)",
-    "patient_1_young_adult": "Patient 1 (Young Adult)",
-    "patient_2_senior_ill": "Patient 2 (Senior with Chronic Illness)",
-    "change_decision": "A data-driven computer model would treat Patient X. Would you like to change your decision again?",
-    "submit_button": "Submit Choices"
+    "title": "Choice Experiment",
+    "instruction_text": "Not every patient can be treated in a medical emergency. A decision has to be made about which patient to treat. Which of the patients shown below should be treated?",
+    "patient_label_1": "1st Patient",
+    "patient_label_2": "2nd Patient",
+    "doctor_instruction": "Move the physician to the patient to be treated!",
+    "reconsider_message": "A data-driven computer model suggests treating the other patient!",
+    "decision_text": "Would you like to change your decision?",
+    "originally_selected": "Originally Selected",
+    "recommendation": "Recommendation",
+    "yes_button": "Yes",
+    "no_button": "No",
+    "final_selection_instruction": "Now please make your final selection for which patient to treat."
   },
   "demography": {
-    "demography_title": "Thank you very much! In the following, we would like to ask you a few more general questions.",
-    "gender_question": "What describes you best?",
+    "title": "Demographic Questions",
+    "gender_question": "What is your gender?",
     "female_label": "Female",
     "male_label": "Male",
     "diverse_label": "Diverse",
     "prefer_not_to_disclose_label": "Prefer not to disclose",
-    "age_question": "How old are you?",
-    "age_placeholder": "Age (in years)",
-    "religion_question": "Do you identify yourself with any of the following religions?",
+    "age_question": "What is your age?",
+    "age_placeholder": "Enter your age",
+    "religion_question": "What is your religion?",
     "no_religion": "No, I do not",
     "christian_label": "Christian",
     "islam_label": "Islam",
     "hinduism_label": "Hinduism",
     "buddhism_label": "Buddhism",
-    "other_label": "Other",
-    "submit_button": "Submit"
+    "other_label": "Other"
   },
   "group_preferences": {
     "group_preferences_title": "Group-Related Preferences",
-    "general_health_question": "How is your health in general?",
-    "select_answer": "Select your answer",
+    "general_health_question": "How would you rate your general health?",
+    "select_answer": "Select an answer",
     "very_poor": "Very Poor",
     "poor": "Poor",
     "fair": "Fair",
@@ -59,39 +51,120 @@
     "children_question": "Do you have children or are you planning to have children?",
     "children_yes": "Yes",
     "children_no": "No",
-    "submit_button": "Submit Preferences"
+    "submit_button": "Submit"
+  },
+  "instructions": {
+    "title": "Thank you very much! In the following we would like to ask you a few more general questions.",
+    "continue_button": "Continue"
+  },
+  "intro": {
+    "intro_title": "How would you decide when confronted with critical life-and-death decisions?",
+    "intro_paragraph_1": "Your view on this question is highly valuable. We greatly appreciate your willingness to participate in this survey on medical decision-making.",
+    "intro_paragraph_2": "Your participation is voluntary, and your information will be collected anonymously, in accordance with data protection regulations. Please read all instructions and questions carefully and answer honestly.",
+    "signature": "Sincerely,<br>Dr. med. Anatol-Fiete Näher, M.A., Hasso Plattner Institute Potsdam<br>Anna Lena Fehlhaber, Leibniz University of Hannover<br>PD Dr. Ivar Krumpal, University of Leipzig",
+    "consent_title": "Informed Consent",
+    "consent_message": "Please decide now if you want to give your consent to the use of your answers for scientific purposes. If you do not agree, you will be redirected to the end of the survey.",
+    "yes_label": "I consent to the use of my data submitted as part of this questionnaire for research purposes.",
+    "no_label": "I do not consent to the use of my data submitted as part of this questionnaire for research purposes.",
+    "start_button": "Submit Consent"
+  },
+  "no_consent": {
+    "no_consent_title": "Thank you for your time!",
+    "no_consent_message": "Since you did not consent to participate in the survey, your responses were not recorded. We appreciate your time."
   },
   "procedural_ratings": {
-    "rating_title": "Procedural Ratings",
-    "rating_intro": "Not every patient can be treated in a medical emergency. There are procedures that can be used to determine which patients should be treated in such situations. Please indicate how morally fair you find these procedures on a scale from 1 (Not Fair) to 6 (Very Fair).",
-    "scale_indicator": "Scale: 1 (Not Fair) - 6 (Very Fair)",
-    "select_answer": "Select your answer",
-    "rating_save_life_years": "Save the most life years: prioritize those who have the most life years left after overcoming the disease (i.e., treat younger patients first).",
-    "rating_advantage_disadvantaged": "Provide advantage to the disadvantaged: prioritize those who are worse off than others (i.e., treat sickest patients first).",
-    "rating_benefit_future": "Benefit to others in the future: prioritize those who are likely to make relevant contributions to the benefit of others (i.e., treat patients who have children or are planning to have children).",
-    "rating_first_come": "First-come, first-served: prioritize those who were first in line (i.e., treat patients who arrived first at the hospital).",
-    "rating_treatment_success": "Maximize treatment success: prioritize those with the highest probability of survival after treatment (i.e., treat patients with the highest chance of recovery).",
-    "rating_treatment_effort": "Minimize treatment effort: prioritize those who will be cured with minimum effort (i.e., treat patients who need the least medication).",
-    "rating_medication_effect": "Maximize the medication effect: prioritize those where the improvement per medication is highest (i.e., treat patients who benefit most from a given medication).",
-    "rating_random_selection": "Random selection: treatment should be allocated by random lottery (i.e., individual characteristics should not be considered).",
-    "submit_button": "Submit Procedural Ratings",
-    "not_fair": "Not Fair",
-    "very_fair": "Very Fair",
+    "rating_title": "Procedural Fairness Ratings",
+    "rating_intro": "Not every patient can be treated in a medical emergency. There are procedures that can be used to determine which patients should be treated in such situations. In the following, please indicate how morally fair you find these procedures.",
+    "scale_indicator": "Please rate on a scale from 1 to 6:",
+    "not_fair": "Not fair at all",
+    "very_fair": "Very fair",
+    "rating_save_life_years": "Treating patients who will gain the most life years",
+    "rating_advantage_disadvantaged": "Giving priority to disadvantaged patients",
+    "rating_benefit_future": "Treating patients who will benefit others in the future",
+    "rating_first_come": "First-come, first-served principle",
+    "rating_treatment_success": "Treating patients with the highest chance of treatment success",
+    "rating_treatment_effort": "Prioritizing patients requiring the least treatment effort",
+    "rating_medication_effect": "Selecting patients for whom medication is most effective",
+    "rating_random_selection": "Random selection of patients",
+    "select_answer": "Select a rating",
+    "questions": [
+      {
+        "id": "save_life_years",
+        "label": "Save the most life years",
+        "full_text": "Save the most life years: prioritize those who have the most life years left after overcoming the disease; i.e., treat younger patients first."
+      },
+      {
+        "id": "advantage_disadvantaged",
+        "label": "Provide advantage to the disadvantaged",
+        "full_text": "Provide advantage to the disadvantaged: prioritize those who are worse off than others; i.e., treat sickest patients first."
+      },
+      {
+        "id": "benefit_future",
+        "label": "Benefit to others in the future",
+        "full_text": "Benefit to others in the future: Prioritize those who are likely to make relevant contributions to the benefit of others; i.e., treat patients who have children or are planning to have children."
+      },
+      {
+        "id": "first_come",
+        "label": "First-come, first-served",
+        "full_text": "First-come, first-served: Prioritize those who were first in line; i.e., treat patients who arrived first at the hospital."
+      },
+      {
+        "id": "treatment_success",
+        "label": "Maximize treatment success",
+        "full_text": "Maximize treatment success: Prioritize those with the highest probability of survival after treatment; i.e., treat patients with the highest chance of recovery."
+      },
+      {
+        "id": "treatment_effort",
+        "label": "Minimize treatment effort",
+        "full_text": "Minimize treatment effort: Prioritize those who will be cured with minimum effort; i.e., treat patients who need the least medication."
+      },
+      {
+        "id": "medication_effect",
+        "label": "Maximize the medication effect",
+        "full_text": "Maximize the medication effect: Prioritize those where the improvement per medication is highest; i.e., treat patients who benefit most from a given medication."
+      },
+      {
+        "id": "random_selection",
+        "label": "Random selection",
+        "full_text": "Random selection: Treatment should be allocated by random lottery; i.e., individual characteristics should not be considered."
+      }
+    ],
     "numbers": {
       "1": "1",
-      "2": "2",
+      "2": "2", 
       "3": "3",
       "4": "4",
       "5": "5",
       "6": "6"
-    }
+    },
+    "submit_button": "Submit"
+  },
+  "results": {
+    "title": "Survey Results",
+    "download_button": "Download Survey Results (CSV)",
+    "user_responses": "User Responses"
   },
   "thank_you": {
     "thank_you_title": "Thank you for submitting your survey!",
     "thank_you_message": "Your responses have been recorded. We appreciate your time and effort in helping us with this research."
   },
-  "no_consent": {
-    "no_consent_title": "Thank you for your time!",
-    "no_consent_message": "Since you did not consent to participate in the survey, your responses were not recorded. We appreciate your time."
+  "images": {
+    "child_simple.jpg": "Child",
+    "Disability.jpg": "Person with Disability",
+    "old_male_female_simpler.jpg": "Elderly Couple",
+    "Overweight_simpler.jpg": "Overweight Person",
+    "test_0_0_1_1_0.jpg": "Test Image 1",
+    "test_0_0_2_3_1.jpg": "Test Image 2",
+    "test_0_2_3_3_2.jpg": "Test Image 3",
+    "test_1_0_3_2_0.jpg": "Test Image 4",
+    "test_1_3_2_2_1.jpg": "Test Image 5",
+    "Patient_at_Laptop_with_Head_Bandage.png": "Patient at Laptop with Head Bandage",
+    "Patient_on_a_Stretcher.png": "Patient on a Stretcher",
+    "Patient_with_Arm_Sling.png": "Patient with Arm Sling",
+    "Patient_with_IV_and_Arm_Sling.jpg": "Patient with IV and Arm Sling",
+    "Patient_with_IV_Drip.png": "Patient with IV Drip",
+    "pregnant_woman_care.webp": "Pregnant Woman Care",
+    "Pregnant_woman_lying_on_hospital_bed.png": "Pregnant Woman Lying on Hospital Bed",
+    "Walking_Patient_with_Crutches.jpg": "Walking Patient with Crutches"
   }
 }

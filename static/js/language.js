@@ -19,101 +19,228 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to dynamically change language
     function changeLanguage(language) {
+        // Set RTL for Arabic and Urdu
+        document.documentElement.dir = ['ar', 'ur'].includes(language) ? 'rtl' : 'ltr';
+
         fetch(`/static/lang/${language}.json`)
             .then(response => response.json())
             .then(data => {
-                if (currentPage === "intro") {
+                if (currentPage === "admin_login") {
+                    // For admin_login.html
+                    document.querySelector('h1').textContent = data.admin_login.title;
+                    document.querySelector('label[for="password"]').textContent = data.admin_login.password_label;
+                    document.querySelector('input[type="submit"]').value = data.admin_login.login_button;
+                } else if (currentPage === "intro") {
+                    // For intro.html
                     document.getElementById('intro-title').textContent = data.intro.intro_title;
                     document.getElementById('intro-paragraph-1').textContent = data.intro.intro_paragraph_1;
                     document.getElementById('intro-paragraph-2').textContent = data.intro.intro_paragraph_2;
-                    document.getElementById('intro-paragraph-3').textContent = data.intro.intro_paragraph_3;
+                    
+                    // Update signature section if it exists
+                    const signatureElement = document.querySelector('.signature');
+                    if (signatureElement && data.intro.signature) {
+                        signatureElement.innerHTML = data.intro.signature;
+                    }
+                    
                     document.getElementById('consent-title').textContent = data.intro.consent_title;
                     document.getElementById('consent-message').textContent = data.intro.consent_message;
                     document.getElementById('yes-label-span').textContent = data.intro.yes_label;
                     document.getElementById('no-label-span').textContent = data.intro.no_label;
                     document.getElementById('start-btn').textContent = data.intro.start_button;
                 } else if (currentPage === "choice_experiment") {
-                    document.getElementById('survey-title').textContent = data.choice_experiment.survey_title;
-                    document.getElementById('patient-question').textContent = data.choice_experiment.patient_question;
-                    document.getElementById('decision-pair-1').textContent = data.choice_experiment.decision_pair_1;
-                    document.getElementById('decision-pair-2').textContent = data.choice_experiment.decision_pair_2;
-                    document.getElementById('decision-pair-3').textContent = data.choice_experiment.decision_pair_3;
-                    document.getElementById('change-decision').textContent = data.choice_experiment.change_decision;
-                    document.getElementById('submit-button').textContent = data.choice_experiment.submit_button;
-                    document.getElementById('patient-1-overweight-label').textContent = data.choice_experiment.patient_1_overweight;
-                    document.getElementById('patient-2-disability-label').textContent = data.choice_experiment.patient_2_disability;
-                    document.getElementById('patient-1-child-label').textContent = data.choice_experiment.patient_1_child;
-                    document.getElementById('patient-2-elderly-couple-label').textContent = data.choice_experiment.patient_2_elderly_couple;
-                    document.getElementById('patient-1-young-adult-label').textContent = data.choice_experiment.patient_1_young_adult;
-                    document.getElementById('patient-2-senior-ill-label').textContent = data.choice_experiment.patient_2_senior_ill;
+                    // For choice_experiment.html
+                    document.querySelector('.instruction-text p').textContent = data.choice_experiment.instruction_text;
+                    document.querySelectorAll('.patient-label')[0].textContent = data.choice_experiment.patient_label_1;
+                    document.querySelectorAll('.patient-label')[1].textContent = data.choice_experiment.patient_label_2;
+                    document.querySelector('.doctor-instruction').textContent = data.choice_experiment.doctor_instruction;
+                    document.querySelector('.highlight-text').textContent = data.choice_experiment.reconsider_message;
+                    document.querySelector('.decision-text').textContent = data.choice_experiment.decision_text;
+                    document.querySelectorAll('.selection-label')[0].textContent = data.choice_experiment.originally_selected;
+                    document.querySelectorAll('.selection-label')[1].textContent = data.choice_experiment.recommendation;
+                    document.querySelector('.btn-change').textContent = data.choice_experiment.yes_button;
+                    document.querySelector('.btn-keep').textContent = data.choice_experiment.no_button;
+                    
+                    // Update image descriptions if they exist
+                    updateImageDescriptions(data);
                 } else if (currentPage === "demography") {
-                    document.getElementById('demography-title').textContent = data.demography.demography_title;
-                    document.getElementById('gender-question').textContent = data.demography.gender_question;
-                    document.getElementById('female-text').textContent = data.demography.female_label;
-                    document.getElementById('male-text').textContent = data.demography.male_label;
-                    document.getElementById('diverse-text').textContent = data.demography.diverse_label;
-                    document.getElementById('prefer-not-to-disclose-text').textContent = data.demography.prefer_not_to_disclose_label;
-                    document.getElementById('age-question').textContent = data.demography.age_question;
-                    document.getElementById('religion-question').textContent = data.demography.religion_question;
-                    document.getElementById('no-religion-text').textContent = data.demography.no_religion;
-                    document.getElementById('christian-text').textContent = data.demography.christian_label;
-                    document.getElementById('islam-text').textContent = data.demography.islam_label;
-                    document.getElementById('hinduism-text').textContent = data.demography.hinduism_label;
-                    document.getElementById('buddhism-text').textContent = data.demography.buddhism_label;
-                    document.getElementById('other-text').textContent = data.demography.other_label;
-                    document.getElementById('submit-button').textContent = data.demography.submit_button;
-                    // Add a slight delay for the placeholder translation to ensure it applies
-                setTimeout(() => {
-                    document.getElementById('age-placeholder').placeholder = data.demography.age_placeholder;
-                }, 100);
+                    // For demography.html
+                    document.querySelector('title').textContent = data.demography.title;
+                    
+                    // Get the current question ID from the hidden input
+                    const currentQuestionId = document.querySelector('input[name="question_id"]').value;
+                    
+                    // Translate the question label regardless of content
+                    document.querySelector('.question-block label').textContent = data.demography[`${currentQuestionId}_question`];
+                    
+                    // Handle different question types
+                    if (currentQuestionId === "gender") {
+                        // Get all label elements and match by their for attribute
+                        document.querySelectorAll('label[for]').forEach(label => {
+                            const forAttr = label.getAttribute('for');
+                            
+                            if (forAttr === 'female') label.textContent = data.demography.female_label;
+                            if (forAttr === 'male') label.textContent = data.demography.male_label;
+                            if (forAttr === 'diverse') label.textContent = data.demography.diverse_label;
+                            if (forAttr === 'prefer_not_to_disclose') label.textContent = data.demography.prefer_not_to_disclose_label;
+                        });
+                    } else if (currentQuestionId === "age") {
+                        document.querySelector('input[placeholder]').placeholder = data.demography.age_placeholder;
+                    } else if (currentQuestionId === "religion") {
+                        // Get all label elements and match by their for attribute
+                        document.querySelectorAll('label[for]').forEach(label => {
+                            const forAttr = label.getAttribute('for');
+                            
+                            if (forAttr === 'none') label.textContent = data.demography.no_religion;
+                            if (forAttr === 'christian') label.textContent = data.demography.christian_label;
+                            if (forAttr === 'islam') label.textContent = data.demography.islam_label;
+                            if (forAttr === 'hinduism') label.textContent = data.demography.hinduism_label;
+                            if (forAttr === 'buddhism') label.textContent = data.demography.buddhism_label;
+                            if (forAttr === 'other') label.textContent = data.demography.other_label;
+                        });
+                    }
+                }
+                 else if (currentPage === "instructions") {
+                    // For instructions.html
+                    document.querySelector('h1').textContent = data.instructions.title;
+                    document.querySelector('.submit-btn').textContent = data.instructions.continue_button;
                 } else if (currentPage === "group_preferences") {
-                    document.getElementById('group-preferences-title').textContent = data.group_preferences.group_preferences_title;
-                    document.getElementById('general-health-question').textContent = data.group_preferences.general_health_question;
-                    document.getElementById('select-answer').textContent = data.group_preferences.select_answer;
-                    document.getElementById('very-poor').textContent = data.group_preferences.very_poor;
-                    document.getElementById('poor').textContent = data.group_preferences.poor;
-                    document.getElementById('fair').textContent = data.group_preferences.fair;
-                    document.getElementById('good').textContent = data.group_preferences.good;
-                    document.getElementById('very-good').textContent = data.group_preferences.very_good;
-                    document.getElementById('excellent').textContent = data.group_preferences.excellent;
-                    document.getElementById('illness-question').textContent = data.group_preferences.illness_question;
-                    document.getElementById('illness-yes-label').textContent = data.group_preferences.illness_yes;
-                    document.getElementById('illness-no-label').textContent = data.group_preferences.illness_no;
-                    document.getElementById('children-question').textContent = data.group_preferences.children_question;
-                    document.getElementById('children-yes-label').textContent = data.group_preferences.children_yes;
-                    document.getElementById('children-no-label').textContent = data.group_preferences.children_no;
-                    document.getElementById('submit-button').textContent = data.group_preferences.submit_button;
+                    // For group_preference.html
+                    const questionId = document.querySelector('input[name="question_id"]').value;
+                    if (questionId === 'general_health') {
+                        document.querySelector('.health-question-label').textContent = data.group_preferences.general_health_question;
+                        document.querySelector('.health-scale-labels span:first-child').textContent = data.group_preferences.very_poor;
+                        document.querySelector('.health-scale-labels span:last-child').textContent = data.group_preferences.excellent;
+                    } else if (questionId === 'illness') {
+                        document.querySelector('.question-label').textContent = data.group_preferences.illness_question;
+                        document.querySelectorAll('.radio-label')[0].textContent = data.group_preferences.illness_yes;
+                        document.querySelectorAll('.radio-label')[1].textContent = data.group_preferences.illness_no;
+                    } else if (questionId === 'children') {
+                        document.querySelector('.question-label').textContent = data.group_preferences.children_question;
+                        document.querySelectorAll('.radio-label')[0].textContent = data.group_preferences.children_yes;
+                        document.querySelectorAll('.radio-label')[1].textContent = data.group_preferences.children_no;
+                    }
                 } else if (currentPage === "procedural_ratings") {
-                    document.getElementById('rating-title').textContent = data.procedural_ratings.rating_title;
-                    document.getElementById('rating-intro').textContent = data.procedural_ratings.rating_intro;
-                    document.getElementById('scale-indicator').textContent = data.procedural_ratings.scale_indicator;
-                    document.getElementById('submit-button').textContent = data.procedural_ratings.submit_button;
-                    document.getElementById('rating-save-life-years').textContent = data.procedural_ratings.rating_save_life_years;
-                    document.getElementById('rating-advantage-disadvantaged').textContent = data.procedural_ratings.rating_advantage_disadvantaged;
-                    document.getElementById('rating-benefit-future').textContent = data.procedural_ratings.rating_benefit_future;
-                    document.getElementById('rating-first-come').textContent = data.procedural_ratings.rating_first_come;
-                    document.getElementById('rating-treatment-success').textContent = data.procedural_ratings.rating_treatment_success;
-                    document.getElementById('rating-treatment-effort').textContent = data.procedural_ratings.rating_treatment_effort;
-                    document.getElementById('rating-medication-effect').textContent = data.procedural_ratings.rating_medication_effect;
-                    document.getElementById('rating-random-selection').textContent = data.procedural_ratings.rating_random_selection;
-                    // Update scale options dynamically for all select elements in this section
-                    document.querySelectorAll('.procedure-block select').forEach(select => {
-                        select.options[0].textContent = data.procedural_ratings.select_answer;
-                        select.options[1].textContent = `${data.procedural_ratings.numbers[1]} (${data.procedural_ratings.not_fair})`;
-                        select.options[2].textContent = data.procedural_ratings.numbers[2];
-                        select.options[3].textContent = data.procedural_ratings.numbers[3];
-                        select.options[4].textContent = data.procedural_ratings.numbers[4];
-                        select.options[5].textContent = data.procedural_ratings.numbers[5];
-                        select.options[6].textContent = `${data.procedural_ratings.numbers[6]} (${data.procedural_ratings.very_fair})`;
-                    });
+                    // For procedural_rating.html
+                    document.querySelector('.rating-container p').textContent = data.procedural_ratings.rating_intro;
+                    const questionId = document.querySelector('input[name="question_id"]').value;
+                    if (data.procedural_ratings.questions) {
+                        const question = data.procedural_ratings.questions.find(q => q.id === questionId);
+                        if (question) {
+                            document.querySelector('.question-label').textContent = question.label;
+                            document.querySelector('.question-description').textContent = question.full_text.replace(question.label + ': ', '');
+                        }
+                    }
+                    document.querySelector('.scale-labels .scale-label:first-child').textContent = data.procedural_ratings.not_fair;
+                    document.querySelector('.scale-labels .scale-label:last-child').textContent = data.procedural_ratings.very_fair;
+                } else if (currentPage === "results") {
+                    // For results.html
+                    document.querySelector('h2').textContent = data.results.user_responses;
+                    document.querySelector('.download-button').textContent = data.results.download_button;
                 } else if (currentPage === "thank_you") {
+                    // For thank_you.html
                     document.getElementById('thank-you-title').textContent = data.thank_you.thank_you_title;
                     document.getElementById('thank-you-message').textContent = data.thank_you.thank_you_message;
                 } else if (currentPage === "no_consent") {
+                    // For no_consent.html
                     document.getElementById('no-consent-title').textContent = data.no_consent.no_consent_title;
                     document.getElementById('no-consent-message').textContent = data.no_consent.no_consent_message;
                 }
             })
             .catch(error => console.error('Error loading language file:', error));
     }
+    
+    // Function to update image descriptions based on filename
+    function updateImageDescriptions(data) {
+        if (!data.images) return;
+        
+        // Find all images with data-filename attributes
+        document.querySelectorAll('img[data-filename]').forEach(img => {
+            const filename = img.dataset.filename;
+            if (data.images[filename]) {
+                // Update alt text and aria-label
+                img.alt = data.images[filename];
+                img.setAttribute('aria-label', data.images[filename]);
+                
+                // If there's a caption or description element after the image, update that too
+                const nextEl = img.nextElementSibling;
+                if (nextEl && (nextEl.classList.contains('image-caption') || 
+                               nextEl.classList.contains('image-description') ||
+                               nextEl.classList.contains('hover-description'))) {
+                    nextEl.textContent = data.images[filename];
+                }
+            }
+        });
+        
+        // Handle specific patient descriptions in choice experiment
+        const patientDescriptions = {
+            'patient_1_overweight': 'Overweight_simpler.jpg',
+            'patient_2_disability': 'Disability.jpg',
+            'patient_1_child': 'child_simple.jpg',
+            'patient_2_elderly_couple': 'old_male_female_simpler.jpg',
+            'patient_1_young_adult': 'Patient_with_Arm_Sling.png',
+            'patient_2_senior_ill': 'Patient_with_IV_Drip.png'
+        };
+        
+        // Update patient descriptions if they exist
+        for (const [id, filename] of Object.entries(patientDescriptions)) {
+            const element = document.getElementById(`${id}-label`);
+            if (element && data.images[filename]) {
+                element.textContent = data.images[filename];
+            }
+        }
+    }
+    
+    // Function to update rating questions
+    function updateRatingQuestions(questions) {
+        // Find all question elements by their IDs and update them
+        questions.forEach(question => {
+            // Update question label
+            const labelElement = document.querySelector(`label[for="${question.id}"]`);
+            if (labelElement) {
+                labelElement.textContent = question.label;
+            }
+            
+            // Update full text description if visible
+            const fullTextElement = document.getElementById(`${question.id}-full-text`);
+            if (fullTextElement) {
+                fullTextElement.textContent = question.full_text;
+            }
+            
+            // Update tooltips or other elements that might contain the question text
+            const tooltipElement = document.querySelector(`.tooltip[data-question="${question.id}"]`);
+            if (tooltipElement) {
+                tooltipElement.setAttribute('title', question.full_text);
+                // If using a tooltip library, might need to reinitialize
+                if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                    new bootstrap.Tooltip(tooltipElement);
+                }
+            }
+        });
+    }
 });
+
+// Add this outside the DOMContentLoaded event handler
+window.updateModalTranslations = function() {
+    const currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    fetch(`/static/lang/${currentLanguage}.json`)
+        .then(response => response.json())
+        .then(data => {
+            // Update modal images
+            const images = document.querySelectorAll('#reconsider-modal img[data-filename]');
+            images.forEach(img => {
+                const filename = img.dataset.filename;
+                if (data.images && data.images[filename]) {
+                    img.alt = data.images[filename];
+                    
+                    // Find description element
+                    const descId = img.id + '-description';
+                    const descEl = document.getElementById(descId);
+                    if (descEl) {
+                        descEl.textContent = data.images[filename];
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error loading modal translations:', error));
+};
+

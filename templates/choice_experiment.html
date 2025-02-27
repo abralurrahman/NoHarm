@@ -6,13 +6,13 @@
     <title>Choice Experiment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body data-page="choice_experiment">
     <div class="language-switcher">
         <select id="language-switcher">
             <option value="ar">العربية</option>
             <option value="bn">বাংলা</option>
             <option value="zh">中文</option>
-            <option value="en" selected>English</option>
+            <option value="en" >English</option>
             <option value="fr">Français</option>
             <option value="de">Deutsch</option>
             <option value="hi">हिन्दी</option>
@@ -34,9 +34,9 @@
                 <div class="patient-label">1st Patient</div>
                 <div class="image-container">
                     <img src="{{ url_for('static', filename=images[0]['filename']) }}"
-                         alt="{{ images[0]['description'] }}"
-                         class="patient-image fade-element"
-                         data-filename="{{ images[0]['filename'] }}">
+                        alt="{{ images[0]['description'] }}"
+                        class="patient-image fade-element"
+                        data-filename="{{ images[0]['filename'].split('/')[-1] }}">
                     <div class="hover-description">{{ images[0]['description'] }}</div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <img src="{{ url_for('static', filename=images[1]['filename']) }}"
                          alt="{{ images[1]['description'] }}"
                          class="patient-image fade-element"
-                         data-filename="{{ images[1]['filename'] }}">
+                         data-filename="{{ images[1]['filename'].split('/')[-1] }}">
                     <div class="hover-description">{{ images[1]['description'] }}</div>
                 </div>
             </div>
@@ -82,21 +82,21 @@
             <div class="patient-card faded" data-patient="1">
                 <div class="selection-label">Originally Selected</div>
                 <div class="image-container">
-                    <img src="" alt="Originally Selected Patient" class="patient-image" id="original-choice">
-                    <div class="image-description" id="original-choice-description"></div>
+                    <img src="" alt="Originally Selected Patient" class="patient-image" id="original-choice" data-filename="">
+                    <div class="hover-description" id="original-choice-description"></div>
                 </div>
             </div>
-
+        
             <!-- Suggested Alternative Patient -->
             <div class="patient-card highlighted" data-patient="2">
                 <div class="selection-label">Recommendation</div>
                 <div class="image-container">
-                    <img src="" alt="Suggested Alternative Patient" class="patient-image" id="suggested-choice">
-                    <div class="image-description" id="suggested-choice-description"></div>
+                    <img src="" alt="Suggested Alternative Patient" class="patient-image" id="suggested-choice" data-filename="">
+                    <div class="hover-description" id="suggested-choice-description"></div>
                 </div>
             </div>
         </div>
-
+        
         <div class="decision-buttons">
             <button type="button" class="btn-change" onclick="handleReconsider(true)">
                 Yes
@@ -115,5 +115,7 @@
     </form>
 
     <script src="{{ url_for('static', filename='js/choice.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/language.js') }}"></script>
+
 </body>
 </html>

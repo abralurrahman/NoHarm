@@ -1,97 +1,170 @@
 {
-    "intro": {
-      "intro_title": "生死を分ける重大な決断を迫られたとき、あなたはどう判断しますか？",
-      "intro_paragraph_1": "この質問に対するあなたの見解は非常に貴重です。医療に関する意思決定に関するこの調査にご協力いただけることに感謝いたします。",
-      "intro_paragraph_2": "質問に答えるのに約5分かかります。あなたの参加は任意であり、匿名で行われます。すべての指示と質問をよく読み、誠実にお答えください。",
-      "intro_paragraph_3": "敬具、Dr. med. アナトール・フィーテ・ネーア, M.A., ハッソ・プラットナー研究所 ポツダム, アンナ・レナ・フェールハーバー, ハノーバー・リービニッツ大学, PD Dr. イヴァー・クルンパル, ライプツィヒ大学",
-      "consent_title": "同意",
-      "consent_message": "ご回答の科学的利用に同意するかどうか、今すぐ決めてください。同意しない場合は、調査の終了ページにリダイレクトされます。",
-      "yes_label": "このアンケートに提供されたデータを研究目的で利用することに同意します。",
-      "no_label": "このアンケートに提供されたデータを研究目的で利用することに同意しません。",
-      "start_button": "同意を送信"
-    },
-    "choice_experiment": {
-      "survey_title": "視覚的な選択セット",
-      "patient_question": "医療の緊急事態では、すべての患者の治療が可能であるとは限りません。どの患者を治療し、どの患者を治療しないかを決定する必要があります。以下に表示された患者のうち、どの患者を治療するべきでしょうか？",
-      "decision_pair_1": "決定ペア 1",
-      "decision_pair_2": "決定ペア 2",
-      "decision_pair_3": "決定ペア 3",
-      "patient_1_overweight": "患者 1 (肥満)",
-      "patient_2_disability": "患者 2 (障害)",
-      "patient_1_child": "患者 1 (子ども)",
-      "patient_2_elderly_couple": "患者 2 (高齢カップル)",
-      "patient_1_young_adult": "患者 1 (若年成人)",
-      "patient_2_senior_ill": "患者 2 (慢性病の高齢者)",
-      "change_decision": "データ駆動型コンピューターモデルは患者Xを治療します。もう一度決定を変更しますか？",
-      "submit_button": "選択を送信"
-    },
-    "demography": {
-      "demography_title": "ありがとうございました！次に、いくつかの一般的な質問をさせていただきます。",
-      "gender_question": "ご自分を最もよく表すものは何ですか？",
-      "female_label": "女性",
-      "male_label": "男性",
-      "diverse_label": "多様",
-      "prefer_not_to_disclose_label": "開示したくない",
-      "age_question": "年齢は何歳ですか？",
-      "age_placeholder": "年齢（歳)",
-      "religion_question": "以下の宗教のいずれかにご自身を同一視していますか？",
-      "no_religion": "いいえ、していません",
-      "christian_label": "キリスト教",
-      "islam_label": "イスラム教",
-      "hinduism_label": "ヒンドゥー教",
-      "buddhism_label": "仏教",
-      "other_label": "その他",
-      "submit_button": "送信"
-    },
-    "group_preferences": {
-      "group_preferences_title": "グループ関連の嗜好",
-      "general_health_question": "一般的な健康状態はいかがですか？",
-      "select_answer": "回答を選択してください",
-      "very_poor": "非常に悪い",
-      "poor": "悪い",
-      "fair": "普通",
-      "good": "良い",
-      "very_good": "非常に良い",
-      "excellent": "優秀",
-      "illness_question": "昨年、重病を患ったことがありますか？",
-      "illness_yes": "はい",
-      "illness_no": "いいえ",
-      "children_question": "お子さんはいますか、またはお子さんを作る予定はありますか？",
-      "children_yes": "はい",
-      "children_no": "いいえ",
-      "submit_button": "嗜好を送信"
-    },
-      "procedural_ratings": {
-        "rating_title": "手続き評価",
-        "rating_intro": "緊急医療の場合、すべての患者を治療することはできません。このような状況でどの患者を治療するかを判断するために使用できる手続きがあります。これらの手続きを、1（不公正）から6（非常に公正）のスケールでどれだけ道徳的に公正であると感じるかを示してください。",
-        "scale_indicator": "スケール:1(不公正) - 6(非常に公正)",
-        "select_answer": "回答を選択してください",
-        "rating_save_life_years": "最も多くの寿命年を救う：回復後に最も多くの寿命年が残っている人を優先する（つまり、若い患者を優先して治療）。",
-        "rating_advantage_disadvantaged": "不利な人を優先する：他の人よりも状況が悪い人を優先する（つまり、最も重症な患者を優先して治療）。",
-        "rating_benefit_future": "将来の他者に利益をもたらす：他者に対して重要な貢献ができる可能性がある人を優先する（つまり、子供がいる、または子供を持つ予定のある患者を優先して治療）。",
-        "rating_first_come": "先着順：最初に並んでいた人を優先する（つまり、病院に最初に到着した患者を優先して治療）。",
-        "rating_treatment_success": "治療成功率を最大化する：治療後に生存する確率が最も高い人を優先する（つまり、回復の可能性が最も高い患者を優先して治療）。",
-        "rating_treatment_effort": "治療の労力を最小限に抑える：最小限の労力で治療できる人を優先する（つまり、最も少ない薬で治療ができる患者を優先）。",
-        "rating_medication_effect": "薬の効果を最大化する：薬ごとの改善が最も大きい人を優先する（つまり、特定の薬から最も恩恵を受ける患者を優先）。",
-        "rating_random_selection": "ランダム選択：治療は抽選で配分されるべき（つまり、個別の特性は考慮されないべき）。",
-        "submit_button": "手続き評価を送信",
-        "not_fair": "不公正",
-        "very_fair": "非常に公正",
-        "numbers": {
-          "1": "1",
-          "2": "2",
-          "3": "3",
-          "4": "4",
-          "5": "5",
-          "6": "6"
-        }
+  "admin_login": {
+    "title": "管理者ログイン",
+    "password_label": "管理者パスワードを入力してください：",
+    "login_button": "ログイン"
+  },
+  "choice_experiment": {
+    "title": "選択実験",
+    "instruction_text": "医療緊急時には、すべての患者を治療することはできません。どの患者を治療するかの決断を下さなければなりません。以下に示される患者のうち、どの患者が治療されるべきでしょうか？",
+    "patient_label_1": "1人目の患者",
+    "patient_label_2": "2人目の患者",
+    "doctor_instruction": "治療する患者に医師を移動させてください！",
+    "reconsider_message": "データ駆動型コンピューターモデルは他の患者を治療することを提案しています！",
+    "decision_text": "決定を変更しますか？",
+    "originally_selected": "当初選択",
+    "recommendation": "推奨",
+    "yes_button": "はい",
+    "no_button": "いいえ",
+    "final_selection_instruction": "治療する患者について最終選択を行ってください。"
+  },
+  "demography": {
+    "title": "人口統計学的質問",
+    "gender_question": "あなたの性別は何ですか？",
+    "female_label": "女性",
+    "male_label": "男性",
+    "diverse_label": "多様",
+    "prefer_not_to_disclose_label": "回答したくない",
+    "age_question": "あなたの年齢は？",
+    "age_placeholder": "年齢を入力してください",
+    "religion_question": "あなたの宗教は何ですか？",
+    "no_religion": "いいえ、私は宗教を持っていません",
+    "christian_label": "キリスト教",
+    "islam_label": "イスラム教",
+    "hinduism_label": "ヒンドゥー教",
+    "buddhism_label": "仏教",
+    "other_label": "その他"
+  },
+  "group_preferences": {
+    "group_preferences_title": "グループ関連の嗜好",
+    "general_health_question": "あなたの一般的な健康状態はどうですか？",
+    "select_answer": "回答を選択してください",
+    "very_poor": "非常に悪い",
+    "poor": "悪い",
+    "fair": "普通",
+    "good": "良い",
+    "very_good": "非常に良い",
+    "excellent": "優れている",
+    "illness_question": "この1年間で重病を患いましたか？",
+    "illness_yes": "はい",
+    "illness_no": "いいえ",
+    "children_question": "子供がいますか、または子供を持つ予定ですか？",
+    "children_yes": "はい",
+    "children_no": "いいえ",
+    "submit_button": "送信"
+  },
+  "instructions": {
+    "title": "どうもありがとうございます！ 次に、いくつかの一般的な質問をさせていただきます。",
+    "continue_button": "続ける"
+  },
+  "intro": {
+    "intro_title": "生死に関わる重大な決断に直面したとき、あなたはどのような決断をしますか？",
+    "intro_paragraph_1": "この質問に対するあなたの見解は非常に貴重です。医療意思決定に関するこの調査にご参加いただけることを深く感謝します。",
+    "intro_paragraph_2": "あなたの参加は自発的なものであり、データ保護規制に従って匿名で情報が収集されます。すべての指示と質問を注意深く読み、正直に回答してください。",
+    "signature": "敬具、<br>アナトール＝フィーテ・ネーヘル医学博士、ハッソ・プラットナー研究所ポツダム<br>アンナ・レナ・フェールハーバー、ライプニッツ大学ハノーファー<br>イヴァー・クルンパル博士、ライプツィヒ大学",
+    "consent_title": "インフォームドコンセント",
+    "consent_message": "ここで、あなたの回答を科学的目的に使用することに同意するかどうかを決めてください。同意しない場合は、調査の終わりにリダイレクトされます。",
+    "yes_label": "このアンケートの一部として提出したデータを研究目的で使用することに同意します。",
+    "no_label": "このアンケートの一部として提出したデータを研究目的で使用することに同意しません。",
+    "start_button": "同意を提出"
+  },
+  "no_consent": {
+    "no_consent_title": "お時間をいただきありがとうございます！",
+    "no_consent_message": "調査への参加に同意されなかったため、回答は記録されていません。お時間をいただきありがとうございました。"
+  },
+  "procedural_ratings": {
+    "rating_title": "手続き的公平性評価",
+    "rating_intro": "医療緊急時には、すべての患者を治療することはできません。このような状況でどの患者を治療すべきかを決定するために使用できる手続きがあります。以下では、これらの手続きがどの程度道徳的に公平だと思うかを示してください。",
+    "scale_indicator": "1から6のスケールで評価してください：",
+    "not_fair": "全く公平ではない",
+    "very_fair": "非常に公平",
+    "rating_save_life_years": "最も多くの生命年を得る患者を治療する",
+    "rating_advantage_disadvantaged": "不利な状況にある患者を優先する",
+    "rating_benefit_future": "将来他者に利益をもたらす患者を治療する",
+    "rating_first_come": "先着順の原則",
+    "rating_treatment_success": "治療成功の可能性が最も高い患者を治療する",
+    "rating_treatment_effort": "最小限の治療努力を要する患者を優先する",
+    "rating_medication_effect": "薬が最も効果的な患者を選択する",
+    "rating_random_selection": "患者のランダム選択",
+    "select_answer": "評価を選択",
+    "questions": [
+      {
+        "id": "save_life_years",
+        "label": "最も多くの生命年を救う",
+        "full_text": "最も多くの生命年を救う：病気を克服した後、最も多くの生命年が残っている人を優先する；つまり、若い患者を最初に治療する。"
       },
-    "thank_you": {
-      "thank_you_title": "調査にご協力いただきありがとうございました！",
-      "thank_you_message": "ご回答が記録されました。この調査にご協力いただき、時間と労力に感謝いたします。"
+      {
+        "id": "advantage_disadvantaged",
+        "label": "不利な立場にある人に利点を提供する",
+        "full_text": "不利な立場にある人に利点を提供する：他の人よりも状況が悪い人を優先する；つまり、最も病気の重い患者を最初に治療する。"
+      },
+      {
+        "id": "benefit_future",
+        "label": "将来の他者への利益",
+        "full_text": "将来の他者への利益：他者の利益に関連する貢献をする可能性が高い人を優先する；つまり、子供がいるか子供を持つ予定のある患者を治療する。"
+      },
+      {
+        "id": "first_come",
+        "label": "先着順",
+        "full_text": "先着順：列の最初にいた人を優先する；つまり、病院に最初に到着した患者を治療する。"
+      },
+      {
+        "id": "treatment_success",
+        "label": "治療成功を最大化する",
+        "full_text": "治療成功を最大化する：治療後の生存確率が最も高い人を優先する；つまり、回復の見込みが最も高い患者を治療する。"
+      },
+      {
+        "id": "treatment_effort",
+        "label": "治療努力を最小化する",
+        "full_text": "治療努力を最小化する：最小限の努力で治癒する人を優先する；つまり、最小限の薬が必要な患者を治療する。"
+      },
+      {
+        "id": "medication_effect",
+        "label": "薬の効果を最大化する",
+        "full_text": "薬の効果を最大化する：薬あたりの改善が最も高い場合を優先する；つまり、特定の薬から最も利益を得る患者を治療する。"
+      },
+      {
+        "id": "random_selection",
+        "label": "ランダム選択",
+        "full_text": "ランダム選択：治療はランダム抽選によって割り当てられるべきである；つまり、個人的特性は考慮されるべきではない。"
+      }
+    ],
+    "numbers": {
+      "1": "1",
+      "2": "2", 
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6"
     },
-    "no_consent": {
-      "no_consent_title": "お時間をありがとうございました！",
-      "no_consent_message": "調査に参加することに同意しなかったため、回答は記録されませんでした。お時間をいただき、ありがとうございました。"
-    }
+    "submit_button": "送信"
+  },
+  "results": {
+    "title": "調査結果",
+    "download_button": "調査結果をダウンロード（CSV）",
+    "user_responses": "ユーザー回答"
+  },
+  "thank_you": {
+    "thank_you_title": "調査を提出していただきありがとうございます！",
+    "thank_you_message": "あなたの回答が記録されました。この研究にご協力いただき、お時間と努力に感謝いたします。"
+  },
+  "images": {
+    "child_simple.jpg": "子供",
+    "Disability.jpg": "障害を持つ人",
+    "old_male_female_simpler.jpg": "高齢夫婦",
+    "Overweight_simpler.jpg": "太り気味の人",
+    "test_0_0_1_1_0.jpg": "テスト画像1",
+    "test_0_0_2_3_1.jpg": "テスト画像2",
+    "test_0_2_3_3_2.jpg": "テスト画像3",
+    "test_1_0_3_2_0.jpg": "テスト画像4",
+    "test_1_3_2_2_1.jpg": "テスト画像5",
+    "Patient_at_Laptop_with_Head_Bandage.png": "頭に包帯を巻いたラップトップ前の患者",
+    "Patient_on_a_Stretcher.png": "ストレッチャーに乗った患者",
+    "Patient_with_Arm_Sling.png": "腕つりバンドをつけた患者",
+    "Patient_with_IV_and_Arm_Sling.jpg": "点滴と腕つりバンドをつけた患者",
+    "Patient_with_IV_Drip.png": "点滴をしている患者",
+    "pregnant_woman_care.webp": "妊婦ケア",
+    "Pregnant_woman_lying_on_hospital_bed.png": "病院のベッドに横たわる妊婦",
+    "Walking_Patient_with_Crutches.jpg": "松葉杖で歩く患者"
   }
+}
