@@ -6,7 +6,7 @@
     <title>Procedural Ratings</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body data-page="procedural_ratings">
 <!-- Language switcher -->
 <div class="language-switcher">
     <select id="language-switcher">
@@ -58,5 +58,7 @@
         </div>
     </form>
 </div>
+<script src="{{ url_for('static', filename='js/language.js') }}"></script>
+
 </body>
 </html>

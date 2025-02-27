@@ -1,97 +1,170 @@
 {
-    "intro": {
-      "intro_title": "当您面对生死攸关的决定时，您会如何做出决定？",
-      "intro_paragraph_1": "您的观点非常宝贵。我们非常感谢您愿意参与这项关于医疗决策的调查。",
-      "intro_paragraph_2": "回答问题大约需要 5 分钟。您的参与是自愿的，您的信息将根据数据保护条例进行匿名收集。请仔细阅读所有说明和问题，并诚实作答。",
-      "intro_paragraph_3": "致以最诚挚的问候，Dr. med. Anatol-Fiete Näher, M.A., 哈索·普拉特纳研究所波茨坦, Anna Lena Fehlhaber, 汉诺威莱布尼茨大学, PD Dr. Ivar Krumpal, 莱比锡大学",
-      "consent_title": "知情同意",
-      "consent_message": "请决定您是否同意将您的回答用于科学目的。如果您不同意，您将被重定向到调查的结束部分。",
-      "yes_label": "我同意将我在本调查中提交的数据用于研究目的。",
-      "no_label": "我不同意将我在本调查中提交的数据用于研究目的。",
-      "start_button": "提交同意"
-    },
-    "choice_experiment": {
-      "survey_title": "视觉选择集",
-      "patient_question": "在医疗紧急情况下，并不是所有患者都能得到治疗。需要做出一个决定，即治疗哪个患者，哪个不治疗。下方显示的患者中，应该治疗哪一位？",
-      "decision_pair_1": "决策组 1",
-      "decision_pair_2": "决策组 2",
-      "decision_pair_3": "决策组 3",
-      "patient_1_overweight": "患者 1 （超重）",
-      "patient_2_disability": "患者 2 （残疾）",
-      "patient_1_child": "患者 1 （儿童）",
-      "patient_2_elderly_couple": "患者 2 （老年夫妇）",
-      "patient_1_young_adult": "患者 1 （年轻人）",
-      "patient_2_senior_ill": "患者 2 （患有慢性病的老年人）",
-      "change_decision": "基于数据的计算机模型会治疗患者 X。您是否想重新改变您的决定？",
-      "submit_button": "提交选择"
-    },
-    "demography": {
-      "demography_title": "非常感谢！接下来我们希望向您询问几个更一般的问题。",
-      "gender_question": "您认为最能描述您的选项是？",
-      "female_label": "女性",
-      "male_label": "男性",
-      "diverse_label": "多样化",
-      "prefer_not_to_disclose_label": "不愿透露",
-      "age_question": "您的年龄是多少？",
-      "age_placeholder": "年龄（岁）",
-      "religion_question": "您是否认同以下任何一种宗教？",
-      "no_religion": "不，我没有",
-      "christian_label": "基督教",
-      "islam_label": "伊斯兰教",
-      "hinduism_label": "印度教",
-      "buddhism_label": "佛教",
-      "other_label": "其他",
-      "submit_button": "提交"
-    },
-    "group_preferences": {
-      "group_preferences_title": "群体相关偏好",
-      "general_health_question": "您的健康状况如何？",
-      "select_answer": "选择您的答案",
-      "very_poor": "非常差",
-      "poor": "差",
-      "fair": "一般",
-      "good": "好",
-      "very_good": "非常好",
-      "excellent": "极好",
-      "illness_question": "您去年是否严重生病？",
-      "illness_yes": "是",
-      "illness_no": "否",
-      "children_question": "您有孩子吗，或者您计划有孩子吗？",
-      "children_yes": "是",
-      "children_no": "否",
-      "submit_button": "提交偏好"
-    },
-      "procedural_ratings": {
-        "rating_title": "程序评估",
-        "rating_intro": "在医疗紧急情况下无法为每位患者提供治疗。可以使用一些程序来确定应在此类情况下接受治疗的患者。请在 1（不公平）到 6（非常公平）之间的范围内指明您对这些程序的道德公平性的看法。",
-        "scale_indicator": "尺度：1（不公平） - 6（非常公平）",
-        "select_answer": "选择您的答案",
-        "rating_save_life_years": "延长生命年数：优先治疗疾病恢复后剩余生命年数最多的患者（即优先治疗年轻患者）。",
-        "rating_advantage_disadvantaged": "提供优势给弱势群体：优先考虑处境比其他人差的患者（即优先治疗病情最严重的患者）。",
-        "rating_benefit_future": "未来利益：优先考虑可能会对他人做出相关贡献的患者（即优先治疗有孩子或计划生育的患者）。",
-        "rating_first_come": "先到先得：优先考虑排在前面的患者（即优先治疗最早到达医院的患者）。",
-        "rating_treatment_success": "最大化治疗成功率：优先治疗在治疗后存活率最高的患者（即优先治疗康复机会最大的患者）。",
-        "rating_treatment_effort": "最小化治疗努力：优先考虑治疗所需的努力最少的患者（即优先治疗需要最少药物的患者）。",
-        "rating_medication_effect": "最大化药物效果：优先考虑每单位药物改善最多的患者（即优先治疗从药物中获益最大的患者）。",
-        "rating_random_selection": "随机选择：治疗应通过随机抽签分配（即不考虑个人特征）。",
-        "submit_button": "提交程序评估",
-        "not_fair": "不公平",
-        "very_fair": "非常公平",
-        "numbers": {
-          "1": "1",
-          "2": "2",
-          "3": "3",
-          "4": "4",
-          "5": "5",
-          "6": "6"
-        }
+  "admin_login": {
+    "title": "管理员登录",
+    "password_label": "输入管理员密码：",
+    "login_button": "登录"
+  },
+  "choice_experiment": {
+    "title": "选择实验",
+    "instruction_text": "在医疗紧急情况下，并非每位患者都能得到治疗。必须决定治疗哪位患者。以下展示的患者中，应该治疗哪一位？",
+    "patient_label_1": "第一位患者",
+    "patient_label_2": "第二位患者",
+    "doctor_instruction": "将医生移动到要治疗的患者处！",
+    "reconsider_message": "数据驱动的计算机模型建议治疗另一位患者！",
+    "decision_text": "您想改变您的决定吗？",
+    "originally_selected": "最初选择",
+    "recommendation": "推荐",
+    "yes_button": "是",
+    "no_button": "否",
+    "final_selection_instruction": "现在请做出最终选择，决定治疗哪位患者。"
+  },
+  "demography": {
+    "title": "人口统计问题",
+    "gender_question": "您的性别是什么？",
+    "female_label": "女性",
+    "male_label": "男性",
+    "diverse_label": "多元性别",
+    "prefer_not_to_disclose_label": "不愿透露",
+    "age_question": "您的年龄是多少？",
+    "age_placeholder": "输入您的年龄",
+    "religion_question": "您认同以下哪种宗教？",
+    "no_religion": "不，我没有宗教信仰",
+    "christian_label": "基督教",
+    "islam_label": "伊斯兰教",
+    "hinduism_label": "印度教",
+    "buddhism_label": "佛教",
+    "other_label": "其他"
+  },
+  "group_preferences": {
+    "group_preferences_title": "群体相关偏好",
+    "general_health_question": "您如何评价您的整体健康状况？",
+    "select_answer": "选择一个答案",
+    "very_poor": "非常差",
+    "poor": "差",
+    "fair": "一般",
+    "good": "好",
+    "very_good": "很好",
+    "excellent": "极好",
+    "illness_question": "您在过去一年中是否患过严重疾病？",
+    "illness_yes": "是",
+    "illness_no": "否",
+    "children_question": "您是否有孩子或计划生育？",
+    "children_yes": "是",
+    "children_no": "否",
+    "submit_button": "提交"
+  },
+  "instructions": {
+    "title": "非常感谢！接下来，我们想问您一些更一般性的问题。",
+    "continue_button": "继续"
+  },
+  "intro": {
+    "intro_title": "当面临生死攸关的决策时，您会如何抉择？",
+    "intro_paragraph_1": "您对这个问题的看法非常宝贵。我们非常感谢您愿意参与这项关于医疗决策的调查。",
+    "intro_paragraph_2": "您的参与是自愿的，您的信息将根据数据保护法规匿名收集。请仔细阅读所有说明和问题，并诚实回答。",
+    "signature": "此致，<br>Anatol-Fiete Näher医学博士，哈索·普拉特纳研究所波茨坦<br>Anna Lena Fehlhaber，汉诺威莱布尼茨大学<br>Ivar Krumpal副教授，莱比锡大学",
+    "consent_title": "知情同意",
+    "consent_message": "请现在决定您是否同意将您的回答用于科学目的。如果您不同意，您将被重定向至调查结束页面。",
+    "yes_label": "我同意将我作为本问卷一部分提交的数据用于研究目的。",
+    "no_label": "我不同意将我作为本问卷一部分提交的数据用于研究目的。",
+    "start_button": "提交同意"
+  },
+  "no_consent": {
+    "no_consent_title": "感谢您的时间！",
+    "no_consent_message": "由于您不同意参与调查，您的回复未被记录。我们感谢您的时间。"
+  },
+  "procedural_ratings": {
+    "rating_title": "程序公平性评分",
+    "rating_intro": "在医疗紧急情况下，并非每位患者都能得到治疗。有一些程序可用于确定在这种情况下应该治疗哪些患者。在以下内容中，请指出您认为这些程序在道德上有多公平。",
+    "scale_indicator": "请在1到6的范围内评分：",
+    "not_fair": "完全不公平",
+    "very_fair": "非常公平",
+    "rating_save_life_years": "治疗那些将获得最多生命年的患者",
+    "rating_advantage_disadvantaged": "优先考虑弱势患者",
+    "rating_benefit_future": "治疗那些将来会使他人受益的患者",
+    "rating_first_come": "先到先得原则",
+    "rating_treatment_success": "治疗那些治疗成功几率最高的患者",
+    "rating_treatment_effort": "优先考虑需要最少治疗努力的患者",
+    "rating_medication_effect": "选择那些药物最有效的患者",
+    "rating_random_selection": "随机选择患者",
+    "select_answer": "选择评分",
+    "questions": [
+      {
+        "id": "save_life_years",
+        "label": "拯救最多的生命年",
+        "full_text": "拯救最多的生命年：优先考虑那些战胜疾病后剩余生命年数最多的人；即，先治疗年轻患者。"
       },
-    "thank_you": {
-      "thank_you_title": "感谢您提交调查问卷！",
-      "thank_you_message": "您的回答已被记录。我们感谢您为我们的研究提供的时间和帮助。"
+      {
+        "id": "advantage_disadvantaged",
+        "label": "为弱势群体提供优势",
+        "full_text": "为弱势群体提供优势：优先考虑那些处境比他人更糟的人；即，先治疗最病重的患者。"
+      },
+      {
+        "id": "benefit_future",
+        "label": "对未来他人的益处",
+        "full_text": "对未来他人的益处：优先考虑那些可能为他人利益做出相关贡献的人；即，治疗那些有孩子或计划生育的患者。"
+      },
+      {
+        "id": "first_come",
+        "label": "先到先得",
+        "full_text": "先到先得：优先考虑那些排在队伍前面的人；即，治疗最先到达医院的患者。"
+      },
+      {
+        "id": "treatment_success",
+        "label": "最大化治疗成功率",
+        "full_text": "最大化治疗成功率：优先考虑那些治疗后存活可能性最高的人；即，治疗康复几率最高的患者。"
+      },
+      {
+        "id": "treatment_effort",
+        "label": "最小化治疗努力",
+        "full_text": "最小化治疗努力：优先考虑那些能以最少努力被治愈的人；即，治疗需要最少药物的患者。"
+      },
+      {
+        "id": "medication_effect",
+        "label": "最大化药物效果",
+        "full_text": "最大化药物效果：优先考虑那些每种药物改善效果最高的人；即，治疗那些从给定药物中获益最大的患者。"
+      },
+      {
+        "id": "random_selection",
+        "label": "随机选择",
+        "full_text": "随机选择：治疗应通过随机抽签分配；即，不应考虑个体特征。"
+      }
+    ],
+    "numbers": {
+      "1": "1",
+      "2": "2", 
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6"
     },
-    "no_consent": {
-      "no_consent_title": "感谢您的时间！",
-      "no_consent_message": "由于您没有同意参与调查，您的回答没有被记录。我们感谢您的时间。"
-    }
+    "submit_button": "提交"
+  },
+  "results": {
+    "title": "调查结果",
+    "download_button": "下载调查结果（CSV）",
+    "user_responses": "用户回复"
+  },
+  "thank_you": {
+    "thank_you_title": "感谢您提交调查！",
+    "thank_you_message": "您的回复已被记录。我们感谢您在帮助我们进行这项研究时所付出的时间和努力。"
+  },
+  "images": {
+    "child_simple.jpg": "儿童",
+    "Disability.jpg": "残疾人士",
+    "old_male_female_simpler.jpg": "老年夫妇",
+    "Overweight_simpler.jpg": "超重人士",
+    "test_0_0_1_1_0.jpg": "测试图片1",
+    "test_0_0_2_3_1.jpg": "测试图片2",
+    "test_0_2_3_3_2.jpg": "测试图片3",
+    "test_1_0_3_2_0.jpg": "测试图片4",
+    "test_1_3_2_2_1.jpg": "测试图片5",
+    "Patient_at_Laptop_with_Head_Bandage.png": "头部绑带的笔记本电脑前患者",
+    "Patient_on_a_Stretcher.png": "担架上的患者",
+    "Patient_with_Arm_Sling.png": "手臂吊带的患者",
+    "Patient_with_IV_and_Arm_Sling.jpg": "静脉注射和手臂吊带的患者",
+    "Patient_with_IV_Drip.png": "静脉滴注的患者",
+    "pregnant_woman_care.webp": "孕妇护理",
+    "Pregnant_woman_lying_on_hospital_bed.png": "躺在医院床上的孕妇",
+    "Walking_Patient_with_Crutches.jpg": "拄拐行走的患者"
   }
+}

@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <div class="language-switcher">
+        <select id="language-switcher">
+            <option value="ar">العربية</option>
+            <option value="bn">বাংলা</option>
+            <option value="zh">中文</option>
+            <option value="en" >English</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="hi">हिन्दी</option>
+            <option value="ja">日本語</option>
+            <option value="ru">Русский</option>
+            <option value="es">Español</option>
+            <option value="ur">اردو</option>
+        </select>
+    </div>
+
     <div class="login-container">
         <h1>Admin Login</h1>
         <form method="POST" action="/admin">
@@ -15,5 +31,7 @@
             <input type="submit" value="Login">
         </form>
     </div>
+<script src="{{ url_for('static', filename='js/language.js') }}"></script>
+
 </body>
 </html>

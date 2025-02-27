@@ -220,15 +220,33 @@ function showReconsiderModal(data) {
     const suggestedChoice = document.getElementById('suggested-choice');
     const originalDesc = document.getElementById('original-choice-description');
     const suggestedDesc = document.getElementById('suggested-choice-description');
-    
-    originalChoice.src = `/static/${data.original}`;
+   
+    // Check if original path includes the resized_images prefix, if not add it
+    const originalPath = data.original.includes('resized_images/') 
+        ? data.original 
+        : `resized_images/${data.original.split('/').pop()}`;
+        
+    // Set image paths with consistent format
+    originalChoice.src = `/static/${originalPath}`;
     suggestedChoice.src = `/static/${data.suggestion}`;
+
+    
+    // Set data-filename attributes for translation
+    originalChoice.setAttribute('data-filename', data.original.split('/').pop());
+    suggestedChoice.setAttribute('data-filename', data.suggestion.split('/').pop());
+    
     originalDesc.textContent = data.original_desc;
     suggestedDesc.textContent = data.suggestion_desc;
-    
+   
     modal.style.display = 'flex';
-    setTimeout(() => modal.classList.add('active'), 10); // Allow CSS transition
+    setTimeout(() => modal.classList.add('active'), 10);
+    
+    if (window.updateModalTranslations) {
+        window.updateModalTranslations();
+    }
 }
+
+
 
 function handleReconsider(change) {
     fetch('/reconsider', {
@@ -245,16 +263,16 @@ function handleReconsider(change) {
             // Hide the modal
             const modal = document.getElementById('reconsider-modal');
             modal.classList.remove('active');
-            
+           
             // Reset the doctor position to center
             const doctor = document.getElementById('draggableDoctor');
             doctor.classList.remove('move-left', 'move-right');
             doctor.style.transform = 'translateX(0)';
-            
+           
             setTimeout(() => {
                 modal.style.display = 'none';
             }, 300); // Short delay to allow transition to complete
-            
+           
             // Reset opacity of patient cards for new selection
             const patientCards = document.querySelectorAll('.patient-card');
             patientCards.forEach(card => {
@@ -262,13 +280,29 @@ function handleReconsider(change) {
                 cardImage.style.opacity = '1';
                 card.classList.remove('selected');
             });
-            
-            // Show message to user to make final selection
+           
+            // Show message to user to make final selection using translations
             const instructionText = document.querySelector('.instruction-text p');
             if (instructionText) {
-                instructionText.textContent = "Now please make your final selection for which patient to treat.";
-                instructionText.style.fontWeight = "bold";
-                instructionText.style.color = "#007bff";
+                // Get current language from localStorage
+                const currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+                
+                // Fetch the translation file
+                fetch(`/static/lang/${currentLanguage}.json`)
+                    .then(response => response.json())
+                    .then(langData => {
+                        // Use the translation key for final selection instruction
+                        instructionText.textContent = langData.choice_experiment.final_selection_instruction;
+                        instructionText.style.fontWeight = "bold";
+                        instructionText.style.color = "#007bff";
+                    })
+                    .catch(err => {
+                        // Fallback to English if translation fails
+                        console.error('Error loading translation:', err);
+                        instructionText.textContent = "Now please make your final selection for which patient to treat.";
+                        instructionText.style.fontWeight = "bold";
+                        instructionText.style.color = "#007bff";
+                    });
             }
         }
     })
@@ -276,6 +310,8 @@ function handleReconsider(change) {
         console.error('Error:', error);
     });
 }
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Initializing doctor movement");

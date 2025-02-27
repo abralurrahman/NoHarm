@@ -36,6 +36,7 @@ def create_database():
             general_health TEXT,                      -- Health status
             illness TEXT,                             -- Recent illness history
             children TEXT,                            -- Children status
+            language TEXT,                            -- User's preferred language
             ip_address TEXT,                          -- User IP
             city TEXT,                                -- Location: City
             region TEXT,                              -- Location: Region
@@ -85,6 +86,7 @@ def add_columns_if_not_exist():
         "general_health": "TEXT",
         "illness": "TEXT",
         "children": "TEXT",
+        "language": "TEXT",
         "ip_address": "TEXT",
         "city": "TEXT",
         "region": "TEXT",
@@ -100,9 +102,3 @@ def add_columns_if_not_exist():
 
     conn.commit()
     conn.close()
-
-if __name__ == '__main__':
-    print("Initializing database schema...")
-    create_database()
-    add_columns_if_not_exist()
-    print("Database setup completed successfully!")
