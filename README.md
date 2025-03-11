@@ -99,7 +99,8 @@ To stop the server, use `CTRL + C` in the terminal.
 
 To deploy a new version of the NoHarm application on the production server, follow these steps.
 
-### 1️⃣ Connect to the HPI VPN
+### 1️⃣ Connect to the HPI VPN [Outside HPI]
+# If you are in the HPI network, skip 1️⃣ & 2️⃣.
 
 Before accessing the production server, connect to the **HPI VPN**:
 
