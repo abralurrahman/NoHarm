@@ -4,7 +4,7 @@ NoHarm is a web-based survey application designed to collect and analyze user re
 
 ## 🔗 Live Version
 The NoHarm survey is accessible online at:  
-➡️ **[NoHarm Survey Live](https://noharm.dhc-lab.hpi.de/)**
+➡️ **[NoHarm Survey Live](https://noharm.sc.hpi.de/)**
 
 ---
 
@@ -162,7 +162,7 @@ git pull origin main
    ```
 
 If the service is running correctly, NoHarm should be updated and live at:  
-➡️ **[https://noharm.dhc-lab.hpi.de/](https://noharm.dhc-lab.hpi.de/)**
+➡️ **[https://noharm.dhc-lab.hpi.de/](https://noharm.sc.hpi.de/)**
 
 ---
 
